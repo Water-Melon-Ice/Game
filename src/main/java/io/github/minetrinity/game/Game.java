@@ -1,6 +1,6 @@
 package io.github.minetrinity.game;
 
-import io.github.minetrinity.game.concurrent.Loader;
+import io.github.minetrinity.game.concurrent.JarLoader;
 import io.github.minetrinity.game.graphics.Window;
 
 public class Game {
@@ -8,7 +8,7 @@ public class Game {
     private static Game instance;
 
     public static void main(String[] args) {
-        Loader.loadAll();
+        JarLoader.loadAll();
     }
 
     public static Game getInstance() {
