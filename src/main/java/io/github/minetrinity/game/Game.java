@@ -4,8 +4,15 @@ import io.github.minetrinity.game.graphics.Window;
 
 public class Game {
 
+    private static Game instance;
+
     public static void main(String[] args) {
         new Game().start();
+    }
+
+    public static Game getInstance() {
+        if(instance == null) instance = new Game();
+        return instance;
     }
 
     protected boolean running = false;
@@ -73,6 +80,7 @@ public class Game {
 
     public void stop(){
         running = false;
+        System.exit(0);
     }
 
 
