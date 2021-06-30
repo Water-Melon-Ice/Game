@@ -1,5 +1,6 @@
 package io.github.minetrinity.game;
 
+import io.github.minetrinity.game.concurrent.Loader;
 import io.github.minetrinity.game.graphics.Window;
 
 public class Game {
@@ -7,7 +8,7 @@ public class Game {
     private static Game instance;
 
     public static void main(String[] args) {
-        new Game().start();
+        Loader.loadAll();
     }
 
     public static Game getInstance() {
@@ -80,6 +81,7 @@ public class Game {
 
     public void stop(){
         running = false;
+        Window.getInstance().dispose();
         System.exit(0);
     }
 
