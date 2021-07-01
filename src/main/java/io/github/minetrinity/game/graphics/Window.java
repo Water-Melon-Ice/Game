@@ -1,11 +1,13 @@
 package io.github.minetrinity.game.graphics;
 
 import io.github.minetrinity.game.Game;
+import io.github.minetrinity.game.graphics.gui.GUI;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferStrategy;
 
 public class Window extends Frame {
 
@@ -16,6 +18,10 @@ public class Window extends Frame {
         if(instance == null) instance = new Window();
         return instance;
     }
+
+    private BufferStrategy strat;
+
+    private GUI g;
 
     private Window(){
         setUndecorated(true);
@@ -40,5 +46,20 @@ public class Window extends Frame {
             setSize(Toolkit.getDefaultToolkit().getScreenSize());
         }
     }
+
+    public Graphics getDrawGraphics(){
+        if(strat == null) {
+            createBufferStrategy(2);
+            strat = getBufferStrategy();
+        }
+        return strat.getDrawGraphics();
+    }
+
+    public void render(){
+        getDrawGraphics();
+
+        getBufferStrategy().show();
+    }
+
 
 }

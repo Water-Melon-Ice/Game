@@ -1,14 +1,17 @@
 package io.github.minetrinity.game;
 
-import io.github.minetrinity.game.concurrent.JarLoader;
+import io.github.minetrinity.game.file.loaders.Loader;
+import io.github.minetrinity.game.file.loaders.LoaderManager;
 import io.github.minetrinity.game.graphics.Window;
+
+import java.nio.file.Path;
 
 public class Game {
 
     private static Game instance;
 
     public static void main(String[] args) {
-        JarLoader.loadAll();
+        getInstance().start();
     }
 
     public static Game getInstance() {
@@ -60,10 +63,11 @@ public class Game {
     protected void init(){
         Window.getInstance().setFullscreen(true);
         Window.getInstance().setVisible(true);
+        LoaderManager.totalLoad();
     }
 
     protected void render(){
-
+        Window.getInstance().render();
     }
 
     protected void tick(){
