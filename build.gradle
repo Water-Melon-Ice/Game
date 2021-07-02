@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+
+}
+allprojects {
+    group 'io.github.minetrinity'
+    version '1.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+}
