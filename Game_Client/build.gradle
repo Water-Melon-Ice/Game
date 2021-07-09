@@ -13,7 +13,7 @@ dependencies {
 jar {
     manifest {
         attributes(
-                'Main-Class': 'io.github.minetrinity.game.Server'
+                'Main-Class': 'io.github.minetrinity.game.Client'
         )
     }
     from {
@@ -21,8 +21,7 @@ jar {
     }
 }
 
-task runServer(type: JavaExec) {
+task runClient(type: JavaExec) {
     main = "-jar"
     args jar.archiveFile.get()
 }
-jar.dependsOn(runServer)

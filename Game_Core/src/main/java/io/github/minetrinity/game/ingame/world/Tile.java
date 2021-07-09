@@ -1,6 +1,8 @@
 package io.github.minetrinity.game.ingame.world;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.nio.Buffer;
 import java.util.HashMap;
 
 public class Tile {
@@ -12,4 +14,22 @@ public class Tile {
         return tiles.get(c);
     }
 
+    protected String path;
+    protected BufferedImage image;
+
+    public Tile(String path){
+        this.path = path;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public BufferedImage getImage(){
+        return image;
+    }
+
+    public void setImage(BufferedImage img){
+        this.image = img;
+    }
 }

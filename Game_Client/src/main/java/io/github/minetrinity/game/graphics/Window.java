@@ -30,7 +30,7 @@ public class Window extends Frame {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Game.getInstance().stop();
+                Game.getInstance().stopGame();
             }
         });
     }

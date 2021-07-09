@@ -73,18 +73,18 @@ public class Game extends Thread{
 
 
     protected void tick(){
-        for(int i = 0; i < tickables.size(); i++){
-            tickables.get(i).tick();
+        for (Tickable tickable : tickables) {
+            tickable.tick();
         }
     }
 
+    //TODO: fixme
     public final void startGame(){
         if(!running && !started) {
-            super.start();
             started = true;
             init();
             running = true;
-            run();
+            super.start();
         }
     }
 

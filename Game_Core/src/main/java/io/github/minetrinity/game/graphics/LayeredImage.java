@@ -66,14 +66,14 @@ public class LayeredImage {
     }
 
     public void addAll(Image... images) {
-        for (int i = 0; i < images.length; i++) {
-            add(images[i]);
+        for (Image image : images) {
+            add(image);
         }
     }
 
     public void forceAddAll(Image... images){
-        for (int i = 0; i < images.length; i++) {
-            forceAdd(images[i]);
+        for (Image image : images) {
+            forceAdd(image);
         }
     }
 

@@ -20,7 +20,7 @@ public class Area {
                 }
             }
         }
-        return null;
+        return area;
     }
 
     ArrayList<Event> events;
