@@ -21,7 +21,7 @@ public class Window extends Frame {
 
     private BufferStrategy strat;
 
-    private GUI g;
+    protected GUI root;
 
     private Window(){
         setUndecorated(true);
@@ -56,10 +56,19 @@ public class Window extends Frame {
     }
 
     public void render(){
-        getDrawGraphics();
-
+        root.paintAll(getDrawGraphics());
         getBufferStrategy().show();
     }
 
+    public void setRoot(GUI root) {
+        if (this.root != null) {
+            this.root.close();
+        }
+        this.root = root;
+        root.open();
+    }
 
+    public GUI getRoot() {
+        return root;
+    }
 }

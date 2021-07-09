@@ -1,13 +1,18 @@
 package io.github.minetrinity.game;
 
-import io.github.minetrinity.game.loaders.LoaderManager;
+import io.github.minetrinity.game.net.UDPWrapper;
+import io.github.minetrinity.game.util.Tickable;
 
-public class Game {
+import java.io.File;
+import java.util.ArrayList;
 
-    private static Game instance;
+public class Game extends Thread{
+
+    protected static Game instance;
 
     public static void main(String[] args) {
-        getInstance().start();
+        new UDPWrapper();
+        getInstance().startGame();
     }
 
     public static Game getInstance() {
@@ -18,30 +23,36 @@ public class Game {
     protected boolean running = false;
     protected boolean started = false;
 
-    protected double fpscap = 60.0;
-    protected double actualfps;
+    protected double tpscap = 60.0;
+    protected double actualticks;
+
+    protected ArrayList<Tickable> tickables = new ArrayList<>();
 
     protected Game(){
 
     }
 
-    protected void run(){
+    public void run(){
+        if(!running) {
+            startGame();
+            return;
+        }
+
         long currenttime = System.currentTimeMillis();
         long lastttime = currenttime;
         double dtime = 0;
-        double mpf = 1000 / fpscap; //millisPerFrame
+        double mpt = 1000 / tpscap; //millisPerFrame
 
-        long fps = 0;
+        long ticks = 0;
         long timer = System.currentTimeMillis();
 
         while (running){
-            dtime += (currenttime - lastttime) / mpf;
+            dtime += (currenttime - lastttime) / mpt;
             lastttime = currenttime;
 
             if(dtime >= 1){
                 tick();
-                render();
-                fps++;
+                ticks++;
                 dtime--;
             }
 
@@ -49,27 +60,27 @@ public class Game {
 
             if((currenttime - timer) > 1000){
                 timer = currenttime;
-                actualfps = fps;
-                fps = 0;
+                actualticks = ticks;
+                ticks = 0;
 
             }
         }
     }
 
     protected void init(){
-        LoaderManager.totalLoad();
     }
 
-    protected void render(){
 
-    }
 
     protected void tick(){
-
+        for(int i = 0; i < tickables.size(); i++){
+            tickables.get(i).tick();
+        }
     }
 
-    public void start(){
+    public final void startGame(){
         if(!running && !started) {
+            super.start();
             started = true;
             init();
             running = true;
@@ -77,10 +88,16 @@ public class Game {
         }
     }
 
-    public void stop(){
+    public final void stopGame(){
         running = false;
         System.exit(0);
     }
 
+    public boolean isRunning() {
+        return running;
+    }
 
+    public boolean isStarted() {
+        return started;
+    }
 }

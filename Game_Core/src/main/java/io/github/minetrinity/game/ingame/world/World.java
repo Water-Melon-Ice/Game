@@ -1,4 +1,4 @@
-package io.github.minetrinity.game.world;
+package io.github.minetrinity.game.ingame.world;
 
 import java.util.ArrayList;
 

@@ -1,6 +1,6 @@
-package io.github.minetrinity.game.world.event;
+package io.github.minetrinity.game.ingame.event;
 
-import io.github.minetrinity.game.world.Entity;
+import io.github.minetrinity.game.ingame.entity.Entity;
 
 import java.awt.*;
 
