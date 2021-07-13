@@ -1,4 +1,4 @@
-package io.github.minetrinity.game.util;
+package io.github.minetrinity.game.time;
 
 public interface Tickable {
 

@@ -1,6 +1,6 @@
 package io.github.minetrinity.game.ingame.world;
 
-import io.github.minetrinity.game.graphics.LayeredImage;
+import io.github.minetrinity.game.graphics.LayeredTexture;
 import io.github.minetrinity.game.ingame.entity.Entity;
 import io.github.minetrinity.game.ingame.event.Event;
 
@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 public class Area {
 
-    public static Area from(LayeredImage img){
+    public static Area from(LayeredTexture img){
         Area area = new Area(img.getWidth(), img.getHeight());
         for (int y = 0; y < img.getHeight(); y++){
             for( int x = 0; x < img.getWidth(); x++){
                 for (int layer = 0; layer < img.getLayers(); layer++){
-                    Color c = new Color(img.getLayer(layer).getRGB(x,y));
+                    Color c = new Color(img.get(layer).getRGB(x,y));
                     Tile t = Tile.from(c);
                     area.setTile(t, x, y, layer);
                 }

@@ -2,14 +2,12 @@ package io.github.minetrinity.game;
 
 import io.github.minetrinity.game.file.Resource;
 import io.github.minetrinity.game.graphics.AreaToImage;
-import io.github.minetrinity.game.graphics.LayeredImage;
-import io.github.minetrinity.game.graphics.Window;
+import io.github.minetrinity.game.graphics.LayeredTexture;
 import io.github.minetrinity.game.ingame.world.Area;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferByte;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -55,11 +53,12 @@ public class Client extends Game{
 
     }
 
+    //TODO: THIS METHOD DISGUSTS ME, FIX AND DISTRIBUTE!
     private BufferedImage TEMPORARYMAPIMAGE(){
         try {
             Stream<File> world = Resource.allFiles().stream().filter(file -> file.getName().contains("world"));
             ArrayList<BufferedImage> worlds = Resource.allImages(world.collect(Collectors.toList()));
-            LayeredImage limg = new LayeredImage(worlds.toArray(Image[]::new));
+            LayeredTexture limg = new LayeredTexture(worlds.toArray(Image[]::new));
             Resource.fillTileMap();
             Area a = Area.from(limg);
             AreaToImage.fillTileImageMap();
