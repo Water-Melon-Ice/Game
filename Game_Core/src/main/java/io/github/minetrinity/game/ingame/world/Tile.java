@@ -1,5 +1,7 @@
 package io.github.minetrinity.game.ingame.world;
 
+import io.github.minetrinity.game.graphics.Texture;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.nio.Buffer;
@@ -14,22 +16,21 @@ public class Tile {
         return tiles.get(c);
     }
 
-    protected String path;
-    protected BufferedImage image;
+    protected Texture tex;
 
-    public Tile(String path){
-        this.path = path;
+    public Tile(Texture t){
+        this.tex = t;
     }
 
     public String getPath() {
-        return path;
+        return tex.getName();
     }
 
-    public BufferedImage getImage(){
-        return image;
+    public Texture getTexture(){
+        return tex;
     }
 
-    public void setImage(BufferedImage img){
-        this.image = img;
+    public void setTexture(Texture t){
+        this.tex = t;
     }
 }

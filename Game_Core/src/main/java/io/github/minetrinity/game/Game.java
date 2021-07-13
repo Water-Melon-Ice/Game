@@ -1,9 +1,8 @@
 package io.github.minetrinity.game;
 
 import io.github.minetrinity.game.net.UDPWrapper;
-import io.github.minetrinity.game.util.Tickable;
+import io.github.minetrinity.game.time.Tickable;
 
-import java.io.File;
 import java.util.ArrayList;
 
 public class Game extends Thread{
@@ -78,7 +77,7 @@ public class Game extends Thread{
         }
     }
 
-    //TODO: fixme
+    //fixme works?
     public final void startGame(){
         if(!running && !started) {
             started = true;
@@ -90,7 +89,12 @@ public class Game extends Thread{
 
     public final void stopGame(){
         running = false;
-        System.exit(0);
+        try {
+            super.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public boolean isRunning() {

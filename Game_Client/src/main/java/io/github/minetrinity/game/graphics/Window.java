@@ -1,12 +1,10 @@
 package io.github.minetrinity.game.graphics;
 
 import io.github.minetrinity.game.Game;
-import io.github.minetrinity.game.graphics.gui.GUI;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 
 public class Window extends Frame {

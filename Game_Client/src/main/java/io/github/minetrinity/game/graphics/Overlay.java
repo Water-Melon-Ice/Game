@@ -1,10 +1,8 @@
-package io.github.minetrinity.game.graphics.gui;
-
-import io.github.minetrinity.game.graphics.GUI;
+package io.github.minetrinity.game.graphics;
 
 import java.awt.*;
 
-public class GUIMenu extends GUI {
+public class Overlay extends GUI {
     @Override
     public void open() {
 
