@@ -1,7 +1,7 @@
 package io.github.minetrinity.game.graphics.gui.ingame.minigames.snake;
 
 
-import io.github.minetrinity.game.graphics.gui.GUI;
+import io.github.minetrinity.game.graphics.GUI;
 
 import java.awt.*;
 
@@ -17,7 +17,12 @@ public class Snake extends GUI {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void paint(Graphics g) {
+
+    }
+
+    @Override
+    public void tick() {
 
     }
 }

@@ -9,12 +9,12 @@ import java.util.ArrayList;
 
 public class Area {
 
-    public static Area from(LayeredTexture img){
-        Area area = new Area(img.getWidth(), img.getHeight());
-        for (int y = 0; y < img.getHeight(); y++){
-            for( int x = 0; x < img.getWidth(); x++){
-                for (int layer = 0; layer < img.getLayers(); layer++){
-                    Color c = new Color(img.get(layer).getRGB(x,y));
+    public static Area from(LayeredTexture ltex){
+        Area area = new Area(ltex.getWidth(), ltex.getHeight());
+        for (int y = 0; y < ltex.getHeight(); y++){
+            for( int x = 0; x < ltex.getWidth(); x++){
+                for (int layer = 0; layer < ltex.getLayerCount(); layer++){
+                    Color c = new Color(ltex.getBufferedImage(layer).getRGB(x,y));
                     Tile t = Tile.from(c);
                     area.setTile(t, x, y, layer);
                 }

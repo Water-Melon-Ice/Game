@@ -1,26 +1,27 @@
 package io.github.minetrinity.game.graphics;
 
-import io.github.minetrinity.game.util.Pair;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.Map;
 
 public class LayeredTexture extends Texture {
 
     //TODO: keep like this or change to 2 different array lists (one Texture other Point)?
-    private ArrayList<Texture> layers = new ArrayList<>();
+    private ArrayList<Image> layers = new ArrayList<>();
     private ArrayList<Point> locations = new ArrayList<>();
 
     public LayeredTexture(String name, int width, int height) {
-        super(name);
         this.width = width;
         this.height = height;
     }
 
     public LayeredTexture(int width, int height) {
         this(null, width, height);
+    }
+
+    public LayeredTexture(Image... images) {
+        this(images[0].getWidth(null), images[0].getHeight(null));
+        addAll(images);
     }
 
     public LayeredTexture(Texture... textures) {
@@ -30,13 +31,13 @@ public class LayeredTexture extends Texture {
 
     @Override
     public void paint(Graphics g) {
-        for (Texture t : layers) {
-            t.paint(g);
+        for(int i = 0; i < layers.size(); i++){
+            g.drawImage(layers.get(i), locations.get(i).x, locations.get(i).y, null);
         }
     }
 
     @Override
-    public Image getImage() {
+    public java.awt.Image getImage() {
         return getBufferedImage();
     }
 
@@ -65,8 +66,12 @@ public class LayeredTexture extends Texture {
     }
 
 
-    public Texture get(int layer) {
+    public Image getImage(int layer) {
         return layers.get(layer);
+    }
+
+    public BufferedImage getBufferedImage(int layer){
+        return Textures.toBufferedImage(getImage(layer));
     }
 
     public Point getPoint(int layer){
@@ -78,23 +83,29 @@ public class LayeredTexture extends Texture {
         locations.remove(layer);
     }
 
-    public void add(Texture t) {
-        layers.add(t);
+    public void add(Image i) {
+        layers.add(i);
         locations.add(new Point(0,0));
     }
 
-    public void put(Texture t, Point p){
-        layers.add(t);
+    public void put(Image i, Point p){
+        layers.add(i);
         locations.add(p);
     }
 
-    public void addAll(Texture... textures) {
-        for (Texture tex : textures) {
-            add(tex);
+    public void addAll(Image... images) {
+        for (Image i : images) {
+            add(i);
         }
     }
 
-    public int getLayers() {
+    public void addAll(Texture... textures) {
+        for (Texture t : textures) {
+            add(t.getImage());
+        }
+    }
+
+    public int getLayerCount() {
         return layers.size();
     }
 }

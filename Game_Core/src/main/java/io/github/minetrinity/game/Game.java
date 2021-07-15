@@ -10,8 +10,7 @@ public class Game extends Thread{
     protected static Game instance;
 
     public static void main(String[] args) {
-        new UDPWrapper();
-        getInstance().startGame();
+
     }
 
     public static Game getInstance() {

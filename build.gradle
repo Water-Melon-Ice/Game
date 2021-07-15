@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-
 }
 allprojects {
     group 'io.github.minetrinity'

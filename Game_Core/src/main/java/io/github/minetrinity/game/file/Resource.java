@@ -1,5 +1,6 @@
 package io.github.minetrinity.game.file;
 
+import io.github.minetrinity.game.graphics.Textures;
 import io.github.minetrinity.game.ingame.world.Tile;
 
 import javax.imageio.ImageIO;
@@ -65,7 +66,7 @@ public class Resource {
     public static void fillTileMap(){
         HashMap<Color, String> stringmap = getColorCodes();
         for(Color c : stringmap.keySet()){
-            Tile.tiles.put(c, new Tile(stringmap.get(c)));
+            Tile.tiles.put(c, new Tile(Textures.getByName(stringmap.get(c))));
         }
     }
 
@@ -87,6 +88,16 @@ public class Resource {
             e.printStackTrace();
         }
         return stringmap;
+    }
+
+    public static InputStream getInputstream(File f){
+        FileInputStream fin = null;
+        try {
+            fin = new FileInputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return fin;
     }
 
 }

@@ -3,6 +3,7 @@ package io.github.minetrinity.game;
 import io.github.minetrinity.game.file.Resource;
 import io.github.minetrinity.game.graphics.AreaToImage;
 import io.github.minetrinity.game.graphics.LayeredTexture;
+import io.github.minetrinity.game.graphics.Textures;
 import io.github.minetrinity.game.ingame.world.Area;
 
 import javax.imageio.ImageIO;
@@ -26,7 +27,7 @@ public class Client extends Game{
     }
 
     public static void main(String[] args) {
-        getInstance().startGame();
+        Textures.readGif(Textures.getInputstream(new File("../defaultresources/images/tiles/Busch_1.png")));
     }
 
     public Client(){
@@ -54,7 +55,7 @@ public class Client extends Game{
     }
 
     //TODO: THIS METHOD DISGUSTS ME, FIX AND DISTRIBUTE!
-    private BufferedImage TEMPORARYMAPIMAGE(){
+    private BufferedImage TEMPORARYMAPIMAGE(){/*
         try {
             Stream<File> world = Resource.allFiles().stream().filter(file -> file.getName().contains("world"));
             ArrayList<BufferedImage> worlds = Resource.allImages(world.collect(Collectors.toList()));
@@ -67,7 +68,7 @@ public class Client extends Game{
 
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         return null;
     }
 

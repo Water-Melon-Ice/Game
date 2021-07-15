@@ -7,31 +7,11 @@ import java.util.HashMap;
 
 public class Texture implements Paintable{
 
-    public static Color transparent = new Color(0, 0, 0, 0);
-
-    protected static HashMap<String, Texture> texturemap = new HashMap<>();
-
-    public static Texture get(String key) {
-        return texturemap.get(key);
-    }
-
-    public static void put(String key, Texture value) throws InvalidKeyException {
-        if(texturemap.containsKey(key)) throw new InvalidKeyException("Key already exists!");
-        texturemap.put(key, value);
-    }
-
-    public static void put(Texture tex) throws InvalidKeyException {
-        if(tex.getName() == null) throw new IllegalArgumentException("No key given.");
-        put(tex.getName(), tex);
-    }
-
     private Image img;
-    private String name;
 
     protected int width, height;
 
-    public Texture(String name){
-        this.name = name;
+    public Texture(){
     }
 
     @Override
@@ -50,16 +30,7 @@ public class Texture implements Paintable{
     }
 
     public BufferedImage getBufferedImage() {
-        if (img instanceof BufferedImage) {
-            return (BufferedImage) img;
-        }
-        BufferedImage bimg = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
-
-        Graphics2D bGr = bimg.createGraphics();
-        bGr.drawImage(img, 0, 0, null);
-        bGr.dispose();
-        img = bimg;
-        return (BufferedImage) img;
+        return Textures.toBufferedImage(img);
     }
 
     public void resizeCut(int width, int height, Color fill) {
@@ -82,12 +53,7 @@ public class Texture implements Paintable{
     }
 
     public void resizeScale(int width, int height) {
-        setImage(getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT));
-    }
-
-
-    public String getName(){
-        return name;
+        setImage(getImage().getScaledInstance(width, height, java.awt.Image.SCALE_DEFAULT));
     }
 
     public int getWidth() {

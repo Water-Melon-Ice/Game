@@ -3,8 +3,6 @@ package io.github.minetrinity.game.ingame.world;
 import io.github.minetrinity.game.graphics.Texture;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.nio.Buffer;
 import java.util.HashMap;
 
 public class Tile {
@@ -20,10 +18,6 @@ public class Tile {
 
     public Tile(Texture t){
         this.tex = t;
-    }
-
-    public String getPath() {
-        return tex.getName();
     }
 
     public Texture getTexture(){

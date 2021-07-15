@@ -11,17 +11,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class AreaToImage {
-
-    public static HashMap<Tile, Image> imageMap = new HashMap<>();
+/*
+    public static HashMap<Tile, Texture> imageMap = new HashMap<>();
 
     public static BufferedImage toImage(Area a, int tilesize) {
         if (tilesize == -1) tilesize = 64;
         BufferedImage img = new BufferedImage(a.getWidth() * tilesize, a.getHeight() * tilesize, BufferedImage.TYPE_INT_ARGB);
         Graphics g = img.createGraphics();
-        Image temp;
+        Texture temp;
         int twidth, theight;
 
         for (int x = 0; x < a.getWidth(); x++) {
@@ -44,7 +43,7 @@ public class AreaToImage {
         return img;
     }
 
-    public static Image getImage(Tile t) {
+    public static Texture getImage(Tile t) {
         if (t == null) return null;
         return imageMap.get(t);
     }
@@ -64,5 +63,5 @@ public class AreaToImage {
             e.printStackTrace();
         }
     }
-
+*/
 }
