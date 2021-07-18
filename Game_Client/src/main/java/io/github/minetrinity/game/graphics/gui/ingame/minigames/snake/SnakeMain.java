@@ -20,7 +20,6 @@ public class SnakeMain extends GUI {
     private static final int SQUARE_SIZE = WIDTH / ROWS;
     private static final int ALL_SQUARES = WIDTH * HEIGHT;
     private static final int RAND_A = 29;
-    //private static final String [] FOODS_IMAGE = new String[];
 
     private final int x[] = new int[ALL_SQUARES];
     private final int y[] = new int[ALL_SQUARES];
@@ -39,12 +38,8 @@ public class SnakeMain extends GUI {
 
     private boolean inGame = true;
 
-    public Board() {
 
-        createBoard();
-    }
-
-    private void createBoard() {
+    public void createBoard() {
 
         addKeyListener(new TAdapter());
 
@@ -104,11 +99,11 @@ public class SnakeMain extends GUI {
             x[0] += SQUARE_SIZE;
         }
 
-        if (leftDirection) {
+        if (upDirection) {
             y[0] -= SQUARE_SIZE;
         }
 
-        if (leftDirection) {
+        if (downDirection) {
             y[0] += SQUARE_SIZE;
         }
     }
