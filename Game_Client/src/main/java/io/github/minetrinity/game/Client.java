@@ -1,21 +1,9 @@
 package io.github.minetrinity.game;
 
-import io.github.minetrinity.game.file.Resource;
-import io.github.minetrinity.game.graphics.AreaToImage;
-import io.github.minetrinity.game.graphics.LayeredTexture;
-import io.github.minetrinity.game.graphics.Textures;
-import io.github.minetrinity.game.ingame.world.Area;
+import io.github.minetrinity.game.graphics.Window;
+import io.github.minetrinity.game.graphics.gui.TestGui;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Client extends Game{
 
@@ -27,7 +15,7 @@ public class Client extends Game{
     }
 
     public static void main(String[] args) {
-        Textures.readGif(Textures.getInputstream(new File("../defaultresources/images/tiles/Busch_1.png")));
+        getInstance().startGame();
     }
 
     public Client(){
@@ -36,8 +24,12 @@ public class Client extends Game{
 
     @Override
     protected void init() {
-        super.init();
-
+        Window.getInstance().setVisible(true);
+        Window.getInstance().setFullscreen(false);
+        TestGui g = new TestGui();
+        tickables.add(g);
+        Window.getInstance().setRoot(g);
+        /*
         //Worldmap
         BufferedImage temporary = TEMPORARYMAPIMAGE();
         File out = new File("./out.png");
@@ -51,7 +43,7 @@ public class Client extends Game{
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        */
     }
 
     //TODO: THIS METHOD DISGUSTS ME, FIX AND DISTRIBUTE!
@@ -75,5 +67,6 @@ public class Client extends Game{
     @Override
     protected void tick() {
         super.tick();
+        Window.getInstance().render();
     }
 }

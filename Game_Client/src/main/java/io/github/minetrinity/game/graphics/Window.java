@@ -13,7 +13,7 @@ public class Window extends Frame {
     protected static Window instance;
 
     public static Window getInstance() {
-        if(instance == null) instance = new Window();
+        if (instance == null) instance = new Window();
         return instance;
     }
 
@@ -21,10 +21,10 @@ public class Window extends Frame {
 
     protected GUI root;
 
-    private Window(){
+    private Window() {
         setUndecorated(true);
         setResizable(false);
-        setLocation(0,0);
+        setLocation(0, 0);
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -33,27 +33,27 @@ public class Window extends Frame {
         });
     }
 
-    public void setFullscreen(boolean trueFullscreen){
-        if(trueFullscreen && gdevice.isFullScreenSupported()){
-            if(isVisible()) {
+    public void setFullscreen(boolean trueFullscreen) {
+        if (trueFullscreen && gdevice.isFullScreenSupported()) {
+            if (!isVisible()) {
                 setFullscreen(false);
                 return;
             }
             gdevice.setFullScreenWindow(this);
-        }else{
+        } else {
             setSize(Toolkit.getDefaultToolkit().getScreenSize());
         }
     }
 
-    public Graphics getDrawGraphics(){
-        if(strat == null) {
+    public Graphics getDrawGraphics() {
+        if (strat == null) {
             createBufferStrategy(2);
             strat = getBufferStrategy();
         }
         return strat.getDrawGraphics();
     }
 
-    public void render(){
+    public void render() {
         root.paintAll(getDrawGraphics());
         getBufferStrategy().show();
     }
@@ -61,9 +61,11 @@ public class Window extends Frame {
     public void setRoot(GUI root) {
         if (this.root != null) {
             this.root.close();
+            Game.getInstance().remove(this.root);
         }
         this.root = root;
         root.open();
+        Game.getInstance().remove(root);
     }
 
     public GUI getRoot() {

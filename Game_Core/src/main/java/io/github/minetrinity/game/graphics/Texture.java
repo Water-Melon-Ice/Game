@@ -13,6 +13,10 @@ public class Texture implements Paintable{
 
     public Texture(){
     }
+    public Texture(int width, int height){
+        this.width = width;
+        this.height = height;
+    }
 
     @Override
     public void paint(Graphics g) {

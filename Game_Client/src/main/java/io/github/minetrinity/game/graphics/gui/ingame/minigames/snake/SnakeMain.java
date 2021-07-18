@@ -1,7 +1,8 @@
 package io.github.minetrinity.game.graphics.gui.ingame.minigames.snake;
 
 
-import io.github.minetrinity.game.graphics.gui.GUI;
+import io.github.minetrinity.game.graphics.GUI;
+
 
 import java.awt.*;
 
@@ -26,16 +27,6 @@ public class SnakeMain extends GUI {
     private int currentDirection;
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Snake");
-        
-
-    }
-
-
-
-
-    @Override
     public void open() {
 
     }
@@ -46,7 +37,12 @@ public class SnakeMain extends GUI {
     }
 
     @Override
-    public void render(Graphics g) {
+    public void paint(Graphics g) {
+
+    }
+
+    @Override
+    public void tick() {
 
     }
 }

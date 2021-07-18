@@ -25,3 +25,5 @@ task runClient(type: JavaExec) {
     main = "-jar"
     args jar.archiveFile.get()
 }
+
+runClient.dependsOn(jar)

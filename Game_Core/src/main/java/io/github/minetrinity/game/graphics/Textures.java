@@ -5,6 +5,8 @@ import io.github.minetrinity.game.file.Resource;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
+import javax.imageio.metadata.IIOMetadata;
+import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -23,13 +25,13 @@ public class Textures {
     }
 
     public static void put(String key, Texture value) throws InvalidKeyException {
-        if(texturemap.containsKey(key)) throw new InvalidKeyException("Key already exists!");
+        if (texturemap.containsKey(key)) throw new InvalidKeyException("Key already exists!");
         texturemap.put(key, value);
     }
 
-    public static Texture[] wrap(Image... images){
+    public static Texture[] wrap(Image... images) {
         Texture[] textures = new Texture[images.length];
-        for(int i = 0; i < images.length; i++){
+        for (int i = 0; i < images.length; i++) {
             Texture t = new Texture();
             t.setImage(images[i]);
             textures[i] = t;
@@ -37,7 +39,7 @@ public class Textures {
         return textures;
     }
 
-    public static BufferedImage toBufferedImage(Image i){
+    public static BufferedImage toBufferedImage(Image i) {
         if (i instanceof BufferedImage) {
             return (BufferedImage) i;
         }
@@ -49,15 +51,15 @@ public class Textures {
         return bimg;
     }
 
-    public static InputStream getInputstream(File f){
+    public static InputStream getInputstream(File f) {
         return Resource.getInputstream(f);
     }
 
-    public static Texture read(InputStream in){
+    public static Texture read(InputStream in) {
         return null;
     }
 
-    public static Texture readTexture(InputStream in){
+    public static Texture readTexture(InputStream in) {
         Texture t = new Texture();
         BufferedImage img = null;
         try {
@@ -69,20 +71,43 @@ public class Textures {
         return t;
     }
 
-    public static AnimatedTexture readGif(InputStream in){
+    public static AnimatedTexture readGif(InputStream in) {
+        AnimatedTexture tex = null;
+
         ImageReader reader = ImageIO.getImageReadersByFormatName("GIF").next();
-        ImageInputStream imgin = null;
+        ImageInputStream imgin;
         try {
-            System.out.println(reader.getFormatName());
             imgin = ImageIO.createImageInputStream(in);
             reader.setInput(imgin);
-            System.out.println(reader.getNumImages(true));
+            tex = new AnimatedTexture(reader.getWidth(0), reader.getHeight(0));
+            for (int i = 0; i < reader.getNumImages(true); i++) {
+                tex.add(reader.read(i));
+            }
+
+            IIOMetadata imageMetaData = null;
+            imageMetaData = reader.getImageMetadata(0);
+            String metaFormatName = imageMetaData.getNativeMetadataFormatName();
+            IIOMetadataNode root = (IIOMetadataNode)imageMetaData.getAsTree(metaFormatName);
+            IIOMetadataNode graphicsControlExtensionNode = getNode(root, "GraphicControlExtension");
+            tex.setDelay(Integer.parseInt(graphicsControlExtensionNode.getAttribute("delayTime")));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+
+        return tex;
     }
 
+    private static IIOMetadataNode getNode(IIOMetadataNode rootNode, String nodeName) {
+        int nNodes = rootNode.getLength();
+        for (int i = 0; i < nNodes; i++) {
+            if (rootNode.item(i).getNodeName().equalsIgnoreCase(nodeName)) {
+                return((IIOMetadataNode) rootNode.item(i));
+            }
+        }
+        IIOMetadataNode node = new IIOMetadataNode(nodeName);
+        rootNode.appendChild(node);
+        return(node);
+    }
 
 
 }

@@ -7,13 +7,9 @@ import io.github.minetrinity.game.time.Tickable;
 
 public abstract class GUI extends Container implements Paintable, Tickable { // GraphicalUserInterface
 
-
-
     public abstract void open();
-    public abstract void close();
 
-    @Override
-    public abstract void paint(Graphics g);
+    public abstract void close();
 
     @Override
     public void paintAll(Graphics g) {

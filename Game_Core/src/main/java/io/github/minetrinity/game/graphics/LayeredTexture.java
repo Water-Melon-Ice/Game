@@ -6,7 +6,6 @@ import java.util.ArrayList;
 
 public class LayeredTexture extends Texture {
 
-    //TODO: keep like this or change to 2 different array lists (one Texture other Point)?
     private ArrayList<Image> layers = new ArrayList<>();
     private ArrayList<Point> locations = new ArrayList<>();
 
