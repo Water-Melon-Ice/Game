@@ -7,7 +7,7 @@ import java.util.List;
 
 public class SnakeBody {
 
-    private List<Point> SnakeBody = new ArrayList();
+    private List<Point> SnakeBody = new ArrayList<>();
     private Point snakeHead;
 
     private Image body;

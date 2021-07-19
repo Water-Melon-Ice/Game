@@ -1,19 +1,24 @@
 package io.github.minetrinity.game.graphics.gui;
 
-import io.github.minetrinity.game.graphics.AnimatedTexture;
-import io.github.minetrinity.game.graphics.GUI;
-import io.github.minetrinity.game.graphics.Textures;
+import io.github.minetrinity.game.graphics.*;
+import io.github.minetrinity.game.ingame.world.Area;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class TestGui extends GUI {
 
-    AnimatedTexture tex;
+    BufferedImage world;
+    Area a;
 
     @Override
     public void open() {
-        tex = Textures.readGif(Textures.getInputstream(new File("../defaultresources/images/tiles/Wasser.gif")));
+        Texture l1 = Textures.getByName("Testworld.png");
+        Texture l2 = Textures.getByName("Testworld2.png");
+        LayeredTexture lt = new LayeredTexture(l1, l2);
+        a = Area.from(lt);
+
     }
 
     @Override
@@ -23,17 +28,12 @@ public class TestGui extends GUI {
 
     @Override
     public void paint(Graphics g) {
-        for (int x = 0; x < 8; x++) {
-            for (int y = 0; y < 8; y++) {
-                Graphics g2 = g.create(x * tex.getHeight() * 8, y * tex.getWidth() * 8, tex.getWidth() * 8, tex.getHeight() * 8);
-                tex.paint(g2);
-            }
-        }
+        world = a.toImage();
+        g.drawImage(world, 0,0, null);
     }
 
     @Override
     public void tick() {
-        tex.tick();
-
+        ((AnimatedTexture) Textures.getByName("Wasser.gif")).tick();
     }
 }

@@ -1,7 +1,10 @@
 package io.github.minetrinity.game.graphics;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.security.InvalidKeyException;
 import java.util.HashMap;
 
@@ -11,11 +14,22 @@ public class Texture implements Paintable{
 
     protected int width, height;
 
-    public Texture(){
-    }
+    protected boolean loaded = false;
+    protected InputStream in;
+
+    public Texture(){}
+
     public Texture(int width, int height){
         this.width = width;
         this.height = height;
+    }
+
+    public Texture(Image i){
+        setImage(i);
+    }
+
+    public Texture(InputStream in) {
+        this.in = in;
     }
 
     @Override
@@ -27,14 +41,14 @@ public class Texture implements Paintable{
         return img;
     }
 
-    public void setImage(Image img) {
+    protected void setImage(Image img) {
         this.img = img;
         this.width = img.getWidth(null);
         this.height = img.getHeight(null);
     }
 
     public BufferedImage getBufferedImage() {
-        return Textures.toBufferedImage(img);
+        return Textures.toBufferedImage(getImage());
     }
 
     public void resizeCut(int width, int height, Color fill) {
@@ -58,6 +72,14 @@ public class Texture implements Paintable{
 
     public void resizeScale(int width, int height) {
         setImage(getImage().getScaledInstance(width, height, java.awt.Image.SCALE_DEFAULT));
+    }
+
+    public void read(){
+        try {
+            setImage(ImageIO.read(in));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public int getWidth() {

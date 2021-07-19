@@ -10,7 +10,7 @@ public class Server extends Game {
     }
 
     public static void main(String[] args) {
-        getInstance().startGame();
+        getInstance().start();
     }
 
     public Server(){
@@ -20,10 +20,5 @@ public class Server extends Game {
     @Override
     protected void init() {
         super.init();
-    }
-
-    @Override
-    protected void tick() {
-        super.tick();
     }
 }

@@ -1,72 +1,112 @@
 package io.github.minetrinity.game;
 
+import io.github.minetrinity.game.file.Resources;
+import io.github.minetrinity.game.graphics.*;
 import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.graphics.gui.TestGui;
+import io.github.minetrinity.game.ingame.world.Area;
+import io.github.minetrinity.game.ingame.world.Tiles;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Client extends Game{
 
-    protected static Client instance;
-
     public static Client getInstance() {
         if (instance == null) instance = new Client();
-        return instance;
+        return (Client) instance;
     }
 
     public static void main(String[] args) {
         getInstance().startGame();
     }
 
-    public Client(){
+    private Thread thread;
 
+    protected double tickspersecond = 60.0;
+    protected volatile long actualticks;
+
+    protected Runnable callback;
+
+    public Client(){
     }
 
     @Override
     protected void init() {
+        super.init();
         Window.getInstance().setVisible(true);
         Window.getInstance().setFullscreen(false);
-        TestGui g = new TestGui();
-        tickables.add(g);
-        Window.getInstance().setRoot(g);
-        /*
-        //Worldmap
-        BufferedImage temporary = TEMPORARYMAPIMAGE();
-        File out = new File("./out.png");
-        try {
-            FileOutputStream outs = new FileOutputStream(out);
-            ImageIO.write(temporary, "png", outs);
-            outs.close();
-            System.out.println("done");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        */
-    }
 
-    //TODO: THIS METHOD DISGUSTS ME, FIX AND DISTRIBUTE!
-    private BufferedImage TEMPORARYMAPIMAGE(){/*
-        try {
-            Stream<File> world = Resource.allFiles().stream().filter(file -> file.getName().contains("world"));
-            ArrayList<BufferedImage> worlds = Resource.allImages(world.collect(Collectors.toList()));
-            LayeredTexture limg = new LayeredTexture(worlds.toArray(Image[]::new));
-            Resource.fillTileMap();
-            Area a = Area.from(limg);
-            AreaToImage.fillTileImageMap();
-            return AreaToImage.toImage(a, -1);
+        Resources.processFiles(Resources.allDefaultFiles());
+        Tiles.fillTileMap();
 
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
-        return null;
+        GUI tg = new TestGui();
+        Window.getInstance().setRoot(tg);
+        tickables.add(tg);
     }
 
     @Override
     protected void tick() {
         super.tick();
+        paint();
+    }
+
+    protected void paint(){
         Window.getInstance().render();
+    }
+
+    @Override
+    /**
+     * Skips excess calls
+     */
+    protected void run() {
+        if (!running) {
+            thread.start();
+            return;
+        }
+
+        long currenttime = System.currentTimeMillis();
+        long lasttime = currenttime;
+        long dtime;                                     //timedifference
+        double mpt = 1000 / tickspersecond;             //millisPerTick
+
+        long tickcounter = 0;                           //counts ticks in every second
+        long ticktimer = System.currentTimeMillis();    //counts every second
+
+        while (running) {
+            dtime = currenttime - lasttime;
+
+            if (dtime >= mpt) {
+                tickcounter++;
+                tick();
+                lasttime = currenttime;
+            }
+
+            currenttime = System.currentTimeMillis();
+
+            if ((currenttime - ticktimer) > 1000) {
+                ticktimer = currenttime;
+                actualticks = tickcounter;
+                System.out.println(actualticks);
+                tickcounter = 0;
+            }
+        }
+    }
+
+    @Override
+    protected void start() {
+        thread = new Thread(this::run);
+        running = true;
+        thread.start();
+    }
+
+    @Override
+    protected void stop() {
+        try {
+            running = false;
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

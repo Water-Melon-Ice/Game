@@ -1,5 +1,6 @@
 package io.github.minetrinity.game.graphics;
 
+import io.github.minetrinity.game.Client;
 import io.github.minetrinity.game.Game;
 
 import java.awt.*;
@@ -25,12 +26,14 @@ public class Window extends Frame {
         setUndecorated(true);
         setResizable(false);
         setLocation(0, 0);
-        addMouseListener(new MouseAdapter() {
+        /*addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Game.getInstance().stopGame();
+                getInstance().dispose();
             }
-        });
+        });*/
+        setBackground(Color.black);
     }
 
     public void setFullscreen(boolean trueFullscreen) {

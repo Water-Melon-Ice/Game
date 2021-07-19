@@ -2,6 +2,7 @@ package io.github.minetrinity.game.graphics;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.util.ArrayList;
 
 public class LayeredTexture extends Texture {
@@ -9,22 +10,20 @@ public class LayeredTexture extends Texture {
     private ArrayList<Image> layers = new ArrayList<>();
     private ArrayList<Point> locations = new ArrayList<>();
 
-    public LayeredTexture(String name, int width, int height) {
+    public LayeredTexture(int width, int height) {
         this.width = width;
         this.height = height;
     }
 
-    public LayeredTexture(int width, int height) {
-        this(null, width, height);
-    }
-
     public LayeredTexture(Image... images) {
         this(images[0].getWidth(null), images[0].getHeight(null));
+        this.loaded = true;
         addAll(images);
     }
 
     public LayeredTexture(Texture... textures) {
         this(textures[0].getWidth(), textures[0].getHeight());
+        this.loaded = true;
         addAll(textures);
     }
 

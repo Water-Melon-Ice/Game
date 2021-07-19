@@ -1,30 +1,26 @@
 package io.github.minetrinity.game.ingame.world;
 
+import io.github.minetrinity.game.file.Resources;
 import io.github.minetrinity.game.graphics.Texture;
+import io.github.minetrinity.game.graphics.Textures;
 
 import java.awt.*;
+import java.io.*;
 import java.util.HashMap;
 
 public class Tile {
 
-    public static final HashMap<Color, Tile> tiles = new HashMap<>();
+    protected String texname;
 
-    public static Tile from(Color c){
-        if(c.getAlpha() == 0) return null;
-        return tiles.get(c);
+    public Tile(String texname){
+        this.texname = texname;
     }
 
-    protected Texture tex;
-
-    public Tile(Texture t){
-        this.tex = t;
+    public String getTexture(){
+        return texname;
     }
 
-    public Texture getTexture(){
-        return tex;
-    }
-
-    public void setTexture(Texture t){
-        this.tex = t;
+    public void setTexture(String t){
+        this.texname = t;
     }
 }

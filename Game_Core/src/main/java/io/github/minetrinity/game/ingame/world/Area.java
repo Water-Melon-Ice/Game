@@ -1,10 +1,13 @@
 package io.github.minetrinity.game.ingame.world;
 
 import io.github.minetrinity.game.graphics.LayeredTexture;
+import io.github.minetrinity.game.graphics.Texture;
+import io.github.minetrinity.game.graphics.Textures;
 import io.github.minetrinity.game.ingame.entity.Entity;
 import io.github.minetrinity.game.ingame.event.Event;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Area {
@@ -15,12 +18,30 @@ public class Area {
             for (int x = 0; x < ltex.getWidth(); x++) {
                 for (int layer = 0; layer < ltex.getLayerCount(); layer++) {
                     Color c = new Color(ltex.getBufferedImage(layer).getRGB(x, y));
-                    Tile t = Tile.from(c);
+                    Tile t = Tiles.from(c);
                     area.setTile(t, x, y, layer);
                 }
             }
         }
         return area;
+    }
+
+    public BufferedImage toImage(){
+        BufferedImage img = new BufferedImage(getWidth() * 16, getHeight() * 16, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = img.createGraphics();
+        for (int y = 0; y < getHeight(); y++) {
+            for (int x = 0; x < getWidth(); x++) {
+                for (int layer = 0; layer < getLayers(); layer++) {
+                    if(tiles[x][y][layer] != null) {
+                        Texture tempt = Textures.getByName(tiles[x][y][layer].getTexture());
+                        Image tempi = tempt.getBufferedImage();
+                        g.drawImage(tempi, x * 16, y * 16, null);
+                    }
+                }
+            }
+        }
+        g.dispose();
+        return img;
     }
 
     ArrayList<Event> events;

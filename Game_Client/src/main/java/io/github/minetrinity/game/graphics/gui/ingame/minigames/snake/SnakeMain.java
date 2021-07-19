@@ -7,11 +7,14 @@ import io.github.minetrinity.game.graphics.GUI;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseWheelEvent;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 
-public class SnakeMain extends GUI {
+public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = WIDTH;
@@ -37,16 +40,16 @@ public class SnakeMain extends GUI {
     private boolean  upDirection = false;
     private boolean  downDirection = false;
 
-    private boolean inGame = true;
+    private boolean inGame = true;      //not necessary
 
-    public Board() {
+    public void Board() { // Board class does not exist...
 
         createBoard();
     }
 
-    private void createBoard() {
+    private void createBoard() { //maybe replace with open()?
 
-        addKeyListener(new TAdapter());
+        //addKeyListener(new TAdapter()); // WHAT IS A TAdapter?
 
         loadImages();
         startGame();
@@ -123,7 +126,7 @@ public class SnakeMain extends GUI {
     }
 
     @Override
-    public void open() {
+    public void open() { //called on opening of the GUI
 
     }
 
@@ -133,12 +136,57 @@ public class SnakeMain extends GUI {
     }
 
     @Override
-    public void paint(Graphics g) {
+    public void paint(Graphics g) { //render snake and background to Graphics here.
 
     }
 
     @Override
-    public void tick() {
+    public void tick() { //called every 16.6666666666 milliseconds (60 times per second)
+
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e) {
 
     }
 }
