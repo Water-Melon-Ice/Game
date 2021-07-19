@@ -23,7 +23,6 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     private static final int SQUARE_SIZE = WIDTH / ROWS;
     private static final int ALL_SQUARES = WIDTH * HEIGHT;
     private static final int RAND_A = 29;
-    //private static final String [] FOODS_IMAGE = new String[];
 
     private final int x[] = new int[ALL_SQUARES];
     private final int y[] = new int[ALL_SQUARES];
@@ -42,14 +41,10 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
 
     private boolean inGame = true;      //not necessary
 
-    public void Board() { // Board class does not exist...
 
-        createBoard();
-    }
+    public void createBoard() {
 
-    private void createBoard() { //maybe replace with open()?
-
-        //addKeyListener(new TAdapter()); // WHAT IS A TAdapter?
+        addKeyListener(new TAdapter());
 
         loadImages();
         startGame();
@@ -107,11 +102,11 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
             x[0] += SQUARE_SIZE;
         }
 
-        if (leftDirection) {
+        if (upDirection) {
             y[0] -= SQUARE_SIZE;
         }
 
-        if (leftDirection) {
+        if (downDirection) {
             y[0] += SQUARE_SIZE;
         }
     }
