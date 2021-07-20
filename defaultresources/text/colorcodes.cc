@@ -1,3 +1,3 @@
-#000000=Wasser.gif
-#FFFFFF=Grass_normal.png
-#3300FF=Stone_normal.png
+#3300FF=Wasser.gif
+#00FF00=Grass_normal.png
+#000000=Stone_normal.png
