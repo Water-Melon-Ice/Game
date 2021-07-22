@@ -109,4 +109,8 @@ public class Client extends Game{
             e.printStackTrace();
         }
     }
+
+    public long getActualticks() {
+        return actualticks;
+    }
 }

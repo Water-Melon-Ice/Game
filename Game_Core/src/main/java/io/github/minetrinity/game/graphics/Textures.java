@@ -63,7 +63,10 @@ public final class Textures {
         return t;
     }
 
-
+    public static Color getColor(BufferedImage img, int x, int y){
+        Color c = new Color(img.getRGB(x,y), true);
+        return c;
+    }
 
 
 

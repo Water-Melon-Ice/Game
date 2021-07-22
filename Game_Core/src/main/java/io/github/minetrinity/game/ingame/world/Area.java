@@ -12,12 +12,15 @@ import java.util.ArrayList;
 
 public class Area {
 
+    BufferedImage image;
+    int ticks = 0;
+
     public static Area from(LayeredTexture ltex) {
         Area area = new Area(ltex.getWidth(), ltex.getHeight());
         for (int y = 0; y < ltex.getHeight(); y++) {
             for (int x = 0; x < ltex.getWidth(); x++) {
                 for (int layer = 0; layer < ltex.getLayerCount(); layer++) {
-                    Color c = new Color(ltex.getBufferedImage(layer).getRGB(x, y));
+                    Color c = Textures.getColor(ltex.getBufferedImage(layer), x, y);
                     Tile t = Tiles.from(c);
                     area.setTile(t, x, y, layer);
                 }
@@ -27,26 +30,32 @@ public class Area {
     }
 
     public BufferedImage toImage(){
-        BufferedImage img = new BufferedImage(getWidth() * 16, getHeight() * 16, BufferedImage.TYPE_INT_ARGB);
-        Graphics g = img.createGraphics();
-        for (int y = 0; y < getHeight(); y++) {
-            for (int x = 0; x < getWidth(); x++) {
-                for (int layer = 0; layer < getLayers(); layer++) {
-                    if(tiles[x][y][layer] != null) {
-                        Texture tempt = Textures.getByName(tiles[x][y][layer].getTexture());
-                        Image tempi = tempt.getBufferedImage();
-                        g.drawImage(tempi, x * 16, y * 16, null);
+        if(image == null || ticks > 5) {
+            BufferedImage img = new BufferedImage(getWidth() * 16, getHeight() * 16, BufferedImage.TYPE_INT_ARGB);
+            Graphics g = img.createGraphics();
+            for (int y = 0; y < getHeight(); y++) {
+                for (int x = 0; x < getWidth(); x++) {
+                    for (int layer = 0; layer < getLayers(); layer++) {
+                        if (tiles[x][y][layer] != null) {
+                            Texture tempt = Textures.getByName(tiles[x][y][layer].getTexture());
+                            g.drawImage(tempt.getBufferedImage(), x * 16, y * 16, null);
+                        }
                     }
                 }
             }
+            g.dispose();
+            image = img;
+            ticks = 0;
+        }else {
+            ticks++;
         }
-        g.dispose();
-        return img;
+        return image;
     }
 
     ArrayList<Event> events;
     ArrayList<Entity> entities;
     private Tile[][][] tiles; // x, y, layer
+    private ArrayList<Tile> differentTiles = new ArrayList<>();
 
     protected final int layerstack = 5;
 

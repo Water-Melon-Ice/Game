@@ -14,7 +14,7 @@ import java.awt.event.MouseWheelEvent;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 
-public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
+public class SnakeMain {/* extends GUI { //I did some commets :D @Minetrinity
 
     private static final int WIDTH = 800;
     private static final int HEIGHT = WIDTH;
@@ -184,4 +184,5 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     public void mouseWheelMoved(MouseWheelEvent e) {
 
     }
+    */
 }

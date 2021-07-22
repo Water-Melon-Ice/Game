@@ -12,7 +12,7 @@ public class Tiles {
     public static final HashMap<Color, String> stringmap = new HashMap<>();
 
     public static Tile from(Color c){
-        if(c.getAlpha() == 0) return null;
+        if(c.getAlpha() != 255) return null;
         return tiles.get(c);
     }
 

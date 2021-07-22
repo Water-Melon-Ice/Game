@@ -26,13 +26,13 @@ public class Window extends Frame {
         setUndecorated(true);
         setResizable(false);
         setLocation(0, 0);
-        /*addMouseListener(new MouseAdapter() {
+        addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Game.getInstance().stopGame();
                 getInstance().dispose();
             }
-        });*/
+        });
         setBackground(Color.black);
     }
 
