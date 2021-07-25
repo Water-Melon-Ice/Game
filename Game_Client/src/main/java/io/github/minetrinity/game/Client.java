@@ -36,13 +36,13 @@ public class Client extends Game{
         super.init();
         Window.getInstance().setVisible(true);
         Window.getInstance().setFullscreen(false);
-
-        Resources.processFiles(Resources.allDefaultFiles());
+/*
+        Resources.processFiles(null);//TODO: ERROR
         Tiles.fillTileMap();
 
         GUI tg = new TestGui();
         Window.getInstance().setRoot(tg);
-        tickables.add(tg);
+        tickables.add(tg);*/
     }
 
     @Override

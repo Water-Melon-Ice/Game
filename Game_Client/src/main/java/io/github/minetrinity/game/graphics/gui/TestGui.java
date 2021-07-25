@@ -30,7 +30,7 @@ public class TestGui extends GUI {
 
     @Override
     public void paint(Graphics g) {
-        world = a.toImage();
+        //TODO: world = a.toImage();
         g.drawImage(world, 0,0, null);
         g.drawString("" + Client.getInstance().getActualticks(), 10, 10);
     }

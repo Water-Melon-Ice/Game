@@ -34,8 +34,26 @@ public class Resources {
         }
     }
 
-    public static ArrayList<File> allDefaultFiles(){
-        return walk(defaultResPath);
+    private static ArrayList<ResourceFactory<?>> resourceFactories = new ArrayList<>();
+
+    public static ArrayList<ResourceFactory<?>> getResourceFactories() {
+        return resourceFactories;
+    }
+
+    public static void registerResourceFactory(ResourceFactory<?> factory){
+        resourceFactories.add(factory);
+    }
+
+    public static void unregisterResourceFactory(ResourceFactory<?> factory){
+        resourceFactories.remove(factory);
+    }
+
+    public static ResourceFactory<?>[] getResourceFactories(String format){
+        ArrayList<ResourceFactory<?>> rffs = new ArrayList<>();
+        for(ResourceFactory<?> rf : resourceFactories){
+            if(rf.isReadable(format)) rffs.add(rf);
+        }
+        return rffs.toArray(ResourceFactory[]::new);
     }
 
     public static ArrayList<File> walk(String path){
@@ -61,16 +79,9 @@ public class Resources {
     }
 
     public static void processFiles(ArrayList<File> files){
-        for(File f : files){
 
-            switch (getFileType(f)){
-                case "png":
-                case "gif":
-                    Textures.put(f);
-                    break;
-                case "cc":
-                    Tiles.getColorCodes(f);
-            }
+        for(File f : files){
+            getResourceFactories(getFileType(f))[0].read(f);
         }
     }
 

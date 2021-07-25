@@ -1,0 +1,52 @@
+resource struct:
+
+???:
+    -json?
+    -xml?
+    -yaml?
+    -txt?
+
+defaultresources:
+    -worlds:
+        - world1:
+            -worldimages:
+                -layer1.png
+                -layer2.png
+                -...
+            -items:
+                -textures:
+                    -axt.png
+                    -...
+                -properties:
+                    -axt.???
+            -tiles:
+                -textures:
+                    -Wasser.gif
+                    -...
+                -properties:
+                    -colorcodes.cc
+                    -walkable.???
+            -entities:
+                -...
+
+    -items:
+        -textures:
+            -axt.png
+            -...
+        -properties:
+            -axt.???
+
+    -tiles:
+        -textures:
+            -Wasser.gif
+            -...
+        -properties:
+            -colorcodes.cc
+            -walkable.???
+
+    -entities:
+        -textures:
+             -Player.gif
+             -...
+        -properties:
+             -...

@@ -6,7 +6,7 @@ public abstract class Entity {
 
     protected AccuratePoint location;
 
-    public Entity(AccuratePoint location){
+    public Entity(){
 
     }
 

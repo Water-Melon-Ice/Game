@@ -1,14 +1,14 @@
 package io.github.minetrinity.game.graphics;
 
+import io.github.minetrinity.game.file.Resource;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.InvalidKeyException;
-import java.util.HashMap;
 
-public class Texture implements Paintable{
+public class Texture extends Resource<Image> implements Paintable{
 
     private Image img;
 
@@ -17,28 +17,28 @@ public class Texture implements Paintable{
     protected boolean loaded = false;
     protected InputStream in;
 
-    public Texture(){}
-
-    public Texture(int width, int height){
-        this.width = width;
-        this.height = height;
-    }
-
-    public Texture(Image i){
-        setImage(i);
-    }
-
     public Texture(InputStream in) {
         this.in = in;
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(getImage(), 0,0,null);
+        g.drawImage(get(), 0,0,null);
     }
 
-    public Image getImage() {
+    @Override
+    public Image get() {
         return img;
+    }
+
+    @Override
+    public void reload() {
+        return;
+    }
+
+    @Override
+    public boolean isReloadable() {
+        return false;
     }
 
     protected void setImage(Image img) {
@@ -48,7 +48,7 @@ public class Texture implements Paintable{
     }
 
     public BufferedImage getBufferedImage() {
-        return Textures.toBufferedImage(getImage());
+        return Textures.toBufferedImage(get());
     }
 
     public void resizeCut(int width, int height, Color fill) {
@@ -71,7 +71,7 @@ public class Texture implements Paintable{
     }
 
     public void resizeScale(int width, int height) {
-        setImage(getImage().getScaledInstance(width, height, java.awt.Image.SCALE_DEFAULT));
+        setImage(get().getScaledInstance(width, height, java.awt.Image.SCALE_DEFAULT));
     }
 
     public void read(){

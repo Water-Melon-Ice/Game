@@ -35,15 +35,6 @@ public class AnimatedTexture extends Texture implements Tickable {
 
     private ArrayList<Image> frames = new ArrayList<>();
 
-    public AnimatedTexture(int width, int height) {
-        super(width, height);
-    }
-
-    public AnimatedTexture(int width, int height, int delay) {
-        super(width, height);
-        this.delay = delay;
-    }
-
     public AnimatedTexture(InputStream in) {
         super(in);
     }
@@ -54,7 +45,7 @@ public class AnimatedTexture extends Texture implements Tickable {
     }
 
     @Override
-    public Image getImage() {
+    public Image get() {
         return frames.get(currentFrame);
     }
 
@@ -122,7 +113,7 @@ public class AnimatedTexture extends Texture implements Tickable {
 
     public void addAll(Texture... textures) {
         for (Texture t : textures) {
-            add(t.getImage());
+            add(t.get());
         }
     }
 

@@ -1,5 +1,6 @@
 package io.github.minetrinity.game;
 
+import io.github.minetrinity.game.ingame.world.World;
 import io.github.minetrinity.game.time.Tickable;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class Game {
     public final void startGame() {
         if (!running && !started) {
             started = true;
-            this.init();
+            init();
             running = true;
             start();
         }

@@ -1,19 +1,14 @@
 package io.github.minetrinity.game.ingame.world;
 
 import io.github.minetrinity.game.graphics.LayeredTexture;
-import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.graphics.Textures;
 import io.github.minetrinity.game.ingame.entity.Entity;
 import io.github.minetrinity.game.ingame.event.Event;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Area {
-
-    BufferedImage image;
-    int ticks = 0;
 
     public static Area from(LayeredTexture ltex) {
         Area area = new Area(ltex.getWidth(), ltex.getHeight());
@@ -27,29 +22,6 @@ public class Area {
             }
         }
         return area;
-    }
-
-    public BufferedImage toImage(){
-        if(image == null || ticks > 5) {
-            BufferedImage img = new BufferedImage(getWidth() * 16, getHeight() * 16, BufferedImage.TYPE_INT_ARGB);
-            Graphics g = img.createGraphics();
-            for (int y = 0; y < getHeight(); y++) {
-                for (int x = 0; x < getWidth(); x++) {
-                    for (int layer = 0; layer < getLayers(); layer++) {
-                        if (tiles[x][y][layer] != null) {
-                            Texture tempt = Textures.getByName(tiles[x][y][layer].getTexture());
-                            g.drawImage(tempt.getBufferedImage(), x * 16, y * 16, null);
-                        }
-                    }
-                }
-            }
-            g.dispose();
-            image = img;
-            ticks = 0;
-        }else {
-            ticks++;
-        }
-        return image;
     }
 
     ArrayList<Event> events;
@@ -82,9 +54,5 @@ public class Area {
 
     public int getHeight() {
         return tiles[0].length;
-    }
-
-    public int getLayers() {
-        return tiles[0][0].length;
     }
 }

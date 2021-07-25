@@ -2,6 +2,7 @@ package io.github.minetrinity.game.graphics;
 
 import io.github.minetrinity.game.Client;
 import io.github.minetrinity.game.Game;
+import io.github.minetrinity.game.input.Controls;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -34,6 +35,7 @@ public class Window extends Frame {
             }
         });
         setBackground(Color.black);
+        addKeyListener(Controls.getInstance());
     }
 
     public void setFullscreen(boolean trueFullscreen) {
