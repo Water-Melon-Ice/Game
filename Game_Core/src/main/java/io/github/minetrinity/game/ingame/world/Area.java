@@ -1,7 +1,7 @@
 package io.github.minetrinity.game.ingame.world;
 
 import io.github.minetrinity.game.graphics.LayeredTexture;
-import io.github.minetrinity.game.graphics.Textures;
+import io.github.minetrinity.game.graphics.TextureFactory;
 import io.github.minetrinity.game.ingame.entity.Entity;
 import io.github.minetrinity.game.ingame.event.Event;
 
@@ -15,8 +15,8 @@ public class Area {
         for (int y = 0; y < ltex.getHeight(); y++) {
             for (int x = 0; x < ltex.getWidth(); x++) {
                 for (int layer = 0; layer < ltex.getLayerCount(); layer++) {
-                    Color c = Textures.getColor(ltex.getBufferedImage(layer), x, y);
-                    Tile t = Tiles.from(c);
+                    Color c = ltex.getColor(x, y);
+                    Tile t = TileFactory.from(c);
                     area.setTile(t, x, y, layer);
                 }
             }

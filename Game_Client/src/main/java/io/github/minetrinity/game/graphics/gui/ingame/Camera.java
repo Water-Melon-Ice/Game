@@ -1,14 +1,6 @@
 package io.github.minetrinity.game.graphics.gui.ingame;
 
 import io.github.minetrinity.game.graphics.Overlay;
-import io.github.minetrinity.game.graphics.Texture;
-import io.github.minetrinity.game.graphics.Textures;
-import io.github.minetrinity.game.ingame.entity.Entity;
-import io.github.minetrinity.game.ingame.world.World;
-import io.github.minetrinity.game.math.AccuratePoint;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Camera extends Overlay {
 /*

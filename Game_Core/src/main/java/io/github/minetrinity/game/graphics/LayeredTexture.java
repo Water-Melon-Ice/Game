@@ -25,7 +25,7 @@ public class LayeredTexture extends Texture {
     }
 
     @Override
-    public java.awt.Image get() {
+    public java.awt.Image getImage() {
         return getBufferedImage();
     }
 
@@ -59,7 +59,7 @@ public class LayeredTexture extends Texture {
     }
 
     public BufferedImage getBufferedImage(int layer){
-        return Textures.toBufferedImage(getImage(layer));
+        return TextureFactory.toBufferedImage(getImage(layer));
     }
 
     public Point getPoint(int layer){
@@ -89,7 +89,7 @@ public class LayeredTexture extends Texture {
 
     public void addAll(Texture... textures) {
         for (Texture t : textures) {
-            add(t.get());
+            add(t.getImage());
         }
     }
 

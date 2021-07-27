@@ -1,44 +1,37 @@
 package io.github.minetrinity.game.graphics;
 
-import io.github.minetrinity.game.file.Resource;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class Texture extends Resource<Image> implements Paintable{
+public class Texture implements Paintable{
 
     private Image img;
 
     protected int width, height;
 
     protected boolean loaded = false;
-    protected InputStream in;
 
-    public Texture(InputStream in) {
-        this.in = in;
+    public Texture() {
     }
 
     @Override
     public void paint(Graphics g) {
-        g.drawImage(get(), 0,0,null);
+        g.drawImage(getImage(), 0,0,null);
     }
 
-    @Override
-    public Image get() {
+    public Image getImage() {
         return img;
     }
 
-    @Override
-    public void reload() {
-        return;
-    }
-
-    @Override
-    public boolean isReloadable() {
-        return false;
+    protected void read(InputStream in) {
+        try {
+            setImage(ImageIO.read(in));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     protected void setImage(Image img) {
@@ -48,7 +41,7 @@ public class Texture extends Resource<Image> implements Paintable{
     }
 
     public BufferedImage getBufferedImage() {
-        return Textures.toBufferedImage(get());
+        return TextureFactory.toBufferedImage(getImage());
     }
 
     public void resizeCut(int width, int height, Color fill) {
@@ -71,15 +64,7 @@ public class Texture extends Resource<Image> implements Paintable{
     }
 
     public void resizeScale(int width, int height) {
-        setImage(get().getScaledInstance(width, height, java.awt.Image.SCALE_DEFAULT));
-    }
-
-    public void read(){
-        try {
-            setImage(ImageIO.read(in));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        setImage(getImage().getScaledInstance(width, height, java.awt.Image.SCALE_DEFAULT));
     }
 
     public int getWidth() {
@@ -88,5 +73,10 @@ public class Texture extends Resource<Image> implements Paintable{
 
     public int getHeight() {
         return height;
+    }
+
+    public Color getColor(int x, int y){
+        Color c = new Color(getBufferedImage().getRGB(x,y), true);
+        return c;
     }
 }

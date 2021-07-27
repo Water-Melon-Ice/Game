@@ -1,14 +1,6 @@
 package io.github.minetrinity.game;
 
-import io.github.minetrinity.game.file.Resources;
-import io.github.minetrinity.game.graphics.*;
 import io.github.minetrinity.game.graphics.Window;
-import io.github.minetrinity.game.graphics.gui.TestGui;
-import io.github.minetrinity.game.ingame.world.Area;
-import io.github.minetrinity.game.ingame.world.Tiles;
-
-import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class Client extends Game{
 
@@ -21,7 +13,7 @@ public class Client extends Game{
         getInstance().startGame();
     }
 
-    private Thread thread;
+    private volatile Thread thread;
 
     protected double tickspersecond = 60.0;
     protected volatile long actualticks;
@@ -36,13 +28,14 @@ public class Client extends Game{
         super.init();
         Window.getInstance().setVisible(true);
         Window.getInstance().setFullscreen(false);
-/*
-        Resources.processFiles(null);//TODO: ERROR
+
+        /*Resources.processFiles(null);//TODO: ERROR
         Tiles.fillTileMap();
 
         GUI tg = new TestGui();
-        Window.getInstance().setRoot(tg);
-        tickables.add(tg);*/
+        Window.getInstance().setGUI(tg);
+        tickables.add(tg);
+         */
     }
 
     @Override

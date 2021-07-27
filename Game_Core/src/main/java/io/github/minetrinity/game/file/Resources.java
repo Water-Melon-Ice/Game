@@ -1,17 +1,8 @@
 package io.github.minetrinity.game.file;
 
-import io.github.minetrinity.game.graphics.Textures;
-import io.github.minetrinity.game.ingame.world.Tile;
-import io.github.minetrinity.game.ingame.world.Tiles;
-
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.List;
-import java.awt.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,28 +23,6 @@ public class Resources {
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-    }
-
-    private static ArrayList<ResourceFactory<?>> resourceFactories = new ArrayList<>();
-
-    public static ArrayList<ResourceFactory<?>> getResourceFactories() {
-        return resourceFactories;
-    }
-
-    public static void registerResourceFactory(ResourceFactory<?> factory){
-        resourceFactories.add(factory);
-    }
-
-    public static void unregisterResourceFactory(ResourceFactory<?> factory){
-        resourceFactories.remove(factory);
-    }
-
-    public static ResourceFactory<?>[] getResourceFactories(String format){
-        ArrayList<ResourceFactory<?>> rffs = new ArrayList<>();
-        for(ResourceFactory<?> rf : resourceFactories){
-            if(rf.isReadable(format)) rffs.add(rf);
-        }
-        return rffs.toArray(ResourceFactory[]::new);
     }
 
     public static ArrayList<File> walk(String path){
@@ -79,14 +48,9 @@ public class Resources {
     }
 
     public static void processFiles(ArrayList<File> files){
-
         for(File f : files){
-            getResourceFactories(getFileType(f))[0].read(f);
+            ResourceFactory.getResourceFactories(ResourceFactory.getFileType(f))[0].read(f);
         }
-    }
-
-    public static String getFileType(File f){
-        return f.getName().substring(f.getName().indexOf(".") + 1);
     }
 
 }

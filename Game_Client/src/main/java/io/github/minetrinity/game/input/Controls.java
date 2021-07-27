@@ -20,7 +20,7 @@ public class Controls implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
-        pressedKeys.remove((char) e.getExtendedKeyCode());
+        pressedKeys.remove((Character) (char) e.getExtendedKeyCode());
     }
 
     public static boolean isKeyPressed(char key){

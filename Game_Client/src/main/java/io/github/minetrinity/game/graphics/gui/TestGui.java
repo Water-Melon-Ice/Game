@@ -1,13 +1,11 @@
 package io.github.minetrinity.game.graphics.gui;
 
 import io.github.minetrinity.game.Client;
-import io.github.minetrinity.game.Game;
 import io.github.minetrinity.game.graphics.*;
 import io.github.minetrinity.game.ingame.world.Area;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
 
 public class TestGui extends GUI {
 
@@ -16,8 +14,8 @@ public class TestGui extends GUI {
 
     @Override
     public void open() {
-        Texture l1 = Textures.getByName("pixil-start-map.png");
-        Texture l2 = Textures.getByName("pixil-start-map2.png");
+        Texture l1 = TextureFactory.getByName("pixil-start-map.png");
+        Texture l2 = TextureFactory.getByName("pixil-start-map2.png");
 
         LayeredTexture lt = new LayeredTexture(l1, l2);
         a = Area.from(lt);
@@ -32,11 +30,12 @@ public class TestGui extends GUI {
     public void paint(Graphics g) {
         //TODO: world = a.toImage();
         g.drawImage(world, 0,0, null);
+        g.setColor(Color.green);
         g.drawString("" + Client.getInstance().getActualticks(), 10, 10);
     }
 
     @Override
     public void tick() {
-        ((AnimatedTexture) Textures.getByName("Wasser.gif")).tick();
+
     }
 }

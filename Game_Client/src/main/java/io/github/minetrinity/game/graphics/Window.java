@@ -1,6 +1,5 @@
 package io.github.minetrinity.game.graphics;
 
-import io.github.minetrinity.game.Client;
 import io.github.minetrinity.game.Game;
 import io.github.minetrinity.game.input.Controls;
 
@@ -21,6 +20,8 @@ public class Window extends Frame {
 
     private BufferStrategy strat;
 
+    private boolean guichangeLock = false;
+    private GUI next;
     protected GUI root;
 
     private Window() {
@@ -59,11 +60,17 @@ public class Window extends Frame {
     }
 
     public void render() {
-        root.paintAll(getDrawGraphics());
-        getBufferStrategy().show();
+        if (root != null) {
+            root.paintAll(getDrawGraphics());
+            getBufferStrategy().show();
+        }
     }
 
-    public void setRoot(GUI root) {
+    public void setGUI(GUI root) {
+        if (guichangeLock) {
+            next = root;
+            return;
+        }
         if (this.root != null) {
             this.root.close();
             Game.getInstance().remove(this.root);
@@ -71,6 +78,15 @@ public class Window extends Frame {
         this.root = root;
         root.open();
         Game.getInstance().remove(root);
+    }
+
+    public void setGUIChangeLock(boolean changeLock) {
+        this.guichangeLock = changeLock;
+        if (!changeLock && next != null) {
+            setGUI(next);
+            next = null;
+        }
+
     }
 
     public GUI getRoot() {

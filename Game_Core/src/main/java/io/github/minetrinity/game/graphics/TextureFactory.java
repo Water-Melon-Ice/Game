@@ -1,14 +1,14 @@
 package io.github.minetrinity.game.graphics;
 
 
-import io.github.minetrinity.game.file.Resources;
+import io.github.minetrinity.game.file.ResourceFactory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
 
-public final class Textures {
+public final class TextureFactory extends ResourceFactory<Texture> {
 
     public static Color transparent = new Color(0, 0, 0, 0);
 
@@ -24,13 +24,16 @@ public final class Textures {
     }
 
     public static void put(File f) {
-        put(f.getName(), toTexture(f));
+        put(f.getName(), (Texture) ResourceFactory.getResourceFactories(f)[0].read(f));
     }
 
     public static void putAll(File[] files) {
         for (File f : files) {
             put(f);
         }
+    }
+    public static void release(){
+        texturemap.clear();
     }
 
     public static BufferedImage toBufferedImage(Image i) {
@@ -45,30 +48,29 @@ public final class Textures {
         return bimg;
     }
 
-    public static InputStream getInputstream(File f) {
-        return Resources.getInputstream(f);
-    }
 
-    public static Texture toTexture(File f) {
+    @Override
+    public Texture read(InputStream in, String format) {
         Texture t = null;
-        switch (f.getName().substring(f.getName().lastIndexOf(".")+1)){
+        switch (format){
             case "gif":
-                t = new AnimatedTexture(getInputstream(f));
+                t = new AnimatedTexture();
                 break;
             case "png":
-                t = new Texture(getInputstream(f));
+                t = new Texture();
                 break;
         }
-        t.read();
+        t.read(in);
         return t;
     }
 
-    public static Color getColor(BufferedImage img, int x, int y){
-        Color c = new Color(img.getRGB(x,y), true);
-        return c;
+    @Override
+    public boolean isReadable(String format) {
+        switch (format){
+            case "gif":
+            case "png":
+                return true;
+        }
+        return false;
     }
-
-
-
-
 }
