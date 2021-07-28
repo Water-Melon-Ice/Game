@@ -1,4 +1,11 @@
 #3300FF=Wasser.gif
 #00FF00=Grass_normal.png
-#000000=Stone_normal.png
 #FFFFFF=Busch_1.png
+#deb164=Weg(L).png
+#deb165=Weg(O).png
+#deb166=Weg(O-L).png
+#deb167=Weg(O-R).png
+#deb168=Weg(R).png
+#deb169=Weg(U).png
+#deb170=Weg(U-L).png
+#deb171=Weg(U-R).png
