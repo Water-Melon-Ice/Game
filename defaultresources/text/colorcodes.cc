@@ -2,10 +2,11 @@
 #00FF00=Grass_normal.png
 #FFFFFF=Busch_1.png
 #deb164=Weg(L).png
-#deb165=Weg(O).png
-#deb166=Weg(O-L).png
-#deb167=Weg(O-R).png
+#deb300=Weg(O).png
+#deb400=Weg(O-L).png
+#deb500=Weg(O-R).png
 #deb200=Weg(R).png
-#deb169=Weg(U).png
-#deb170=Weg(U-L).png
-#deb171=Weg(U-R).png
+#deb600=Weg(U).png
+#deb700=Weg(U-L).png
+#deb800=Weg(U-R).png
+#deb900=Weg.png
