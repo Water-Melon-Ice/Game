@@ -5,7 +5,7 @@
 #deb165=Weg(O).png
 #deb166=Weg(O-L).png
 #deb167=Weg(O-R).png
-#deb168=Weg(R).png
+#deb200=Weg(R).png
 #deb169=Weg(U).png
 #deb170=Weg(U-L).png
 #deb171=Weg(U-R).png
