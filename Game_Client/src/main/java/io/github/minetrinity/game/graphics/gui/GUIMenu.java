@@ -20,7 +20,6 @@ public class GUIMenu extends GUI {
 
     }
 
-    @Override
     public void tick() {
 
     }

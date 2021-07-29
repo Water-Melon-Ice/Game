@@ -1,24 +1,28 @@
 package io.github.minetrinity.game.graphics.gui;
 
 import io.github.minetrinity.game.Client;
+import io.github.minetrinity.game.io.AreaIO;
+import io.github.minetrinity.game.load.Resources;
+import io.github.minetrinity.game.load.TextureFactory;
 import io.github.minetrinity.game.graphics.*;
+import io.github.minetrinity.game.graphics.gui.ingame.Camera;
 import io.github.minetrinity.game.ingame.world.Area;
+import io.github.minetrinity.game.ingame.world.World;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 
 public class TestGui extends GUI {
 
-    BufferedImage world;
-    Area a;
 
     @Override
     public void open() {
-        Texture l1 = TextureFactory.getByName("pixil-start-map.png");
-        Texture l2 = TextureFactory.getByName("pixil-start-map2.png");
+        Area a = AreaIO.create(Resources.defaultResPath, "start");
+        World.getInstance().setCurrent(a);
 
-        LayeredTexture lt = new LayeredTexture(l1, l2);
-        a = Area.from(lt);
+        Camera c = new Camera();
+        c.setSize(this.getSize());
+        add(c);
+
     }
 
     @Override
@@ -28,14 +32,8 @@ public class TestGui extends GUI {
 
     @Override
     public void paint(Graphics g) {
-        //TODO: world = a.toImage();
-        g.drawImage(world, 0,0, null);
-        g.setColor(Color.green);
+        g.setColor(Color.WHITE);
         g.drawString("" + Client.getInstance().getActualticks(), 10, 10);
     }
 
-    @Override
-    public void tick() {
-
-    }
 }

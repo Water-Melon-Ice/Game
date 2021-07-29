@@ -1,35 +1,50 @@
 package io.github.minetrinity.game.graphics.gui.ingame;
 
 import io.github.minetrinity.game.graphics.Overlay;
+import io.github.minetrinity.game.graphics.Texture;
+import io.github.minetrinity.game.load.TextureFactory;
+import io.github.minetrinity.game.ingame.world.World;
+
+import java.awt.*;
 
 public class Camera extends Overlay {
-/*
-    private BufferedImage image;
-    int ticks = 0;
 
-    public BufferedImage areaToImage(){
-        if(image == null || ticks > 5) {
-            BufferedImage img = new BufferedImage(getWidth() * 16, getHeight() * 16, BufferedImage.TYPE_INT_ARGB);
-            Graphics g = img.createGraphics();
-            for (int y = 0; y < getHeight(); y++) {
-                for (int x = 0; x < getWidth(); x++) {
-                    for (int layer = 0; layer < getLayers(); layer++) {
-                        if (tiles[x][y][layer] != null) {
-                            Texture tempt = Textures.getByName(tiles[x][y][layer].getTexture());
-                            g.drawImage(tempt.getBufferedImage(), x * 16, y * 16, null);
-                        }
+    private int ticks = 0;
+    private int size = 64;
+    private double x = 0, y = 0;
+
+
+    public Camera() {
+        setVisible(true);
+        for (int y = 0; y < World.getInstance().getCurrent().getHeight(); y++) {
+            for (int x = 0; x < World.getInstance().getCurrent().getWidth(); x++) {
+                for (int layer = 0; layer < World.getInstance().getCurrent().getLayers(); layer++) {
+                    if (World.getInstance().getCurrent().getTiles()[x][y][layer] != null) {
+                        Texture tempt = TextureFactory.getByName(World.getInstance().getCurrent().getTiles()[x][y][layer].getTexture());
+                        if(tempt.getWidth() != size) tempt.resizeScale(size, size);
+                        else if (tempt.getHeight() != size) tempt.resizeScale(size, size);
                     }
                 }
             }
-            g.dispose();
-            image = img;
-            ticks = 0;
-        }else {
-            ticks++;
         }
-        return image;
     }
-*/
-    public Camera() {
+
+    @Override
+    public void paint(Graphics g) {
+        paintWorld(g);
     }
+
+    public void paintWorld(Graphics g){
+        for (int y = 0; y < World.getInstance().getCurrent().getHeight(); y++) {
+            for (int x = 0; x < World.getInstance().getCurrent().getWidth(); x++) {
+                for (int layer = 0; layer < World.getInstance().getCurrent().getLayers(); layer++) {
+                    if (World.getInstance().getCurrent().getTiles()[x][y][layer] != null) {
+                        Texture tempt = TextureFactory.getByName(World.getInstance().getCurrent().getTiles()[x][y][layer].getTexture());
+                        g.drawImage(tempt.getBufferedImage(), x * 16, y * 16, null);
+                    }
+                }
+            }
+        }
+    }
+
 }

@@ -1,9 +1,7 @@
 package io.github.minetrinity.game.ingame.world;
 
 import io.github.minetrinity.game.graphics.LayeredTexture;
-import io.github.minetrinity.game.graphics.TextureFactory;
 import io.github.minetrinity.game.ingame.entity.Entity;
-import io.github.minetrinity.game.ingame.event.Event;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,8 +13,8 @@ public class Area {
         for (int y = 0; y < ltex.getHeight(); y++) {
             for (int x = 0; x < ltex.getWidth(); x++) {
                 for (int layer = 0; layer < ltex.getLayerCount(); layer++) {
-                    Color c = ltex.getColor(x, y);
-                    Tile t = TileFactory.from(c);
+                    Color c = ltex.getColor(x, y, layer);
+                    Tile t = Tile.from(c);
                     area.setTile(t, x, y, layer);
                 }
             }
@@ -24,14 +22,12 @@ public class Area {
         return area;
     }
 
-    ArrayList<Event> events;
     ArrayList<Entity> entities;
     private Tile[][][] tiles; // x, y, layer
-    private ArrayList<Tile> differentTiles = new ArrayList<>();
 
     protected final int layerstack = 5;
 
-    public Area(int width, int height) {
+    protected Area(int width, int height) {
         tiles = new Tile[width][height][layerstack];
     }
 
@@ -54,5 +50,9 @@ public class Area {
 
     public int getHeight() {
         return tiles[0].length;
+    }
+
+    public int getLayers(){
+        return tiles[0][0].length;
     }
 }

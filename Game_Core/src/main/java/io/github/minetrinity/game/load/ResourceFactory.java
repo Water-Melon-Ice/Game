@@ -1,18 +1,13 @@
-package io.github.minetrinity.game.file;
-
-import io.github.minetrinity.game.graphics.TextureFactory;
+package io.github.minetrinity.game.load;
 
 import java.io.File;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class ResourceFactory<T> {
 
     private static ArrayList<ResourceFactory<?>> resourceFactories = new ArrayList<>();
-
-    static {
-        registerResourceFactory(new TextureFactory());
-    }
 
     public static void registerResourceFactory(ResourceFactory<?> factory){
         resourceFactories.add(factory);
@@ -35,11 +30,7 @@ public abstract class ResourceFactory<T> {
     }
 
     public static ResourceFactory<?>[] getResourceFactories(File f){
-        return getResourceFactories(getFileType(f));
-    }
-
-    public static String getFileType(File f){
-        return f.getName().substring(f.getName().indexOf(".") + 1);
+        return getResourceFactories(Resources.getFileType(f));
     }
 
     protected ResourceFactory(){

@@ -1,7 +1,5 @@
 package io.github.minetrinity.game.ingame.world;
 
-import java.util.ArrayList;
-
 public class World {
 
     private static World instance;
@@ -11,7 +9,13 @@ public class World {
         return instance;
     }
 
-    protected Area start;
-    protected ArrayList<Area> list;
+    protected Area current;
 
+    public void setCurrent(Area current) {
+        this.current = current;
+    }
+
+    public Area getCurrent() {
+        return current;
+    }
 }

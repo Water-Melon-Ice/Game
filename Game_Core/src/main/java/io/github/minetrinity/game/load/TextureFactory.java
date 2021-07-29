@@ -1,14 +1,15 @@
-package io.github.minetrinity.game.graphics;
+package io.github.minetrinity.game.load;
 
 
-import io.github.minetrinity.game.file.ResourceFactory;
+import io.github.minetrinity.game.graphics.AnimatedTexture;
+import io.github.minetrinity.game.graphics.Texture;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.HashMap;
 
-public final class TextureFactory extends ResourceFactory<Texture> {
+public class TextureFactory extends ResourceFactory<Texture> {
 
     public static Color transparent = new Color(0, 0, 0, 0);
 
@@ -19,7 +20,6 @@ public final class TextureFactory extends ResourceFactory<Texture> {
     }
 
     public static void put(String key, Texture value) throws RuntimeException {
-        if (texturemap.containsKey(key)) throw new RuntimeException("Key already exists!");
         texturemap.put(key, value);
     }
 
@@ -32,6 +32,7 @@ public final class TextureFactory extends ResourceFactory<Texture> {
             put(f);
         }
     }
+
     public static void release(){
         texturemap.clear();
     }
@@ -48,6 +49,12 @@ public final class TextureFactory extends ResourceFactory<Texture> {
         return bimg;
     }
 
+    @Override
+    public Texture read(File f) {
+        Texture t = super.read(f);
+        put(f.getName(), t);
+        return t;
+    }
 
     @Override
     public Texture read(InputStream in, String format) {

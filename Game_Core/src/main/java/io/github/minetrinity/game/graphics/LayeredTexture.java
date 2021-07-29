@@ -1,5 +1,7 @@
 package io.github.minetrinity.game.graphics;
 
+import io.github.minetrinity.game.load.TextureFactory;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -7,20 +9,22 @@ import java.util.ArrayList;
 public class LayeredTexture extends Texture {
 
     private ArrayList<Image> layers = new ArrayList<>();
-    private ArrayList<Point> locations = new ArrayList<>();
 
     public LayeredTexture(Texture... textures) {
-        super(null);
         this.width = textures[0].getWidth();
         this.height = textures[0].getHeight();
         this.loaded = true;
         addAll(textures);
     }
 
+    public LayeredTexture() {
+        this.loaded = false;
+    }
+
     @Override
     public void paint(Graphics g) {
         for(int i = 0; i < layers.size(); i++){
-            g.drawImage(layers.get(i), locations.get(i).x, locations.get(i).y, null);
+            g.drawImage(layers.get(i), 0, 0, null);
         }
     }
 
@@ -62,23 +66,20 @@ public class LayeredTexture extends Texture {
         return TextureFactory.toBufferedImage(getImage(layer));
     }
 
-    public Point getPoint(int layer){
-        return locations.get(layer);
-    }
 
     public void remove(int layer){
         layers.remove(layer);
-        locations.remove(layer);
     }
 
     public void add(Image i) {
-        layers.add(i);
-        locations.add(new Point(0,0));
+        put(i, layers.size());
     }
 
-    public void put(Image i, Point p){
-        layers.add(i);
-        locations.add(p);
+
+    public void put(Image i, int pos){
+        if(width == 0) width = i.getWidth(null);
+        if(height == 0) height = i.getHeight(null);
+        layers.add(pos, i);
     }
 
     public void addAll(Image... images) {
@@ -87,13 +88,26 @@ public class LayeredTexture extends Texture {
         }
     }
 
+    public void add(Texture t) {
+        add(t.getImage());
+    }
+
+
+    public void put(Texture t, int pos){
+        put(t.getImage(), pos);
+    }
+
     public void addAll(Texture... textures) {
         for (Texture t : textures) {
-            add(t.getImage());
+            add(t);
         }
     }
 
     public int getLayerCount() {
         return layers.size();
+    }
+
+    public Color getColor(int x, int y, int layer) {
+        return new Color(getBufferedImage(layer).getRGB(x,y), true);
     }
 }

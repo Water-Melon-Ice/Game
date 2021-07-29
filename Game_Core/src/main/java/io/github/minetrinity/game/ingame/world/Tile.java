@@ -1,26 +1,20 @@
 package io.github.minetrinity.game.ingame.world;
 
+import java.awt.*;
 import java.util.HashMap;
 
 public class Tile {
 
-    public static final HashMap<String, Tile> tiles = new HashMap<>();
+    public static final HashMap<Color, Tile> tiles = new HashMap<>();
 
-    public static Tile getTile(String name){
-        if(tiles.containsKey(name)){
-            return tiles.get(name);
-        }else {
-            Tile t = new Tile(name);
-            tiles.put(name, t);
-            return t;
-        }
+    public static Tile from(Color c){
+        if(c.getAlpha() != 255) return null;
+        return tiles.get(c);
     }
-
-
 
     protected String texture;
 
-    private Tile(String texture){
+    public Tile(String texture){
         this.texture = texture;
     }
 

@@ -61,6 +61,8 @@ public class Window extends Frame {
 
     public void render() {
         if (root != null) {
+            getDrawGraphics().setColor(Color.black);
+            getDrawGraphics().clearRect(0,0,this.getWidth(), this.getHeight());
             root.paintAll(getDrawGraphics());
             getBufferStrategy().show();
         }
@@ -73,11 +75,10 @@ public class Window extends Frame {
         }
         if (this.root != null) {
             this.root.close();
-            Game.getInstance().remove(this.root);
         }
         this.root = root;
+        root.setSize(this.getSize());
         root.open();
-        Game.getInstance().remove(root);
     }
 
     public void setGUIChangeLock(boolean changeLock) {

@@ -23,8 +23,5 @@ public class GUIIngame extends GUI {
 
     }
 
-    @Override
-    public void tick() {
 
-    }
 }
