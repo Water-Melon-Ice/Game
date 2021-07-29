@@ -23,6 +23,8 @@ public class TestGui extends GUI {
         c.setSize(this.getSize());
         add(c);
 
+
+
     }
 
     @Override

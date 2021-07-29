@@ -6,6 +6,7 @@ import javax.imageio.metadata.IIOMetadata;
 import javax.imageio.metadata.IIOMetadataNode;
 import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class AnimatedTexture extends Texture {
     private ArrayList<Image> frames = new ArrayList<>();
 
     public AnimatedTexture() {
-
+        play();
     }
 
     @Override
@@ -57,7 +58,7 @@ public class AnimatedTexture extends Texture {
     public int getCurrentFrame() {
         if(startedPlaying == 0) return 0;
         else{
-            int dt = (int) (startedPlaying - System.currentTimeMillis());
+            int dt = (int) (System.currentTimeMillis() - startedPlaying);
             int fpassed = dt / delay;
              return fpassed % getFrameCount();
         }
@@ -79,7 +80,7 @@ public class AnimatedTexture extends Texture {
             String metaFormatName = imageMetaData.getNativeMetadataFormatName();
             IIOMetadataNode root = (IIOMetadataNode) imageMetaData.getAsTree(metaFormatName);
             IIOMetadataNode graphicsControlExtensionNode = getNode(root);
-            setDelay(Integer.parseInt(graphicsControlExtensionNode.getAttribute("delayTime")));
+            setDelay(Integer.parseInt(graphicsControlExtensionNode.getAttribute("delayTime")) * 10);
         } catch (IOException e) {
             e.printStackTrace();
         }
