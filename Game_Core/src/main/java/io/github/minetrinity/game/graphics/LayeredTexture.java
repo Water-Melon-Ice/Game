@@ -63,7 +63,7 @@ public class LayeredTexture extends Texture {
     }
 
     public BufferedImage getBufferedImage(int layer){
-        return TextureFactory.toBufferedImage(getImage(layer));
+        return toBufferedImage(getImage(layer));
     }
 
 

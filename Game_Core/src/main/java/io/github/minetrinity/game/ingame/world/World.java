@@ -1,21 +1,17 @@
 package io.github.minetrinity.game.ingame.world;
 
+import io.github.minetrinity.game.time.Tickable;
+
 public class World {
 
-    private static World instance;
+    private static Area current;
 
-    public static World getInstance() {
-        if(instance == null) instance = new World();
-        return instance;
+    public static void setCurrent(Area current) {
+        World.current = current;
     }
 
-    protected Area current;
-
-    public void setCurrent(Area current) {
-        this.current = current;
-    }
-
-    public Area getCurrent() {
+    public static Area getCurrent() {
         return current;
     }
+
 }

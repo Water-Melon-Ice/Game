@@ -21,6 +21,7 @@ public class Game {
     protected volatile boolean running = false;
     protected volatile boolean started = false;
 
+    public long startTime;
 
     protected ArrayList<Tickable> tickables = new ArrayList<>();
 
@@ -31,6 +32,7 @@ public class Game {
     public final void startGame() {
         if (!running && !started) {
             started = true;
+            startTime = System.currentTimeMillis();
             init();
             running = true;
             start();
@@ -39,6 +41,7 @@ public class Game {
 
     public final void stopGame() {
         running = false;
+        startTime = -1;
         stop();
     }
 

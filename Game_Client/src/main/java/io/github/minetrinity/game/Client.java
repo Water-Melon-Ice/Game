@@ -57,13 +57,13 @@ public class Client extends Game{
             return;
         }
 
-        long currenttime = System.currentTimeMillis();
+        long currenttime = startTime;
         long lasttime = currenttime;
         long dtime;                                     //timedifference
         double mpt = 1000 / tickspersecond;             //millisPerTick
 
         long tickcounter = 0;                           //counts ticks in every second
-        long ticktimer = System.currentTimeMillis();    //counts every second
+        long ticktimer = startTime;    //counts every second
 
         while (running) {
             dtime = currenttime - lasttime;
@@ -79,7 +79,6 @@ public class Client extends Game{
             if ((currenttime - ticktimer) > 1000) {
                 ticktimer = currenttime;
                 actualticks = tickcounter;
-                System.out.println(actualticks);
                 tickcounter = 0;
             }
         }

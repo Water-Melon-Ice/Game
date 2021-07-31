@@ -10,6 +10,20 @@ import java.io.InputStream;
 
 public class Texture implements Paintable{
 
+    public static Color transparent = new Color(0, 0, 0, 0);
+
+    public static BufferedImage toBufferedImage(Image i) {
+        if (i instanceof BufferedImage) {
+            return (BufferedImage) i;
+        }
+        BufferedImage bimg = new BufferedImage(i.getWidth(null), i.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D bGr = bimg.createGraphics();
+        bGr.drawImage(i, 0, 0, null);
+        bGr.dispose();
+        return bimg;
+    }
+
     private Image img;
 
     protected int width, height;
@@ -43,7 +57,7 @@ public class Texture implements Paintable{
     }
 
     public BufferedImage getBufferedImage() {
-        return TextureFactory.toBufferedImage(getImage());
+        return toBufferedImage(getImage());
     }
 
     public void resizeCut(int width, int height, Color fill) {

@@ -48,16 +48,15 @@ public class Resources {
     public static ArrayList<File> walk(String path, String extension, int depth, boolean onlyFiles) {
         ArrayList<File> files = new ArrayList<>();
         for(File f : walk(path, depth, onlyFiles)){
-            if(getFileType(f).equalsIgnoreCase(extension)) files.add(f);
+            if(getFileFormat(f).equalsIgnoreCase(extension)) files.add(f);
         }
         return files;
     }
 
     //TODO: return results
     public static void processAllFiles(ArrayList<File> files){
-        System.out.println(ResourceFactory.getResourceFactories().size());
         for( File f : files){
-            ResourceFactory.getResourceFactories(f)[0].read(f);
+            ResourceFactory.getResourceFactories(f)[0].put(f);
         }
     }
 
@@ -71,7 +70,7 @@ public class Resources {
         return fin;
     }
 
-    public static String getFileType(File f) {
+    public static String getFileFormat(File f) {
         return f.getName().substring(f.getName().lastIndexOf(".") + 1);
     }
 

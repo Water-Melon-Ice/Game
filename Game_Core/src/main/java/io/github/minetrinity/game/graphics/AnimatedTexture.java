@@ -1,5 +1,7 @@
 package io.github.minetrinity.game.graphics;
 
+import io.github.minetrinity.game.Game;
+
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.metadata.IIOMetadata;
@@ -42,12 +44,16 @@ public class AnimatedTexture extends Texture {
 
     @Override
     public Image getImage() {
-        return frames.get(getCurrentFrame());
+        return getImage(getCurrentFrame());
+    }
+
+    public Image getImage(int frame) {
+        return frames.get(frame);
     }
 
     public void play() {
         if (startedPlaying == 0)
-            startedPlaying = System.currentTimeMillis();
+            startedPlaying = Game.getInstance().startTime;
     }
 
     public void stop() {
@@ -57,7 +63,7 @@ public class AnimatedTexture extends Texture {
 
     public int getCurrentFrame() {
         if(startedPlaying == 0) return 0;
-        else{
+        else {
             int dt = (int) (System.currentTimeMillis() - startedPlaying);
             int fpassed = dt / delay;
              return fpassed % getFrameCount();

@@ -2,32 +2,20 @@ package io.github.minetrinity.game.ingame.world;
 
 import io.github.minetrinity.game.graphics.LayeredTexture;
 import io.github.minetrinity.game.ingame.entity.Entity;
+import io.github.minetrinity.game.ingame.entity.LivingEntity;
+import io.github.minetrinity.game.time.Tickable;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class Area {
+public class Area implements Tickable {
 
-    public static Area from(LayeredTexture ltex) {
-        Area area = new Area(ltex.getWidth(), ltex.getHeight());
-        for (int y = 0; y < ltex.getHeight(); y++) {
-            for (int x = 0; x < ltex.getWidth(); x++) {
-                for (int layer = 0; layer < ltex.getLayerCount(); layer++) {
-                    Color c = ltex.getColor(x, y, layer);
-                    Tile t = Tile.from(c);
-                    area.setTile(t, x, y, layer);
-                }
-            }
-        }
-        return area;
-    }
-
-    ArrayList<Entity> entities;
+    private ArrayList<Entity> entities = new ArrayList<>();
     private Tile[][][] tiles; // x, y, layer
 
     protected final int layerstack = 5;
 
-    protected Area(int width, int height) {
+    public Area(int width, int height) {
         tiles = new Tile[width][height][layerstack];
     }
 
@@ -54,5 +42,25 @@ public class Area {
 
     public int getLayers(){
         return tiles[0][0].length;
+    }
+
+    public ArrayList<Entity> getEntities() {
+        return entities;
+    }
+
+    public void add(Entity e){
+        entities.add(e);
+        if(!(e.getArea() == this)) e.setArea(this);
+    }
+
+    @Override
+    public void tick() {
+        for(int i = entities.size() - 1; i >= 0; i--){
+            entities.get(i).tick();
+        }
+    }
+
+    public void remove(Entity e){
+        entities.remove(e);
     }
 }
