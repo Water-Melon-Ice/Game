@@ -2,6 +2,7 @@ package io.github.minetrinity.game;
 
 import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.graphics.gui.TestGui;
+import io.github.minetrinity.game.graphics.gui.ingame.minigames.snake.SnakeMain;
 import io.github.minetrinity.game.load.Resources;
 
 public class Client extends Game{
@@ -33,7 +34,7 @@ public class Client extends Game{
 
         Resources.processAllFiles(Resources.walk(Resources.defaultResPath + Resources.globalPath, Integer.MAX_VALUE, true));
 
-        Window.getInstance().setGUI(new TestGui());
+        Window.getInstance().setGUI(new SnakeMain());
 
     }
 
