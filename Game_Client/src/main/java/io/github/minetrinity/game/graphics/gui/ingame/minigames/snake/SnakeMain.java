@@ -13,15 +13,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 
 public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
 
-    private static final int WIDTH = 800;
+    private static final int WIDTH = 1000;
     private static final int HEIGHT = WIDTH;
-    private static final int SQUARE_SIZE = WIDTH / 20;
+    private static final int ROW = WIDTH / 35;
+    private static final int SQUARE_SIZE = WIDTH / HEIGHT;
     private static final int ALL_SQUARES = WIDTH * HEIGHT;
 
 
@@ -38,8 +41,15 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     private boolean  upDirection = false;
     private boolean  downDirection = false;
 
-    Texture TestSnake = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("Weg.png");
+    private List<Point> snakebody = new ArrayList();
+    private Point snakeHead;
+
+    Texture background = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("Weg.png");
     Texture apple = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("Pixel-apple.png");
+    Texture snakeHeadImage = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("Pixel-apple.png");
+    Texture snakeBodyImage = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("Pixel-apple.png");
+    Texture snakeTailImage = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("Pixel-apple.png");
+
 
     private void placeApple() {
 
@@ -48,6 +58,13 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
 
         a = (int) (Math.random() * HEIGHT);
         apple_y = a;
+    }
+
+    private void creatSnake(Graphics g) {
+        g.drawImage(snakeHeadImage.getImage(),WIDTH / 2,HEIGHT / 2,null);
+        g.drawImage(snakeBodyImage.getImage(),WIDTH / 2 - ROW,HEIGHT / 2,null);
+        g.drawImage(snakeTailImage.getImage(),WIDTH / 2 - 2 * ROW,HEIGHT / 2,null);
+
     }
 
     private void eaten() {
@@ -94,6 +111,10 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
             y[z] = 50;
         }
 
+        for (int i = 0; i < 3; i++) {
+            snakebody.add(new Point(5, WIDTH / 2));
+        }
+        snakeHead = snakebody.get(0);
         placeApple();
 
     }
@@ -109,14 +130,15 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
         eaten();
         move();
 
-
         for(int x = 0; x < WIDTH; x++) {
             for(int y = 0; y < HEIGHT; y++){
-                g.drawImage(TestSnake.getImage(), x, y, null);
+                g.drawImage(background.getImage(), x, y, null);
             }
         }
+        //Add Background Rows
 
         g.drawImage(apple.getImage(),apple_x,apple_y,null);
+        creatSnake(g);
     }
 
 }
