@@ -6,12 +6,10 @@ import io.github.minetrinity.game.ingame.entity.Entity;
 import io.github.minetrinity.game.ingame.entity.MovingEntity;
 import io.github.minetrinity.game.io.AreaIO;
 import io.github.minetrinity.game.load.Resources;
-import io.github.minetrinity.game.load.TextureFactory;
 import io.github.minetrinity.game.graphics.*;
 import io.github.minetrinity.game.graphics.gui.ingame.Camera;
 import io.github.minetrinity.game.ingame.world.Area;
 import io.github.minetrinity.game.ingame.world.World;
-import io.github.minetrinity.game.math.AccuratePoint;
 
 import java.awt.*;
 
@@ -26,7 +24,7 @@ public class TestGui extends GUI {
 
         for (int i = 0; i < 10000; i++) {
             Entity e = new MovingEntity();
-            e.setLocation(new AccuratePoint(400 , 400));
+            e.setLocation(new Point(400 , 400));
             World.getCurrent().add(e);
         }
         Camera c = new Camera();

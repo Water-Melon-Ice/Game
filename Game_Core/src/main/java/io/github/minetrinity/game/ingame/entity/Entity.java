@@ -1,19 +1,20 @@
 package io.github.minetrinity.game.ingame.entity;
 
-import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.ingame.world.Area;
-import io.github.minetrinity.game.math.AccuratePoint;
 import io.github.minetrinity.game.time.Tickable;
+
+import java.awt.*;
 
 public abstract class Entity implements Tickable {
 
     public String texture = "Character(L).gif";
 
     protected Area area;
-    protected AccuratePoint location;
+
+    protected Rectangle hitbox;
 
     public Entity(){
-        location = AccuratePoint.zero;
+        hitbox = new Rectangle(16, 32);
     }
 
     @Override
@@ -21,12 +22,12 @@ public abstract class Entity implements Tickable {
 
     }
 
-    public AccuratePoint getLocation() {
-        return location;
+    public boolean isInHitbox(Point p){
+        return hitbox.contains(p.x, p.y);
     }
 
-    public void setLocation(AccuratePoint location) {
-        this.location = location;
+    public boolean isInHitbox(Entity e){
+        return hitbox.contains(e.getHitbox());
     }
 
     public Area getArea() {
@@ -37,5 +38,17 @@ public abstract class Entity implements Tickable {
         if(this.area != null) this.area.remove(this);
         this.area = area;
         if(!area.getEntities().contains(this)) area.add(this);
+    }
+
+    public Point getLocation() {
+        return hitbox.getLocation();
+    }
+
+    public void setLocation(Point location) {
+        hitbox.setLocation(location);
+    }
+
+    public Rectangle getHitbox() {
+        return hitbox;
     }
 }

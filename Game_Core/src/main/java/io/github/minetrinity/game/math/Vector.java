@@ -1,33 +1,38 @@
 package io.github.minetrinity.game.math;
 
+import java.awt.*;
+
 public class Vector {
 
-    public static final Vector zero = new Vector(AccuratePoint.zero);
+    public static final Vector zero = new Vector(new Point());
 
-    protected AccuratePoint location;
-    protected AccuratePoint direction;
+    protected Point location;
+    protected Point direction;
 
-    public Vector(AccuratePoint p){
-        this.location = AccuratePoint.zero;
-        this.direction = p;
+    public Vector(){
+        this(new Point());
     }
 
-    public Vector(AccuratePoint p, AccuratePoint direction){
+    public Vector(Point p){
+        this(new Point(), p);
+    }
+
+    public Vector(Point p, Point direction){
         this.location = p;
         this.direction = direction;
     }
 
-    public AccuratePoint getLocation() {
+    public Point getLocation() {
         return location;
     }
 
-    public AccuratePoint getDirection() {
+    public Point getDirection() {
         return direction;
     }
 
-    public void move(double factor){
-        location.dx += factor * direction.dx;
-        location.dy += factor * direction.dy;
+    public void move(double factor) {
+        location.x += factor * direction.x;
+        location.y += factor * direction.y;
     }
 
 }

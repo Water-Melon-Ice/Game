@@ -63,7 +63,7 @@ public class Camera extends Overlay {
             }
         }
         for(Entity e : World.getCurrent().getEntities()){
-            g.drawImage(((AnimatedTexture) ResourceFactory.getResourceFactories("png")[0].getByName(e.texture)).getImage(), (int) e.getLocation().dx, (int) e.getLocation().dy, null);
+            g.drawImage(((AnimatedTexture) ResourceFactory.getResourceFactories("png")[0].getByName(e.texture)).getImage(), (int) e.getLocation().x, (int) e.getLocation().y , null);
         }
         g.setColor(Color.black);
         g.drawString("" + Client.getInstance().getActualticks(), 10,10);
