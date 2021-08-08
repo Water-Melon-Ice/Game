@@ -7,9 +7,9 @@ import java.awt.*;
 
 public abstract class Entity implements Tickable {
 
-    public String texture = "Character(L).gif";
+    protected String texture = "";
 
-    protected Area area;
+    private Area area;
 
     protected Rectangle hitbox;
 
@@ -20,6 +20,10 @@ public abstract class Entity implements Tickable {
     @Override
     public void tick() {
 
+    }
+
+    public final void kill(){
+        getArea().remove(this);
     }
 
     public boolean isInHitbox(Point p){
@@ -35,7 +39,6 @@ public abstract class Entity implements Tickable {
     }
 
     public void setArea(Area area) {
-        if(this.area != null) this.area.remove(this);
         this.area = area;
         if(!area.getEntities().contains(this)) area.add(this);
     }
@@ -50,5 +53,17 @@ public abstract class Entity implements Tickable {
 
     public Rectangle getHitbox() {
         return hitbox;
+    }
+
+    public String getTexture() {
+        return texture;
+    }
+
+    public void onSpawn(){
+
+    }
+
+    public void onDeath(){
+
     }
 }

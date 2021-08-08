@@ -3,9 +3,10 @@ package io.github.minetrinity.game;
 import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.graphics.gui.TestGui;
 import io.github.minetrinity.game.graphics.gui.ingame.minigames.snake.SnakeMain;
+import io.github.minetrinity.game.ingame.Player;
 import io.github.minetrinity.game.load.Resources;
 
-public class Client extends Game{
+public class Client extends Game {
 
     public static Client getInstance() {
         if (instance == null) instance = new Client();
@@ -21,30 +22,30 @@ public class Client extends Game{
     protected double tickspersecond = 60.0;
     protected volatile long actualticks;
 
-    protected Runnable callback;
+    protected Player p;
 
-    public Client(){
+    public Client() {
     }
 
     @Override
     protected void init() {
         super.init();
-        Window.getInstance().setVisible(true);
-        Window.getInstance().setFullscreen(false);
 
         Resources.processAllFiles(Resources.walk(Resources.defaultResPath + Resources.globalPath, Integer.MAX_VALUE, true));
 
-        Window.getInstance().setGUI(new SnakeMain());
+        Window.getInstance().setVisible(true);
+        Window.getInstance().getFrame().setSize(1920, 1080);
+        Window.init();
 
     }
 
     @Override
     protected void tick() {
         super.tick();
-        paint();
+        Window.getInstance().getRoot().tickAll();
     }
 
-    protected void paint(){
+    protected void paint() {
         Window.getInstance().render();
     }
 
@@ -72,6 +73,7 @@ public class Client extends Game{
             if (dtime >= mpt) {
                 tickcounter++;
                 tick();
+                paint();
                 lasttime = currenttime;
             }
 
@@ -96,7 +98,8 @@ public class Client extends Game{
     protected void stop() {
         try {
             running = false;
-            thread.join();
+            if (thread != null && thread.isAlive())
+                thread.join();
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -104,5 +107,9 @@ public class Client extends Game{
 
     public long getActualticks() {
         return actualticks;
+    }
+
+    public Player getPlayer() {
+        return p;
     }
 }

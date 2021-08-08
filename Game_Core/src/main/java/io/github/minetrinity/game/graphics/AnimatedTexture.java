@@ -15,26 +15,98 @@ import java.util.ArrayList;
 
 public class AnimatedTexture extends Texture {
 
-    private static IIOMetadataNode getNode(IIOMetadataNode rootNode) {
-        int nNodes = rootNode.getLength();
-        for (int i = 0; i < nNodes; i++) {
-            if (rootNode.item(i).getNodeName().equalsIgnoreCase("GraphicControlExtension")) {
+    private static IIOMetadataNode getNode(IIOMetadataNode rootNode, String attribute) {
+        for (int i = 0; i < rootNode.getLength(); i++) {
+            if (rootNode.item(i).getNodeName().equalsIgnoreCase(attribute)) {
                 return ((IIOMetadataNode) rootNode.item(i));
             }
         }
-        IIOMetadataNode node = new IIOMetadataNode("GraphicControlExtension");
-        rootNode.appendChild(node);
-        return (node);
+        return null;
     }
 
-    private int delay = 50;
+    private long startedPlaying = -1;
+    private long dt = 0;
 
-    private long startedPlaying = 0;
+    private int delay = 0;
 
-    private ArrayList<Image> frames = new ArrayList<>();
+    private ArrayList<ImageData> frames = new ArrayList<>();
 
     public AnimatedTexture() {
-        play();
+        play(true);
+    }
+
+    public void play(boolean playing) {
+        if (startedPlaying == -1)
+            setStartedPlaying(Game.getInstance().startTime);
+
+        if (playing && dt != 0) {
+            startedPlaying = System.currentTimeMillis() - dt;
+            dt = 0;
+        } else if (!playing && dt == 0) {
+            dt = System.currentTimeMillis() - startedPlaying;
+        }
+    }
+
+    public void stop() {
+        startedPlaying = -1;
+        dt = 0;
+    }
+
+
+    public int getCurrentFrame() {
+        if (startedPlaying == -1) return 0;
+        int diff;
+        int frame;
+        if (this.dt == 0) {
+            diff = (int) (System.currentTimeMillis() - startedPlaying);
+        } else diff = (int) (dt);
+
+        frame = getFrame(Math.abs(diff));
+
+        return frame;
+    }
+
+    public int getFrame(int timepassed) {
+        if (delay == -1) {
+            int f = 0;
+            while (timepassed > 0) {
+                timepassed -= frames.get(f).delay;
+                f++;
+                if (f > frames.size() - 1) f = 0;
+            }
+            return f;
+        } else {
+            int fpassd = timepassed / delay;
+            fpassd = fpassd % frames.size();
+            return fpassd;
+        }
+    }
+
+    public void setCurrentFrame(int frame) {
+        if (delay == -1) {
+            frame %= frames.size();
+            int diff = 0;
+            while (frame >= 0) {
+                diff += frames.get(frame).delay;
+                frame--;
+            }
+            setStartedPlaying(diff + System.currentTimeMillis());
+        } else {
+            setStartedPlaying((frame * -delay) + System.currentTimeMillis());
+        }
+    }
+
+    public void setStartedPlaying(long startedPlaying) {
+        if (dt == 0)
+            this.startedPlaying = startedPlaying;
+        else {
+            dt = startedPlaying - System.currentTimeMillis(); //IDK why this works, but it does
+            this.startedPlaying = startedPlaying;
+        }
+    }
+
+    public boolean isPaused(){
+        return dt != 0;
     }
 
     @Override
@@ -48,26 +120,39 @@ public class AnimatedTexture extends Texture {
     }
 
     public Image getImage(int frame) {
-        return frames.get(frame);
+        return frames.get(frame).image;
     }
 
-    public void play() {
-        if (startedPlaying == 0)
-            startedPlaying = Game.getInstance().startTime;
+    @Override
+    protected void setImage(Image img) {
+        frames.get(getCurrentFrame()).image = img;
     }
 
-    public void stop() {
-        startedPlaying = 0;
+    protected void setImage(Image img, int index) {
+        frames.get(index).image = img;
     }
 
 
-    public int getCurrentFrame() {
-        if(startedPlaying == 0) return 0;
-        else {
-            int dt = (int) (System.currentTimeMillis() - startedPlaying);
-            int fpassed = dt / delay;
-             return fpassed % getFrameCount();
+    @Override
+    public void resizeCut(int width, int height, Color fill) {
+        super.resizeCut(width, height, fill);
+    }
+
+    @Override
+    public void moveCut(int x, int y) {
+        super.moveCut(x, y);
+    }
+
+    @Override
+    public void resizeScale(int width, int height) {
+        for(int i = 0; i < frames.size(); i++) {
+            setImage(getImage(i).getScaledInstance(width, height, java.awt.Image.SCALE_DEFAULT), i);
         }
+    }
+
+    @Override
+    public Image getImageFillNonOpaque(Color c) {
+        return super.getImageFillNonOpaque(c);
     }
 
     @Override
@@ -78,15 +163,23 @@ public class AnimatedTexture extends Texture {
             imgin = ImageIO.createImageInputStream(in);
             reader.setInput(imgin);
             for (int i = 0; i < reader.getNumImages(true); i++) {
-                add(reader.read(i));
+                ImageData imd = new ImageData();
+                IIOMetadata imageMetaData = null;
+                imageMetaData = reader.getImageMetadata(i);
+                String metaFormatName = imageMetaData.getNativeMetadataFormatName();
+                IIOMetadataNode root = (IIOMetadataNode) imageMetaData.getAsTree(metaFormatName);
+                IIOMetadataNode graphicsControlExtensionNode = getNode(root, "GraphicControlExtension");
+                int delay = Integer.parseInt(graphicsControlExtensionNode.getAttribute("delayTime")) * 10;
+                IIOMetadataNode imgDescriptorNode = getNode(root, "ImageDescriptor");
+
+                imd.image = reader.read(i);
+                imd.delay = delay;
+                imd.x = Integer.parseInt(imgDescriptorNode.getAttribute("imageLeftPosition"));
+                imd.y = Integer.parseInt(imgDescriptorNode.getAttribute("imageTopPosition"));
+
+                add(imd);
             }
 
-            IIOMetadata imageMetaData = null;
-            imageMetaData = reader.getImageMetadata(0);
-            String metaFormatName = imageMetaData.getNativeMetadataFormatName();
-            IIOMetadataNode root = (IIOMetadataNode) imageMetaData.getAsTree(metaFormatName);
-            IIOMetadataNode graphicsControlExtensionNode = getNode(root);
-            setDelay(Integer.parseInt(graphicsControlExtensionNode.getAttribute("delayTime")) * 10);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -101,9 +194,30 @@ public class AnimatedTexture extends Texture {
     }
 
     public void put(Image i, int frame) {
+        ImageData imd = new ImageData();
+        imd.image = i;
+        put(imd, frame);
+    }
+
+    public void add(ImageData i) {
+        put(i, frames.size());
+    }
+
+    public void put(ImageData i, int frame) {
+        if (i.x != 0 || i.y != 0) {
+            int wd = i.x + i.image.getWidth(null);
+            int he = i.y + i.image.getHeight(null);
+            BufferedImage bufimg = new BufferedImage(wd, he, BufferedImage.TYPE_INT_ARGB);
+            bufimg.createGraphics().drawImage(i.image, i.x, i.y, null);
+            i.image = bufimg;
+            i.x = 0;
+            i.y = 0;
+        }
+        if (frames.size() == 0 || i.delay == delay) delay = i.delay;
+        else delay = -1;
         frames.add(frame, i);
-        if (width == 0) width = i.getWidth(null);
-        if (height == 0) height = i.getHeight(null);
+        if (width == 0) width = i.image.getWidth(null);
+        if (height == 0) height = i.image.getHeight(null);
     }
 
     public void addAll(Image... images) {
@@ -118,23 +232,22 @@ public class AnimatedTexture extends Texture {
         }
     }
 
+    public void addAll(ImageData... data) {
+        for (ImageData i : data) {
+            add(i);
+        }
+    }
+
     public int getFrameCount() {
         return frames.size();
     }
 
-    /**
-     * delay in milliseconds between frames
-     */
-    public void setDelay(int delay) {
-        this.delay = delay;
+    private static class ImageData {
+        public int x = 0;
+        public int y = 0;
+        public int delay = 0;
+        public Image image;
+        public boolean interlaced = false;
     }
-
-    /**
-     * delay in milliseconds between frames
-     */
-    public int getDelay() {
-        return delay;
-    }
-
 
 }

@@ -8,6 +8,8 @@ import java.util.HashMap;
 
 public class CSVFactory extends ResourceFactory<ArrayList<String[]>> {
 
+    protected String delimiter = ",";
+    protected String comment = "#";
 
     @Override
     public ArrayList<String[]> read(File f) {
@@ -18,13 +20,14 @@ public class CSVFactory extends ResourceFactory<ArrayList<String[]>> {
 
     @Override
     public ArrayList<String[]> read(InputStream in, String format) {
-        String delimiter = ",";
+
         try {
             BufferedReader bufr = new BufferedReader(new InputStreamReader(in));
             ArrayList<String[]> linelist = new ArrayList<>();
             String line;
             while ((line = bufr.readLine()) != null) {
                 if(line.equalsIgnoreCase("")) continue;
+                if(line.startsWith(comment)) continue;
                 String[] sa = line.split(delimiter);
                 linelist.add(sa);
             }

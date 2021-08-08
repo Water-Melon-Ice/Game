@@ -28,8 +28,8 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     private static final int ALL_SQUARES = WIDTH * HEIGHT;
 
 
-    private final int x[] = new int[ALL_SQUARES];
-    private final int y[] = new int[ALL_SQUARES];
+    private final int[] x = new int[ALL_SQUARES];
+    private final int[] y = new int[ALL_SQUARES];
 
     private int apple_x;
     private int apple_y;
@@ -41,7 +41,7 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     private boolean  upDirection = false;
     private boolean  downDirection = false;
 
-    private List<Point> snakebody = new ArrayList();
+    private final List<Point> snakebody = new ArrayList<>();
     private Point snakeHead;
 
     Texture background = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("Weg.png");

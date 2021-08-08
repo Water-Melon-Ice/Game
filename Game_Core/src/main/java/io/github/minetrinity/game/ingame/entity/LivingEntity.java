@@ -2,7 +2,7 @@ package io.github.minetrinity.game.ingame.entity;
 
 public class LivingEntity extends Entity {
 
-    private int health;
+    private int health = 1;
 
     @Override
     public void tick() {
@@ -14,10 +14,6 @@ public class LivingEntity extends Entity {
         return health > 0;
     }
 
-    public final void kill(){
-        area.remove(this);
-    }
-
     public int getHealth() {
         return health;
     }
@@ -25,4 +21,10 @@ public class LivingEntity extends Entity {
     public void setHealth(int health) {
         this.health = health;
     }
+
+    public void onDamage(Entity damage){
+
+    }
+
+
 }

@@ -50,7 +50,7 @@ public class Area implements Tickable {
 
     public void add(Entity e){
         entities.add(e);
-        if(!(e.getArea() == this)) e.setArea(this);
+        if(e.getArea() != this) e.setArea(this);
     }
 
     @Override

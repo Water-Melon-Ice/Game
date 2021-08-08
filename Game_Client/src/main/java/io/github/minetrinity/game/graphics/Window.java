@@ -1,6 +1,8 @@
 package io.github.minetrinity.game.graphics;
 
 import io.github.minetrinity.game.Game;
+import io.github.minetrinity.game.graphics.gui.TestGui;
+import io.github.minetrinity.game.graphics.gui.menu.GUIMenu;
 import io.github.minetrinity.game.input.Controls;
 
 import java.awt.*;
@@ -8,7 +10,9 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferStrategy;
 
-public class Window extends Frame {
+public class Window {
+
+    private static boolean disposelistener = false;
 
     private static GraphicsDevice gdevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     protected static Window instance;
@@ -18,53 +22,72 @@ public class Window extends Frame {
         return instance;
     }
 
+    public static void init() {
+        getInstance().setGUI(new GUIMenu());
+    }
+
+
+    private Frame frame;
     private BufferStrategy strat;
+
 
     private boolean guichangeLock = false;
     private GUI next;
     protected GUI root;
 
+    private Color defaultBackground = Color.black;
+
     private Window() {
-        setUndecorated(true);
-        setResizable(false);
-        setLocation(0, 0);
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Game.getInstance().stopGame();
-                getInstance().dispose();
-            }
-        });
-        setBackground(Color.black);
-        addKeyListener(Controls.getInstance());
+        frame = new Frame();
+        frame.setUndecorated(true);
+        frame.setResizable(false);
+        frame.setLocation(0, 0);
+        frame.setBackground(Color.black);
+        frame.addKeyListener(Controls.getInstance());
+        frame.addMouseListener(Controls.getInstance());
+        frame.setFocusable(true);
+        if (disposelistener)
+            frame.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    Game.getInstance().stopGame();
+                    frame.dispose();
+                }
+            });
     }
 
     public void setFullscreen(boolean trueFullscreen) {
         if (trueFullscreen && gdevice.isFullScreenSupported()) {
-            if (!isVisible()) {
+            if (!frame.isVisible()) {
                 setFullscreen(false);
                 return;
             }
-            gdevice.setFullScreenWindow(this);
+            gdevice.setFullScreenWindow(frame);
         } else {
-            setSize(Toolkit.getDefaultToolkit().getScreenSize());
+            frame.setSize(Toolkit.getDefaultToolkit().getScreenSize());
         }
     }
 
     public Graphics getDrawGraphics() {
         if (strat == null) {
-            createBufferStrategy(2);
-            strat = getBufferStrategy();
+            strat = frame.getBufferStrategy();
         }
         return strat.getDrawGraphics();
     }
 
     public void render() {
+        if (!guichangeLock && next != null) {
+            setGUI(next);
+            next = null;
+        }
         if (root != null) {
-            getDrawGraphics().setColor(Color.black);
-            getDrawGraphics().clearRect(0,0,this.getWidth(), this.getHeight());
-            root.paintAll(getDrawGraphics());
-            getBufferStrategy().show();
+            Graphics2D graphics = (Graphics2D) getDrawGraphics();
+            graphics.setBackground(defaultBackground);
+            graphics.clearRect(0,0, frame.getWidth(), frame.getHeight());
+            root.paintAll(graphics);
+            strat.show();
+            graphics.dispose();
+
         }
     }
 
@@ -77,20 +100,44 @@ public class Window extends Frame {
             this.root.close();
         }
         this.root = root;
-        root.setSize(this.getSize());
+        root.setSize(this.frame.getSize());
         root.open();
     }
 
     public void setGUIChangeLock(boolean changeLock) {
         this.guichangeLock = changeLock;
-        if (!changeLock && next != null) {
-            setGUI(next);
-            next = null;
-        }
-
     }
 
     public GUI getRoot() {
         return root;
+    }
+
+    public void setVisible(boolean visible) {
+        frame.setVisible(visible);
+        frame.createBufferStrategy(2);
+    }
+
+    public Dimension getSize() {
+        return frame.getSize();
+    }
+
+    public int getX() {
+        return frame.getX();
+    }
+
+    public int getY() {
+        return frame.getY();
+    }
+
+    public int getWidth() {
+        return frame.getWidth();
+    }
+
+    public int getHeight() {
+        return frame.getHeight();
+    }
+
+    public Frame getFrame() {
+        return frame;
     }
 }
