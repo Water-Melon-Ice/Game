@@ -21,10 +21,10 @@ import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
 
-    private static final int WIDTH = 1000;
+    private static final int WIDTH = 1008;
     private static final int HEIGHT = WIDTH;
-    private static final int ROW = WIDTH / 59;
-    private static final int SQUARE_SIZE = WIDTH / HEIGHT;
+    private static final int ROW = WIDTH / 63;
+    private static final int SQUARE_SIZE = HEIGHT / ROW;
     private static final int ALL_SQUARES = WIDTH * HEIGHT;
 
 
@@ -121,7 +121,6 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     public void paint(Graphics g) { //render snake and background to Graphics here.
 
         eaten();
-        move();
 
         for(int x = 0; x < WIDTH; x++) {
             for(int y = 0; y < HEIGHT; y++){
@@ -132,6 +131,8 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
 
         g.drawImage(apple.getImage(),apple_x,apple_y,null);
         creatSnake(g);
+
+        move();
     }
 
 }
