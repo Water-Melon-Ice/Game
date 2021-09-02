@@ -128,8 +128,6 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     @Override
     public void paint(Graphics g) { //render snake and background to Graphics here.
 
-        eaten();
-
         for(int x = 0; x < WIDTH / 16; x++) {
             for(int y = 0; y < HEIGHT / 16; y++){
                 if ((x + y) %2 == 1) {
@@ -144,10 +142,11 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
 
         g.drawImage(apple.getImage(),apple_x,apple_y,null);
         creatSnake(g);
-
-        move();
     }
 
-
-
+    @Override
+    public void tick() {
+        eaten();
+        move();
+    }
 }
