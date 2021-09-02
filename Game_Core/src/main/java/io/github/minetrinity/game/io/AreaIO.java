@@ -4,34 +4,43 @@ import io.github.minetrinity.game.graphics.LayeredTexture;
 import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.ingame.world.Area;
 import io.github.minetrinity.game.ingame.world.Tile;
-import io.github.minetrinity.game.load.CSVFactory;
-import io.github.minetrinity.game.load.ResourceFactory;
-import io.github.minetrinity.game.load.Resources;
 
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-//TODO: what to do with this???
+//TODO: what to do with this garbage???
 public class AreaIO {
 
-    private static CSVFactory csv = new CSVFactory();
+    private static CSVIO csv = new CSVIO();
 
     public static final HashMap<Color, Tile> tiles = new HashMap<>();
+    private File[] walk;
 
     public static Area create(String resPath, String name){
         String areaRoot = resPath + Resources.worldsPath + "/" + name;
 
-        ArrayList<File> areafiles = Resources.walk(areaRoot, Integer.MAX_VALUE, true);
-        Resources.processAllFiles(areafiles);
+        File[] areafiles = Resources.walk(areaRoot, Integer.MAX_VALUE, true);
 
-        csv.putAll(areafiles.toArray(File[]::new));
+        TextureIO texfac = new TextureIO();
+        for(File f : areafiles){
+            if(texfac.isReadable(Resources.getFileFormat(f))){
+                texfac.put(f.getName(), Resources.getInputstream(f));
+            }
+
+        }
+        for(File f : areafiles){
+            if(csv.isReadable(Resources.getFileFormat(f))){
+                csv.put(f.getName(), Resources.getInputstream(f));
+            }
+
+        }
         ArrayList<String[]> layerlist = csv.getByName("layers.csv");
 
         LayeredTexture lt = new LayeredTexture();
         for (String[] sa : layerlist){
-            lt.add((Texture) ResourceFactory.getResourceFactories("png")[0].getByName(sa[0]));
+            lt.add(texfac.getByName(sa[0]));
         }
         fillTileMap();
         return toArea(lt);
@@ -49,7 +58,7 @@ public class AreaIO {
         if(c.getAlpha() != 255) return null;
         return tiles.get(c);
     }
-
+    //TODO: this is da lag machina
     public static Area toArea(LayeredTexture ltex) {
         Area area = new Area(ltex.getWidth(), ltex.getHeight());
         for (int y = 0; y < ltex.getHeight(); y++) {

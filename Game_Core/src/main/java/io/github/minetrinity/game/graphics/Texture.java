@@ -1,7 +1,5 @@
 package io.github.minetrinity.game.graphics;
 
-import io.github.minetrinity.game.load.TextureFactory;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -42,15 +40,7 @@ public class Texture implements Paintable{
         return img;
     }
 
-    public void read(InputStream in) {
-        try {
-            setImage(ImageIO.read(in));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    protected void setImage(Image img) {
+    public void setImage(Image img) {
         this.img = img;
         this.width = img.getWidth(null);
         this.height = img.getHeight(null);

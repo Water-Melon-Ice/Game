@@ -1,7 +1,5 @@
 package io.github.minetrinity.game.graphics;
 
-import io.github.minetrinity.game.load.TextureFactory;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -29,7 +27,7 @@ public class LayeredTexture extends Texture {
     }
 
     @Override
-    public java.awt.Image getImage() {
+    public BufferedImage getImage() {
         return getBufferedImage();
     }
 

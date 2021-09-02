@@ -3,20 +3,12 @@ package io.github.minetrinity.game.graphics.gui.ingame.minigames.snake;
 
 import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Texture;
-import io.github.minetrinity.game.ingame.world.World;
-import io.github.minetrinity.game.load.ResourceFactory;
+import io.github.minetrinity.game.io.Resources;
 
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 
 public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
@@ -44,11 +36,11 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     private final List<Point> snakebody = new ArrayList<>();
     private Point snakeHead;
 
-    Texture background = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("Weg.png");
-    Texture apple = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("Pixel-apple.png");
-    Texture snakeHeadImage = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("snakehead.png");
-    Texture snakeBodyImage = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("snakebody.png");
-    Texture snakeTailImage = (Texture) ResourceFactory.getResourceFactories("png")[0].getByName("snakebutt.png");
+    Texture background = (Texture) Resources.getResource("Weg.png");
+    Texture apple = (Texture) Resources.getResource("Pixel-apple.png");
+    Texture snakeHeadImage = (Texture) Resources.getResource("snakehead.png");
+    Texture snakeBodyImage = (Texture) Resources.getResource("snakebody.png");
+    Texture snakeTailImage = (Texture) Resources.getResource("snakebutt.png");
 
 
     private void placeApple() {

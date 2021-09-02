@@ -23,6 +23,9 @@ public class Window {
     }
 
     public static void init() {
+        getInstance().setVisible(true);
+        getInstance().setFullscreen(true);
+
         getInstance().setGUI(new GUIMenu());
     }
 
@@ -83,7 +86,7 @@ public class Window {
         if (root != null) {
             Graphics2D graphics = (Graphics2D) getDrawGraphics();
             graphics.setBackground(defaultBackground);
-            graphics.clearRect(0,0, frame.getWidth(), frame.getHeight());
+            graphics.clearRect(0, 0, frame.getWidth(), frame.getHeight());
             root.paintAll(graphics);
             strat.show();
             graphics.dispose();

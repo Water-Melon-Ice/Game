@@ -17,6 +17,8 @@ public class Controls implements KeyListener, MouseListener {
 
     private static boolean isMouseInBounds = true;
 
+    private static double directioncache = 0.0;
+
     @Override
     public void keyTyped(KeyEvent e) {}
 
@@ -62,6 +64,7 @@ public class Controls implements KeyListener, MouseListener {
         }
         return y;
     }
+
 
     public static int getMouseX(){
         return MouseInfo.getPointerInfo().getLocation().x;

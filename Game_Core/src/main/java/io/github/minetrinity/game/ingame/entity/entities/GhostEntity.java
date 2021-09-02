@@ -19,33 +19,14 @@ public class GhostEntity extends MovingEntity {
 
     @Override
     public void move() {
-        hitbox.getLocation().translate(entityVector.getDirection().x, entityVector.getDirection().y);
-        entityVector.getDirection().x *= airDrag;
-        entityVector.getDirection().y *= airDrag;
-        if(entityVector.getDirection().distance(new Point()) < maxSpeed){
-            double rdx = Math.random() * maxSpeed - maxSpeed / 2;
-            double rdy = Math.random() * maxSpeed - maxSpeed / 2;
-            entityVector.getDirection().x += rdx;
-            entityVector.getDirection().y += rdy;
-            if(entityVector.getDirection().x > 0)
-                texture = "Geist(Laser).gif";
-            else texture = "Geist(Laser).gif";
+        hitbox.x += (int) (Math.cos(Math.toRadians(direction)) * speed);
+        hitbox.y += (int) (Math.sin(Math.toRadians(direction)) * speed);
+        speed *= airDrag;
+        if(speed < maxSpeed){
+            int rd = (int) (Math.random() * maxSpeed);
+            speed += rd;
+            speed = (int) Math.min(maxSpeed, speed);
         }
-        if(hitbox.x < 0 && entityVector.getDirection().x < 0){
-            hitbox.x = 0;
-            entityVector.getDirection().x = -entityVector.getDirection().x;
-        }
-        if(hitbox.y < 0 && entityVector.getDirection().y < 0){
-            hitbox.y = 0;
-            entityVector.getDirection().y = -entityVector.getDirection().y;
-        }
-        if(hitbox.x > 1920 - 16 && entityVector.getDirection().x > 0){
-            hitbox.x = 1920 - 16;
-            entityVector.getDirection().x = -entityVector.getDirection().x;
-        }
-        if(hitbox.y > 1080 - 32 && entityVector.getDirection().y > 0){
-            hitbox.y = 1080 - 32;
-            entityVector.getDirection().y = -entityVector.getDirection().y;
-        }
+
     }
 }

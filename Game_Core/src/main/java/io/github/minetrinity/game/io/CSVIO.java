@@ -1,25 +1,15 @@
-package io.github.minetrinity.game.load;
-
-import io.github.minetrinity.game.graphics.Texture;
+package io.github.minetrinity.game.io;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
-public class CSVFactory extends ResourceFactory<ArrayList<String[]>> {
+public class CSVIO extends ResourceIO<ArrayList<String[]>> {
 
     protected String delimiter = ",";
     protected String comment = "#";
 
     @Override
-    public ArrayList<String[]> read(File f) {
-        ArrayList<String[]> t = super.read(f);
-        put(f.getName(), t);
-        return t;
-    }
-
-    @Override
-    public ArrayList<String[]> read(InputStream in, String format) {
+    public ArrayList<String[]> read(InputStream in) {
 
         try {
             BufferedReader bufr = new BufferedReader(new InputStreamReader(in));
@@ -39,7 +29,18 @@ public class CSVFactory extends ResourceFactory<ArrayList<String[]>> {
     }
 
     @Override
+    public void write(OutputStream out, ArrayList<String[]> obj) {
+
+    }
+
+
+    @Override
     public boolean isReadable(String format) {
         return format.equals("csv");
+    }
+
+    @Override
+    public boolean isWriteable() {
+        return true;
     }
 }

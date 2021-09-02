@@ -14,7 +14,7 @@ public class GUIMenu extends GUI {
 
     @Override
     public void open() {
-        GButton play = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 512, 512,256, null, "Play.png"){
+        GButton play = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 512, 512,256, "Play.png"){
             @Override
             public void onClick() {
                 Window.getInstance().setGUI(new TestGui());
@@ -22,7 +22,7 @@ public class GUIMenu extends GUI {
         };
         add(play);
 
-        GButton snake = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 256, 512,256, null, "Credits.png"){
+        GButton snake = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 256, 512,256, "Credits.png"){
             @Override
             public void onClick() {
                 Window.getInstance().setGUI(new TestGui());
@@ -39,7 +39,6 @@ public class GUIMenu extends GUI {
 
     @Override
     public void paint(Graphics g) {
-
     }
 
     public void tick() {

@@ -15,15 +15,6 @@ import java.util.ArrayList;
 
 public class AnimatedTexture extends Texture {
 
-    private static IIOMetadataNode getNode(IIOMetadataNode rootNode, String attribute) {
-        for (int i = 0; i < rootNode.getLength(); i++) {
-            if (rootNode.item(i).getNodeName().equalsIgnoreCase(attribute)) {
-                return ((IIOMetadataNode) rootNode.item(i));
-            }
-        }
-        return null;
-    }
-
     private long startedPlaying = -1;
     private long dt = 0;
 
@@ -124,11 +115,11 @@ public class AnimatedTexture extends Texture {
     }
 
     @Override
-    protected void setImage(Image img) {
-        frames.get(getCurrentFrame()).image = img;
+    public void setImage(Image img) {
+        setImage(img, getCurrentFrame());
     }
 
-    protected void setImage(Image img, int index) {
+    public void setImage(Image img, int index) {
         frames.get(index).image = img;
     }
 
@@ -153,36 +144,6 @@ public class AnimatedTexture extends Texture {
     @Override
     public Image getImageFillNonOpaque(Color c) {
         return super.getImageFillNonOpaque(c);
-    }
-
-    @Override
-    public void read(InputStream in) {
-        ImageReader reader = ImageIO.getImageReadersByFormatName("GIF").next();
-        ImageInputStream imgin;
-        try {
-            imgin = ImageIO.createImageInputStream(in);
-            reader.setInput(imgin);
-            for (int i = 0; i < reader.getNumImages(true); i++) {
-                ImageData imd = new ImageData();
-                IIOMetadata imageMetaData = null;
-                imageMetaData = reader.getImageMetadata(i);
-                String metaFormatName = imageMetaData.getNativeMetadataFormatName();
-                IIOMetadataNode root = (IIOMetadataNode) imageMetaData.getAsTree(metaFormatName);
-                IIOMetadataNode graphicsControlExtensionNode = getNode(root, "GraphicControlExtension");
-                int delay = Integer.parseInt(graphicsControlExtensionNode.getAttribute("delayTime")) * 10;
-                IIOMetadataNode imgDescriptorNode = getNode(root, "ImageDescriptor");
-
-                imd.image = reader.read(i);
-                imd.delay = delay;
-                imd.x = Integer.parseInt(imgDescriptorNode.getAttribute("imageLeftPosition"));
-                imd.y = Integer.parseInt(imgDescriptorNode.getAttribute("imageTopPosition"));
-
-                add(imd);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void remove(int frame) {
@@ -242,7 +203,7 @@ public class AnimatedTexture extends Texture {
         return frames.size();
     }
 
-    private static class ImageData {
+    public static class ImageData {
         public int x = 0;
         public int y = 0;
         public int delay = 0;

@@ -18,17 +18,6 @@ public abstract class GUI extends GComponent implements Paintable, Tickable { //
     }
 
     @Override
-    public void paintAll(Graphics g) {
-        paint(g);
-        for (GComponent c : getComponents()) {
-            if(c == null) continue;
-            Graphics g2 = g.create(c.getX(), c.getY(), c.getWidth(), c.getHeight());
-            c.paintAll(g2);
-            g2.dispose();
-        }
-    }
-
-    @Override
     public void tick() {
 
     }

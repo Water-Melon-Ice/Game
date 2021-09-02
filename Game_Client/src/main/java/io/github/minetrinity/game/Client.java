@@ -1,10 +1,8 @@
 package io.github.minetrinity.game;
 
 import io.github.minetrinity.game.graphics.Window;
-import io.github.minetrinity.game.graphics.gui.TestGui;
-import io.github.minetrinity.game.graphics.gui.ingame.minigames.snake.SnakeMain;
 import io.github.minetrinity.game.ingame.Player;
-import io.github.minetrinity.game.load.Resources;
+import io.github.minetrinity.game.io.Resources;
 
 public class Client extends Game {
 
@@ -15,6 +13,7 @@ public class Client extends Game {
 
     public static void main(String[] args) {
         getInstance().startGame();
+
     }
 
     private volatile Thread thread;
@@ -31,12 +30,11 @@ public class Client extends Game {
     protected void init() {
         super.init();
 
-        Resources.processAllFiles(Resources.walk(Resources.defaultResPath + Resources.globalPath, Integer.MAX_VALUE, true));
+        Resources.loadAllFiles(Resources.walk(Resources.defaultResPath + Resources.globalPath));
 
         Window.getInstance().setVisible(true);
-        Window.getInstance().getFrame().setSize(1920, 1080);
+        Window.getInstance().setFullscreen(true);
         Window.init();
-
     }
 
     @Override

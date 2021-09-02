@@ -1,19 +1,17 @@
 package io.github.minetrinity.game.ingame.entity;
 
-import io.github.minetrinity.game.math.Vector;
-
 import java.awt.*;
 
 public class MovingEntity extends LivingEntity {
 
-    protected Vector entityVector;
+    protected int speed = 10;
+    protected double direction = 0.0;
 
     protected double airDrag = 0.9;
-    protected double maxSpeed = 20;
+    protected double maxSpeed = 2000;
 
     public MovingEntity(){
         super();
-        entityVector = new Vector(new Point(1,1));
     }
 
     @Override
