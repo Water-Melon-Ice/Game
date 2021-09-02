@@ -4,6 +4,7 @@ import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.graphics.components.GButton;
 import io.github.minetrinity.game.graphics.gui.TestGui;
+import io.github.minetrinity.game.graphics.gui.ingame.minigames.snake.SnakeMain;
 
 import java.awt.*;
 import java.util.Timer;
@@ -25,7 +26,7 @@ public class GUIMenu extends GUI {
         GButton snake = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 256, 512,256, null, "Credits.png"){
             @Override
             public void onClick() {
-                Window.getInstance().setGUI(new TestGui());
+                Window.getInstance().setGUI(new SnakeMain());
             }
         };
         add(snake);
