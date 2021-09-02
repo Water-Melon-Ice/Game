@@ -59,18 +59,17 @@ e00303,HausV.1(6.4).png
 004542,Zaun(Nach oben-L).png
 186864,Zaun(Nach oben-R).png
 4ba9a4,Zaun(Rechts).png
-,HausV.2(1.2).png
-,HausV.2(1.3).png
-,HausV.2(1.4).png
-,HausV.2(1.5).png
-,HausV.2(1.6).png
-,HausV.2(2.1).png
-,HausV.2(2.2).png
-,HausV.2(2.3).png
-,HausV.2(2.4).png
-,HausV.2(2.5).png
-,HausV.2(2.6).png
-,HausV.2(3.1).png
+34a037,HausV.2(1.2).png
+26932a,HausV.2(1.3).png
+447546,HausV.2(1.4).png
+6aa46c,HausV.2(1.5).png
+0e6310,HausV.2(2.1).png
+2b9c2f,HausV.2(2.2).png
+117d15,HausV.2(2.3).png
+55ad58,HausV.2(2.4).png
+0d4e0f,HausV.2(2.5).png
+65a067,HausV.2(2.6).png
+347536,HausV.2(3.1).png
 ,HausV.2(3.2).png
 ,HausV.2(3.3).png
 ,HausV.2(3.4).png
@@ -121,5 +120,5 @@ e00303,HausV.1(6.4).png
 ,HausV.2(12.3).png
 ,HausV.2(12.4).png
 ,HausV.2(12.5).png
-0b450c,HausV.2(9.2-5,10.3-4,11.4).png
-0b4514,HausV.2(9.6,10.5).png
+0b450c,HausV.2(9.2-5;10.3-4;11.4).png
+0b4514,HausV.2(9.6;10.5).png
