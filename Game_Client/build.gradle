@@ -7,7 +7,7 @@ repositories {
 }
 
 dependencies {
-    compile project(':Game_Core')
+    implementation project(':Game_Core')
 }
 
 task copyResources(type: Copy){
