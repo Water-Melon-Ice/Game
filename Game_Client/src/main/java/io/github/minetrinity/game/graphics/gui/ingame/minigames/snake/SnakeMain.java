@@ -21,12 +21,11 @@ import java.util.List;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 
-public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
+public class SnakeMain extends GUI {
 
     private static final int WIDTH = 512;
     private static final int HEIGHT = WIDTH;
     private static final int ROW = WIDTH / 16;
-    private static final int SQUARE_SIZE = HEIGHT / ROW;
     private static final int ALL_SQUARES = WIDTH * HEIGHT;
 
 
@@ -100,8 +99,13 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
             y[z] = y[(z - 1)];
         }
 
+        snakeHead.x += 5;
+
         snakeHead.x += Controls.getX() * 16;
         snakeHead.y += Controls.getY() * 16;
+
+
+
 /*
         if (leftDirection) {
             x[0] -= SQUARE_SIZE;
@@ -151,7 +155,6 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
                 }
             }
         }
-        //Add Background Rows
 
         g.drawImage(apple.getImage(),apple_x,apple_y,null);
         creatSnake(g);
@@ -165,3 +168,5 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     }
 }
 //create bomb "snake" minigame
+
+//Glider Game: snakeHead.x += 5;

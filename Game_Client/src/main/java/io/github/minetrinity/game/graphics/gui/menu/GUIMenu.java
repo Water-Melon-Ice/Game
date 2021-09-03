@@ -7,8 +7,6 @@ import io.github.minetrinity.game.graphics.gui.TestGui;
 import io.github.minetrinity.game.graphics.gui.ingame.minigames.snake.SnakeMain;
 
 import java.awt.*;
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class GUIMenu extends GUI {
 
