@@ -3,6 +3,7 @@ package io.github.minetrinity.game.graphics.gui.ingame.minigames.snake;
 
 import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Texture;
+import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.ingame.world.World;
 import io.github.minetrinity.game.input.Controls;
 import io.github.minetrinity.game.io.Resources;
@@ -42,6 +43,8 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     private boolean  upDirection = false;
     private boolean  downDirection = false;
 
+    boolean eaten = false;
+
     private final List<Point> snakebody = new ArrayList<>();
     private Point snakeHead = new Point(WIDTH / 2, HEIGHT /2);
 
@@ -79,19 +82,26 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
 
     private void eaten() {
 
-        if ((x[0] == apple_x) && (y[0] == apple_y)) {
+        if ((snakeHead.x == apple_x) && (snakeHead.y == apple_y)) {
 
-            squares++;
+            snakebody.add(snakebody.get(snakebody.size() - 1));
             placeApple();
+            eaten = true;
         }
     }
 
     private void move() {
 
-        for (int z = squares; z > 0; z--) {
+        int sub = 0;
+        if(eaten) sub = 1;
+
+        for (int z = 1; z < snakebody.size() - sub; z++) {
             x[z] = x[(z - 1)];
             y[z] = y[(z - 1)];
         }
+
+        snakeHead.x += Controls.getX() * 16;
+        snakeHead.y += Controls.getY() * 16;
 /*
         if (leftDirection) {
             x[0] -= SQUARE_SIZE;
@@ -108,10 +118,13 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
         if (downDirection) {
             y[0] += SQUARE_SIZE;
         }*/
-        snakeHead.x = Controls.getX() * 16;
-        snakeHead.y = Controls.getY() * 16;
     }
 
+    private void collision() {
+        if ((snakeHead.x > WIDTH - 1) || (snakeHead.y > HEIGHT - 1) || (snakeHead.x < 0 ) || (snakeHead.y < 0)) {
+            Window.init();
+        }
+    }
 
     @Override
     public void open() { //called on opening of the GUI
@@ -148,5 +161,7 @@ public class SnakeMain extends GUI { //I did some commets :D @Minetrinity
     public void tick() {
         eaten();
         move();
+        collision();
     }
 }
+//create bomb "snake" minigame
