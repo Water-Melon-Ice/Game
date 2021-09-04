@@ -23,6 +23,8 @@ public class SlimeMain extends GUI {
     private int bomb_x;
     private int bomb_y;
 
+    private int score;
+
     private final List<Point> bombs = new ArrayList<>();
     private Point slime = new Point(WIDTH / 2, HEIGHT /2);
 
@@ -94,6 +96,8 @@ public class SlimeMain extends GUI {
             bombs.add(placebomb());
             bombs.add(placebomb());
             placeApple();
+
+            score = score + 1;
         }
     }
 
@@ -116,6 +120,7 @@ public class SlimeMain extends GUI {
     @Override
     public void open() { //called on opening of the GUI
         placeApple();
+        score = 0;
         for (int i = 0; i < 5; i++) {
             bombs.add(placebomb());
         }
@@ -142,6 +147,8 @@ public class SlimeMain extends GUI {
         }
         g.drawImage(apple.getImage(),apple_x,apple_y,null);
         paintbomb(g);
+        g.setColor(new Color(8, 140, 210));
+        g.drawString("Score: " + score, HEIGHT, 16);
     }
 
     @Override
