@@ -16,12 +16,6 @@ public class SlimeMain extends GUI {
 
     private static final int WIDTH = 512;
     private static final int HEIGHT = WIDTH;
-    private static final int ROW = WIDTH / 16;
-    private static final int ALL_SQUARES = WIDTH * HEIGHT;
-
-
-    private final int[] x = new int[ALL_SQUARES];
-    private final int[] y = new int[ALL_SQUARES];
 
     private int apple_x;
     private int apple_y;
@@ -29,18 +23,14 @@ public class SlimeMain extends GUI {
     private int bomb_x;
     private int bomb_y;
 
-    private int squares;
-
-    boolean eaten = false;
-
     private final List<Point> bombs = new ArrayList<>();
     private Point slime = new Point(WIDTH / 2, HEIGHT /2);
 
     Texture background2 = (Texture) Resources.getResource("SnakeBackgroundLightGreen.png");
     Texture background = (Texture) Resources.getResource("SnakeBackgroundDarkGreen.png");
     Texture apple = (Texture) Resources.getResource("Pixel-apple.png");
-    Texture slimeImage = (Texture) Resources.getResource("snakehead.png");
-    Texture bombImage = (Texture) Resources.getResource("snakebody.png");
+    Texture slimeImage = (Texture) Resources.getResource("SlimeImage.png");
+    Texture bombImage = (Texture) Resources.getResource("BombImage.png");
 
 
     private void placeApple() {
@@ -63,7 +53,7 @@ public class SlimeMain extends GUI {
             }
         }
 
-        if ((apple_x == 0) || (apple_x == WIDTH - 1) || (apple_y == 0) || (apple_y == HEIGHT - 1)) {
+        if ((apple_x == 0) || (apple_x == WIDTH - 1 * 16) || (apple_y == 0) || (apple_y == HEIGHT - 1 * 16)) {
             placeApple();
         }
     }
@@ -101,6 +91,7 @@ public class SlimeMain extends GUI {
 
         if ((slime.x == apple_x) && (slime.y == apple_y)) {
 
+            bombs.add(placebomb());
             bombs.add(placebomb());
             placeApple();
         }
