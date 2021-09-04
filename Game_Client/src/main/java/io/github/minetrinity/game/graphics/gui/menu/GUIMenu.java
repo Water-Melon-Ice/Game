@@ -30,7 +30,7 @@ public class GUIMenu extends GUI {
         };
         add(snake);
 
-        GButton slime = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 786, 512,256, "Credits.png"){
+        GButton slime = new GButton(getWidth() / 2 - 256, getHeight() / 2, 512,256, "Credits.png"){
             @Override
             public void onClick() {
                 Window.getInstance().setGUI(new SlimeMain());

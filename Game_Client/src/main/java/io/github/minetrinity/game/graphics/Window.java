@@ -31,7 +31,6 @@ public class Window {
 
 
     private Frame frame;
-    private BufferStrategy strat;
 
 
     private boolean guichangeLock = false;
@@ -72,10 +71,10 @@ public class Window {
     }
 
     public Graphics getDrawGraphics() {
-        if (strat == null) {
-            strat = frame.getBufferStrategy();
+        if (frame.getBufferStrategy() == null) {
+            frame.createBufferStrategy(2);
         }
-        return strat.getDrawGraphics();
+        return frame.getBufferStrategy().getDrawGraphics();
     }
 
     public void render() {
@@ -88,8 +87,7 @@ public class Window {
             graphics.setBackground(defaultBackground);
             graphics.clearRect(0, 0, frame.getWidth(), frame.getHeight());
             root.paintAll(graphics);
-            strat.show();
-            graphics.dispose();
+            frame.getBufferStrategy().show();
 
         }
     }
