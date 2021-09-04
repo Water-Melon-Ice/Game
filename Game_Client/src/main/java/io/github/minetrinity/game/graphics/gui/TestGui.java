@@ -28,7 +28,7 @@ public class TestGui extends GUI {
             World.getCurrent().add(e);
         }*/
 
-        Camera c = new Camera();
+        Camera c = new Camera(null);
         c.setSize(this.getSize());
         add(c);
 
