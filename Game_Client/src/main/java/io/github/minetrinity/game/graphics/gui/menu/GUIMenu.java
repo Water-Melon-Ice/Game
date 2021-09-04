@@ -4,6 +4,7 @@ import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.graphics.components.GButton;
 import io.github.minetrinity.game.graphics.gui.TestGui;
+import io.github.minetrinity.game.graphics.gui.ingame.minigames.slimehead.SlimeMain;
 import io.github.minetrinity.game.graphics.gui.ingame.minigames.snake.SnakeMain;
 
 import java.awt.*;
@@ -28,6 +29,14 @@ public class GUIMenu extends GUI {
             }
         };
         add(snake);
+
+        GButton slime = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 786, 512,256, "Credits.png"){
+            @Override
+            public void onClick() {
+                Window.getInstance().setGUI(new SlimeMain());
+            }
+        };
+        add(slime);
 
     }
 
