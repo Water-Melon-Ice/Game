@@ -22,16 +22,17 @@ public class GComponent implements Paintable, Tickable {
 
     public GComponent(int x, int y, int width, int height) {
         this.area = new Rectangle(x,y,width,height);
-        initialize();
     }
 
     public GComponent(Dimension size){
         this(0,0, size.width,size.height);
     }
 
-    public void initialize() {
+    public void open() {
     }
 
+    public void close(){
+    }
 
     public void destroy() {
         getParent().remove(this);
@@ -42,7 +43,7 @@ public class GComponent implements Paintable, Tickable {
 
     }
 
-    public final void tickAll() {
+    public void tickAll() {
         if (!visible) return;
         tick();
         for (GComponent c : gcomponents) {
@@ -87,9 +88,11 @@ public class GComponent implements Paintable, Tickable {
         gcomponents.add(index, gcomponent);
         if (gcomponent.parent != null) gcomponent.parent.remove(gcomponent);
         gcomponent.parent = this;
+        gcomponent.open();
     }
 
     public void remove(GComponent gcomponent) {
+        gcomponent.close();
         gcomponents.remove(gcomponent);
         gcomponent.parent = null;
     }
@@ -102,7 +105,7 @@ public class GComponent implements Paintable, Tickable {
         return parent;
     }
 
-    public void setParent(GComponent parent) {
+    protected void setParent(GComponent parent) {
         this.parent = parent;
     }
 

@@ -28,7 +28,7 @@ public class GButton extends GComponent {
     @Override
     public void paint(Graphics g) {
         if (text != null)
-            g.drawString(text, 0, 0);
+            g.drawString(text, 0, 10);
         if (texture != null) {
             texture.paint(g);
             if (isMouseOver() && Controls.isMousePressed(1)) {
@@ -36,7 +36,6 @@ public class GButton extends GComponent {
             } else if (isMouseOver()) {
                 g.drawImage(texture.getImageFillNonOpaque(new Color(64, 64, 64, 64)), 0, 0, getWidth() - 1, getHeight() - 1, null);
             }
-
         }
     }
 

@@ -1,9 +1,8 @@
 package io.github.minetrinity.game.graphics.gui.ingame.minigames.slimehead;
 
 
-import io.github.minetrinity.game.graphics.GUI;
+import io.github.minetrinity.game.graphics.gui.ingame.minigames.MinigameGUI;
 import io.github.minetrinity.game.graphics.Texture;
-import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.input.Controls;
 import io.github.minetrinity.game.io.Resources;
 
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SlimeMain extends GUI {
+public class SlimeMain extends MinigameGUI {
 
     private static final int WIDTH = 512;
     private static final int HEIGHT = WIDTH;
@@ -34,7 +33,7 @@ public class SlimeMain extends GUI {
     boolean eaten = false;
 
     private final List<Point> bombs = new ArrayList<>();
-    private Point slime = new Point(WIDTH / 2, HEIGHT /2);
+    private final Point slime = new Point(WIDTH / 2, HEIGHT /2);
 
     Texture background2 = (Texture) Resources.getResource("SnakeBackgroundLightGreen.png");
     Texture background = (Texture) Resources.getResource("SnakeBackgroundDarkGreen.png");
@@ -113,27 +112,28 @@ public class SlimeMain extends GUI {
 
     private void collision() {
         if ((slime.x > WIDTH - 1) || (slime.y > HEIGHT - 1) || (slime.x < 0 ) || (slime.y < 0)) {
-            Window.init();
+            die();
         }
         for (Point i: bombs){
             if ((slime.x == i.x) && (slime.y == i.y)) {
-                Window.init();
+                die();
             }
         }
     }
 
     @Override
     public void open() { //called on opening of the GUI
-        placeApple();
         for (int i = 0; i < 5; i++) {
             bombs.add(placebomb());
         }
+        placeApple();
 
     }
 
-    @Override
-    public void close() {
 
+    @Override
+    public int closeMinigame() {
+        return 0;
     }
 
     @Override

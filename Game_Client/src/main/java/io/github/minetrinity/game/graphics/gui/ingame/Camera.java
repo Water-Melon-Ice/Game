@@ -2,24 +2,22 @@ package io.github.minetrinity.game.graphics.gui.ingame;
 
 import io.github.minetrinity.game.Client;
 import io.github.minetrinity.game.graphics.AnimatedTexture;
-import io.github.minetrinity.game.graphics.Overlay;
+import io.github.minetrinity.game.graphics.components.GOverlay;
 import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.ingame.entity.Entity;
-import io.github.minetrinity.game.input.Controls;
 import io.github.minetrinity.game.io.Resources;
 import io.github.minetrinity.game.ingame.world.World;
 
 import java.awt.*;
 
-public class Camera extends Overlay {
+public class Camera extends GOverlay {
 
     public int x = 0;
     public int y = 0;
 
-    private int size = 128;
-    private int minsize = 16;
-    private int zoomfactor;
+    private final int factor = 1;
+    private final int size = 16;
 
     private int rows, columns;
 
@@ -36,16 +34,15 @@ public class Camera extends Overlay {
                             System.err.println(World.getCurrent().getTiles()[x][y][layer].getTexture());
                             continue;
                         }
-                        if (tempt.getWidth() != size) {
-                            tempt.resizeScale(size, size);
-                        } else if (tempt.getHeight() != size) tempt.resizeScale(size, size);
+                        if (tempt.getWidth() != factor * size) {
+                            tempt.resizeScale(factor * size, factor * size);
+                        } else if (tempt.getHeight() != factor * size) tempt.resizeScale(factor * size, factor * size);
                     }
                 }
             }
         }
-        columns = Window.getInstance().getWidth() / size;
-        rows = Window.getInstance().getHeight() / size;
-        zoomfactor = ((size / minsize) - 1);
+        columns = Window.getInstance().getWidth() / factor * size;
+        rows = Window.getInstance().getHeight() / factor * size;
 
         this.follow = follow;
 
@@ -74,7 +71,7 @@ public class Camera extends Overlay {
                 for (int layer = 0; layer < World.getCurrent().getLayers(); layer++) {
                     if (World.getCurrent().getTiles()[x][y][layer] != null) {
                         Texture tempt = (Texture) Resources.getResource(World.getCurrent().getTiles()[x][y][layer].getTexture());
-                        g.drawImage(tempt.getBufferedImage(), (x - this.x) * size, (y - this.y) * size, null);
+                        g.drawImage(tempt.getBufferedImage(), (x - this.x) * factor * size, (y - this.y) * factor * size, null);
                     }
                 }
             }
@@ -85,8 +82,8 @@ public class Camera extends Overlay {
     private void paintEntities(Graphics g) {
         for (Entity e : World.getCurrent().getEntities()) {
             Texture tex = ((AnimatedTexture) Resources.getResource(e.getTexture()));
-            tex.resizeScale((size / minsize) * tex.getWidth(), (size / minsize) * tex.getHeight());
-            g.drawImage(tex.getImage(), e.getLocation().x * (size / minsize), e.getLocation().y * (size / minsize), null);
+            tex.resizeScale((factor / size) * tex.getWidth(), (factor / size) * tex.getHeight());
+            g.drawImage(tex.getImage(), e.getLocation().x * (factor / size), e.getLocation().y * (factor / size), null);
         }
     }
 

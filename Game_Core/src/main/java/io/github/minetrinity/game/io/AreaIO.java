@@ -60,7 +60,7 @@ public class AreaIO {
     }
     //TODO: this is da lag machina
     public static Area toArea(LayeredTexture ltex) {
-        Area area = new Area(ltex.getWidth(), ltex.getHeight());
+        Area area = new Area(ltex.getWidth(), ltex.getHeight(), ltex.getLayerCount());
         for (int y = 0; y < ltex.getHeight(); y++) {
             for (int x = 0; x < ltex.getWidth(); x++) {
                 for (int layer = 0; layer < ltex.getLayerCount(); layer++) {

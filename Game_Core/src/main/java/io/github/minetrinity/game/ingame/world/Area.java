@@ -13,14 +13,12 @@ public class Area implements Tickable {
     private ArrayList<Entity> entities = new ArrayList<>();
     private Tile[][][] tiles; // x, y, layer
 
-    protected final int layerstack = 5;
 
-    public Area(int width, int height) {
-        tiles = new Tile[width][height][layerstack];
+    public Area(int width, int height, int layers) {
+        tiles = new Tile[width][height][layers];
     }
 
     public void setTile(Tile tile, int x, int y, int layer) {
-        if (layer > layerstack - 1) return;
         this.tiles[x][y][layer] = tile;
     }
 
