@@ -25,6 +25,9 @@ public class SlimeMain extends GUI {
 
     private int score;
 
+    private int tick;
+    private int test2;
+
     private final List<Point> bombs = new ArrayList<>();
     private Point slime = new Point(WIDTH / 2, HEIGHT /2);
 
@@ -75,6 +78,12 @@ public class SlimeMain extends GUI {
 
         if ((bomb_x == slime.x) && (bomb_y == slime.y)) {
             return placebomb();
+        }
+
+        for (Point i: bombs) {
+            if ((bomb_x == i.x) && (bomb_y == i.y)) {
+                return placebomb();
+            }
         }
 
         return new Point (bomb_x, bomb_y);
@@ -154,7 +163,10 @@ public class SlimeMain extends GUI {
     @Override
     public void tick() {
         eaten();
-        move();
+        if (tick % 3 == 0) { //slowing down Slime
+            move();
+        }
         collision();
+        tick = tick + 1;
     }
 }

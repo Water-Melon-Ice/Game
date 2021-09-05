@@ -44,6 +44,10 @@ public class SnakeMain extends GUI {
 
     boolean eaten = false;
 
+    private int score;
+
+    private int tick;
+
     private final List<Point> snakebody = new ArrayList<>();
     private Point snakeHead = new Point(WIDTH / 2, HEIGHT /2);
 
@@ -86,6 +90,7 @@ public class SnakeMain extends GUI {
             snakebody.add(snakebody.get(snakebody.size() - 1));
             placeApple();
             eaten = true;
+            score = score +1;
         }
     }
 
@@ -99,7 +104,7 @@ public class SnakeMain extends GUI {
             y[z] = y[(z - 1)];
         }
 
-        snakeHead.x += 5;
+        snakeHead.x = snakeHead.x + 16;
 
         snakeHead.x += Controls.getX() * 16;
         snakeHead.y += Controls.getY() * 16;
@@ -158,15 +163,18 @@ public class SnakeMain extends GUI {
 
         g.drawImage(apple.getImage(),apple_x,apple_y,null);
         creatSnake(g);
+        g.setColor(new Color(8, 140, 210));
+        g.drawString("Score: " + score, HEIGHT, 16);
     }
 
     @Override
     public void tick() {
         eaten();
-        move();
+        if (tick % 10 == 0) { //slowing down the Snake
+            move();
+        }
         collision();
+        tick = tick + 1;
     }
 }
-//create bomb "snake" minigame
-
-//Glider Game: snakeHead.x += 5;
+//Glider Game: snakeHead.x += 5; (Space
