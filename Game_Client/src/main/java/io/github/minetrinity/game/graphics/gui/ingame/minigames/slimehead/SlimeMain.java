@@ -15,12 +15,6 @@ public class SlimeMain extends MinigameGUI {
 
     private static final int WIDTH = 512;
     private static final int HEIGHT = WIDTH;
-    private static final int ROW = WIDTH / 16;
-    private static final int ALL_SQUARES = WIDTH * HEIGHT;
-
-
-    private final int[] x = new int[ALL_SQUARES];
-    private final int[] y = new int[ALL_SQUARES];
 
     private int apple_x;
     private int apple_y;
@@ -28,9 +22,10 @@ public class SlimeMain extends MinigameGUI {
     private int bomb_x;
     private int bomb_y;
 
-    private int squares;
+    private int score;
 
-    boolean eaten = false;
+    private int tick;
+    private int test2;
 
     private final List<Point> bombs = new ArrayList<>();
     private final Point slime = new Point(WIDTH / 2, HEIGHT /2);
@@ -38,8 +33,8 @@ public class SlimeMain extends MinigameGUI {
     Texture background2 = (Texture) Resources.getResource("SnakeBackgroundLightGreen.png");
     Texture background = (Texture) Resources.getResource("SnakeBackgroundDarkGreen.png");
     Texture apple = (Texture) Resources.getResource("Pixel-apple.png");
-    Texture slimeImage = (Texture) Resources.getResource("snakehead.png");
-    Texture bombImage = (Texture) Resources.getResource("snakebody.png");
+    Texture slimeImage = (Texture) Resources.getResource("SlimeImage.png");
+    Texture bombImage = (Texture) Resources.getResource("BombImage.png");
 
 
     private void placeApple() {
@@ -62,7 +57,7 @@ public class SlimeMain extends MinigameGUI {
             }
         }
 
-        if ((apple_x == 0) || (apple_x == WIDTH - 1) || (apple_y == 0) || (apple_y == HEIGHT - 1)) {
+        if ((apple_x == 0) || (apple_x == WIDTH - 1 * 16) || (apple_y == 0) || (apple_y == HEIGHT - 1 * 16)) {
             placeApple();
         }
     }
@@ -84,6 +79,12 @@ public class SlimeMain extends MinigameGUI {
             return placebomb();
         }
 
+        for (Point i: bombs) {
+            if ((bomb_x == i.x) && (bomb_y == i.y)) {
+                return placebomb();
+            }
+        }
+
         return new Point (bomb_x, bomb_y);
 
     }
@@ -101,7 +102,10 @@ public class SlimeMain extends MinigameGUI {
         if ((slime.x == apple_x) && (slime.y == apple_y)) {
 
             bombs.add(placebomb());
+            bombs.add(placebomb());
             placeApple();
+
+            score = score + 1;
         }
     }
 
@@ -123,6 +127,8 @@ public class SlimeMain extends MinigameGUI {
 
     @Override
     public void open() { //called on opening of the GUI
+        placeApple();
+        score = 0;
         for (int i = 0; i < 5; i++) {
             bombs.add(placebomb());
         }
@@ -151,12 +157,17 @@ public class SlimeMain extends MinigameGUI {
         }
         g.drawImage(apple.getImage(),apple_x,apple_y,null);
         paintbomb(g);
+        g.setColor(new Color(8, 140, 210));
+        g.drawString("Score: " + score, HEIGHT, 16);
     }
 
     @Override
     public void tick() {
         eaten();
-        move();
+        if (tick % 3 == 0) { //slowing down Slime
+            move();
+        }
         collision();
+        tick = tick + 1;
     }
 }
