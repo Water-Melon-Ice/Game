@@ -4,8 +4,8 @@ import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.graphics.components.GButton;
 import io.github.minetrinity.game.graphics.gui.TestGui;
-import io.github.minetrinity.game.graphics.gui.ingame.minigames.slimehead.SlimeMain;
-import io.github.minetrinity.game.graphics.gui.ingame.minigames.snake.SnakeMain;
+import io.github.minetrinity.game.graphics.gui.minigames.slimehead.SlimeMain;
+import io.github.minetrinity.game.graphics.gui.minigames.snake.SnakeMain;
 
 import java.awt.*;
 

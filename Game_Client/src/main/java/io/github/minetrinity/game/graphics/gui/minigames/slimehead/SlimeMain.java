@@ -1,7 +1,7 @@
-package io.github.minetrinity.game.graphics.gui.ingame.minigames.slimehead;
+package io.github.minetrinity.game.graphics.gui.minigames.slimehead;
 
 
-import io.github.minetrinity.game.graphics.gui.ingame.minigames.MinigameGUI;
+import io.github.minetrinity.game.graphics.gui.minigames.MinigameGUI;
 import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.input.Controls;
 import io.github.minetrinity.game.io.Resources;

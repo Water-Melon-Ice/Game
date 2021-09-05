@@ -1,4 +1,4 @@
-package io.github.minetrinity.game.graphics.gui.ingame.minigames;
+package io.github.minetrinity.game.graphics.gui.minigames;
 
 import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.graphics.components.GButton;

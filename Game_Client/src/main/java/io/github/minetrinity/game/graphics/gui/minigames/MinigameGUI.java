@@ -1,7 +1,6 @@
-package io.github.minetrinity.game.graphics.gui.ingame.minigames;
+package io.github.minetrinity.game.graphics.gui.minigames;
 
 import io.github.minetrinity.game.graphics.GUI;
-import io.github.minetrinity.game.graphics.gui.ingame.minigames.RetryOverlay;
 
 public abstract class MinigameGUI extends GUI {
 

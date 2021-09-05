@@ -1,24 +1,16 @@
-package io.github.minetrinity.game.graphics.gui.ingame.minigames.snake;
+package io.github.minetrinity.game.graphics.gui.minigames.snake;
 
 
 import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.graphics.Window;
-import io.github.minetrinity.game.ingame.world.World;
 import io.github.minetrinity.game.input.Controls;
 import io.github.minetrinity.game.io.Resources;
 
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 
 public class SnakeMain extends GUI {

@@ -1,4 +1,4 @@
-package io.github.minetrinity.game.graphics.gui.ingame.minigames.snake;
+package io.github.minetrinity.game.graphics.gui.minigames.snake;
 
 import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.io.Resources;
