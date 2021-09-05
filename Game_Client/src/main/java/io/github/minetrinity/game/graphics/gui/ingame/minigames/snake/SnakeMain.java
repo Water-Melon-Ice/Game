@@ -177,4 +177,5 @@ public class SnakeMain extends GUI {
         tick = tick + 1;
     }
 }
+//Luka stinkt
 //Glider Game: snakeHead.x += 5; (Space
