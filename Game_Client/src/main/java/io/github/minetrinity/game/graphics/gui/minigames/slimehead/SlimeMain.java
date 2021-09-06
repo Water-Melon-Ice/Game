@@ -25,7 +25,6 @@ public class SlimeMain extends MinigameGUI {
     private int score;
 
     private int tick;
-    private int test2;
 
     private final List<Point> bombs = new ArrayList<>();
     private final Point slime = new Point(WIDTH / 2, HEIGHT /2);
@@ -143,7 +142,7 @@ public class SlimeMain extends MinigameGUI {
     }
 
     @Override
-    public void paint(Graphics g) { //render snake and background to Graphics here.
+    public void paint(Graphics g) { //render slime and background to Graphics here.
 
         for(int x = 0; x < WIDTH / 16; x++) {
             for(int y = 0; y < HEIGHT / 16; y++){
