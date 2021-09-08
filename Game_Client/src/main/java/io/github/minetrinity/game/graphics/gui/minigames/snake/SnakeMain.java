@@ -26,8 +26,8 @@ public class SnakeMain extends GUI {
 
     private int apple_x;
     private int apple_y;
-
-    private int squares;
+    private int tmpHead_x;
+    private int tmpHead_y;
 
     private boolean leftDirection = false;
     private boolean  rightDirection = true;
@@ -37,7 +37,6 @@ public class SnakeMain extends GUI {
     boolean eaten = false;
 
     private int score;
-
     private int tick;
 
     private final List<Point> snakebody = new ArrayList<>();
@@ -96,30 +95,25 @@ public class SnakeMain extends GUI {
             y[z] = y[(z - 1)];
         }
 
-        snakeHead.x = snakeHead.x + 16;
+        tmpHead_x = snakeHead.x; //saving old Position
+        tmpHead_y = snakeHead.y;
 
-        snakeHead.x += Controls.getX() * 16;
+        snakeHead.x += Controls.getX() * 16; //moving Snake
         snakeHead.y += Controls.getY() * 16;
 
-
-
-/*
-        if (leftDirection) {
-            x[0] -= SQUARE_SIZE;
-        }
-
-        if (rightDirection) {
-            x[0] += SQUARE_SIZE;
-        }
-
-        if (upDirection) {
-            y[0] -= SQUARE_SIZE;
-        }
-
-        if (downDirection) {
-            y[0] += SQUARE_SIZE;
-        }*/
     }
+
+    private void automove() {
+
+        if (snakeHead.x > tmpHead_x) {
+            snakeHead.x = snakeHead.x + 16;
+        }
+
+        if (snakeHead.x < tmpHead_x) {
+            snakeHead.x = snakeHead.x - 16;
+        }
+    }
+
 
     private void collision() {
         if ((snakeHead.x > WIDTH - 1) || (snakeHead.y > HEIGHT - 1) || (snakeHead.x < 0 ) || (snakeHead.y < 0)) {
@@ -163,11 +157,11 @@ public class SnakeMain extends GUI {
     public void tick() {
         eaten();
         if (tick % 10 == 0) { //slowing down the Snake
+            automove();
             move();
         }
         collision();
         tick = tick + 1;
     }
 }
-//Luka stinkt
 //Glider Game: snakeHead.x += 5; (Space
