@@ -2,8 +2,6 @@ package io.github.minetrinity.game.graphics.gui;
 
 import io.github.minetrinity.game.Client;
 import io.github.minetrinity.game.Game;
-import io.github.minetrinity.game.ingame.entity.Entity;
-import io.github.minetrinity.game.ingame.entity.entities.GhostEntity;
 import io.github.minetrinity.game.io.AreaIO;
 import io.github.minetrinity.game.io.Resources;
 import io.github.minetrinity.game.graphics.*;

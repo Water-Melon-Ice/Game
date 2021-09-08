@@ -25,9 +25,4 @@ public abstract class GUI extends GComponent implements Paintable, Tickable { //
     public void tick() {
 
     }
-
-    @Override
-    public void tickAll() {
-        super.tickAll();
-    }
 }

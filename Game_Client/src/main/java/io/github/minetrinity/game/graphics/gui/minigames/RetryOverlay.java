@@ -10,18 +10,17 @@ import java.awt.*;
 
 public class RetryOverlay extends GOverlay {
 
-    private MinigameGUI ming;
+    private MinigameOverlay ming;
     private int score;
 
-    public RetryOverlay(MinigameGUI ming, int score){
+    public RetryOverlay(MinigameOverlay ming, int score){
         this.score = score;
         this.ming = ming;
 
         GButton play = new GButton(getWidth() / 2 - 512, getHeight() / 2, 512,256, "Play.png", "CONTINUE"){
             @Override
             public void onClick() {
-                destroy();
-                System.out.println("CLICKED");
+                getParent().destroy();
             }
         };
         add(play);
@@ -29,7 +28,8 @@ public class RetryOverlay extends GOverlay {
         GButton snake = new GButton(getWidth() / 2, getHeight() / 2, 512,256, "Credits.png", "EXIT"){
             @Override
             public void onClick() {
-                Window.getInstance().setGUI(new GUIMenu());
+                System.out.println(getParent().getParent());
+               getParent().getParent().destroy();
             }
         };
         add(snake);
@@ -41,8 +41,7 @@ public class RetryOverlay extends GOverlay {
 
     @Override
     public void close() {
-        System.out.println("CLOSED");
-        super.open();
+        super.close();
         ming.open();
     }
 }

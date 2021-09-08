@@ -20,6 +20,8 @@ public class GComponent implements Paintable, Tickable {
     private boolean ignorepadding = false;
     private boolean paintfirst = true;
 
+    private boolean destroy = false;
+
     public GComponent(int x, int y, int width, int height) {
         this.area = new Rectangle(x,y,width,height);
     }
@@ -35,7 +37,7 @@ public class GComponent implements Paintable, Tickable {
     }
 
     public void destroy() {
-        getParent().remove(this);
+        destroy = true;
     }
 
     @Override
@@ -49,6 +51,11 @@ public class GComponent implements Paintable, Tickable {
         for (GComponent c : gcomponents) {
             if (c == null) continue;
             c.tickAll();
+        }
+        for(int i = gcomponents.size() - 1; i >= 0; i--){
+            if(gcomponents.get(i).destroy){
+                gcomponents.remove(i);
+            }
         }
     }
 

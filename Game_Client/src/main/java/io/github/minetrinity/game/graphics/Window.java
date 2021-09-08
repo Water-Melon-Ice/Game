@@ -1,14 +1,12 @@
 package io.github.minetrinity.game.graphics;
 
 import io.github.minetrinity.game.Game;
-import io.github.minetrinity.game.graphics.gui.TestGui;
 import io.github.minetrinity.game.graphics.gui.menu.GUIMenu;
 import io.github.minetrinity.game.input.Controls;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferStrategy;
 
 public class Window {
 

@@ -3,7 +3,6 @@ package io.github.minetrinity.game.graphics.components;
 import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Paintable;
 import io.github.minetrinity.game.graphics.Window;
-import io.github.minetrinity.game.graphics.components.GComponent;
 import io.github.minetrinity.game.time.Tickable;
 
 import java.awt.*;
