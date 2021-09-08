@@ -61,4 +61,11 @@ public class Area implements Tickable {
     public void remove(Entity e){
         entities.remove(e);
     }
+
+    public boolean isWalkable(int x, int y){
+        for(int i = 0; i < getLayers(); i++){
+            if(!getTile(x,y,i).isWalkable()) return false;
+        }
+        return true;
+    }
 }

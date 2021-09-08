@@ -6,9 +6,11 @@ import java.util.HashMap;
 public class Tile {
 
     protected String texture;
+    private boolean isWalkable = true;
 
     public Tile(String texture){
         this.texture = texture;
+
     }
 
     public String getTexture(){
@@ -17,5 +19,13 @@ public class Tile {
 
     public void setTexture(String t){
         this.texture = t;
+    }
+
+    public void setWalkable(boolean walkable) {
+        isWalkable = walkable;
+    }
+
+    public boolean isWalkable() {
+        return isWalkable;
     }
 }

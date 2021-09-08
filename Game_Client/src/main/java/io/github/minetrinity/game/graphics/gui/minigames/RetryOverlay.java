@@ -17,6 +17,7 @@ public class RetryOverlay extends GOverlay {
         this.score = score;
         this.ming = ming;
 
+        //Retry
         GButton play = new GButton(getWidth() / 2 - 512, getHeight() / 2, 512,256, "Play.png", "CONTINUE"){
             @Override
             public void onClick() {
@@ -25,10 +26,10 @@ public class RetryOverlay extends GOverlay {
         };
         add(play);
 
+        //Exit
         GButton snake = new GButton(getWidth() / 2, getHeight() / 2, 512,256, "Credits.png", "EXIT"){
             @Override
             public void onClick() {
-                System.out.println(getParent().getParent());
                getParent().getParent().destroy();
             }
         };

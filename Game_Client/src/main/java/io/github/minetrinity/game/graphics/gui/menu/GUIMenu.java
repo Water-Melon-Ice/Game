@@ -25,7 +25,7 @@ public class GUIMenu extends GUI {
         GButton snake = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 256, 512,256, "Credits.png"){
             @Override
             public void onClick() {
-                Window.getInstance().setGUI(new SnakeMain());
+                getParent().add(new SnakeMain());
             }
         };
         add(snake);
@@ -33,7 +33,7 @@ public class GUIMenu extends GUI {
         GButton slime = new GButton(getWidth() / 2 - 256, getHeight() / 2, 512,256, "Credits.png"){
             @Override
             public void onClick() {
-                Window.getInstance().setGUI(new SlimeMain());
+                getParent().add(new SlimeMain());
             }
         };
         add(slime);
@@ -50,6 +50,5 @@ public class GUIMenu extends GUI {
     }
 
     public void tick() {
-
     }
 }

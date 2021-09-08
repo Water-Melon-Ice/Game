@@ -48,7 +48,8 @@ public class GComponent implements Paintable, Tickable {
     public void tickAll() {
         if (!visible) return;
         tick();
-        for (GComponent c : gcomponents) {
+        for (int i = gcomponents.size() - 1; i >= 0; i--) {
+            GComponent c = gcomponents.get(i);
             if (c == null) continue;
             c.tickAll();
         }
@@ -250,5 +251,9 @@ public class GComponent implements Paintable, Tickable {
 
     public Dimension getSize(){
         return area.getSize();
+    }
+
+    public ArrayList<GComponent> getChildren() {
+        return gcomponents;
     }
 }

@@ -22,7 +22,8 @@ public class MovingEntity extends LivingEntity {
     }
 
     public void move(){
-
+        hitbox.x += (int) (Math.cos(Math.toRadians(direction)) * speed);
+        hitbox.y += (int) (Math.sin(Math.toRadians(direction)) * speed);
     }
 
     public void moveTowardsPoint(Point p){

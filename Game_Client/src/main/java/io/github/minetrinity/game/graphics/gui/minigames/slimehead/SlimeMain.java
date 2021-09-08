@@ -26,8 +26,8 @@ public class SlimeMain extends MinigameOverlay {
 
     private int tick;
 
-    private final List<Point> bombs = new ArrayList<>();
-    private final Point slime = new Point(WIDTH / 2, HEIGHT /2);
+    private List<Point> bombs = new ArrayList<>();
+    private Point slime = new Point(WIDTH / 2, HEIGHT /2);
 
     Texture background2 = (Texture) Resources.getResource("SnakeBackgroundLightGreen.png");
     Texture background = (Texture) Resources.getResource("SnakeBackgroundDarkGreen.png");
@@ -126,6 +126,12 @@ public class SlimeMain extends MinigameOverlay {
 
     @Override
     public void open() { //called on opening of the GUI
+        bombs = new ArrayList<>();
+        score = 0;
+        tick = 0;
+        slime = new Point(WIDTH / 2, HEIGHT /2);
+
+
         placeBong();
         score = 0;
         for (int i = 0; i < 5; i++) {
@@ -138,12 +144,12 @@ public class SlimeMain extends MinigameOverlay {
 
     @Override
     public int closeMinigame() {
-        return 0;
+        return score;
     }
 
     @Override
     public void paint(Graphics g) { //render slime and background to Graphics here.
-
+        super.paint(g);
         for(int x = 0; x < WIDTH / 16; x++) {
             for(int y = 0; y < HEIGHT / 16; y++){
                 if ((x + y) %2 == 1) {

@@ -71,6 +71,7 @@ public class Camera extends GOverlay {
                 for (int layer = 0; layer < World.getCurrent().getLayers(); layer++) {
                     if (World.getCurrent().getTiles()[x][y][layer] != null) {
                         Texture tempt = (Texture) Resources.getResource(World.getCurrent().getTiles()[x][y][layer].getTexture());
+                        if(tempt == null) continue;
                         g.drawImage(tempt.getBufferedImage(), (x - this.x) * factor * size, (y - this.y) * factor * size, null);
                     }
                 }

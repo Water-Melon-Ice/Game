@@ -16,22 +16,21 @@ public class AreaIO {
     private static CSVIO csv = new CSVIO();
 
     public static final HashMap<Color, Tile> tiles = new HashMap<>();
-    private File[] walk;
 
-    public static Area create(String resPath, String name){
+    public static Area create(String resPath, String name) {
         String areaRoot = resPath + Resources.worldsPath + "/" + name;
 
         File[] areafiles = Resources.walk(areaRoot, Integer.MAX_VALUE, true);
 
         TextureIO texfac = new TextureIO();
-        for(File f : areafiles){
-            if(texfac.isReadable(Resources.getFileFormat(f))){
+        for (File f : areafiles) {
+            if (texfac.isReadable(Resources.getFileFormat(f))) {
                 texfac.put(f.getName(), Resources.getInputstream(f));
             }
 
         }
-        for(File f : areafiles){
-            if(csv.isReadable(Resources.getFileFormat(f))){
+        for (File f : areafiles) {
+            if (csv.isReadable(Resources.getFileFormat(f))) {
                 csv.put(f.getName(), Resources.getInputstream(f));
             }
 
@@ -39,7 +38,7 @@ public class AreaIO {
         ArrayList<String[]> layerlist = csv.getByName("layers.csv");
 
         LayeredTexture lt = new LayeredTexture();
-        for (String[] sa : layerlist){
+        for (String[] sa : layerlist) {
             lt.add(texfac.getByName(sa[0]));
         }
         fillTileMap();
@@ -47,17 +46,21 @@ public class AreaIO {
     }
 
     //TODO: actually DO return the hashmap from this method (u know what to do anyway...)
-    public static void fillTileMap(){
+    public static void fillTileMap() {
         ArrayList<String[]> cclist = csv.getByName("colorcodes.csv");
-        for (String[] sa : cclist){
-            tiles.put(Color.decode("#" + sa[0]), new Tile(sa[1]));
+        for (String[] sa : cclist) {
+            Tile t = new Tile(sa[1]);
+            if (sa.length > 2)
+                t.setWalkable(Boolean.parseBoolean(sa[2]));
+            tiles.put(Color.decode("#" + sa[0]), t);
         }
     }
 
-    public static Tile toTile(Color c){
-        if(c.getAlpha() != 255) return null;
+    public static Tile toTile(Color c) {
+        if (c.getAlpha() != 255) return null;
         return tiles.get(c);
     }
+
     //TODO: this is da lag machina
     public static Area toArea(LayeredTexture ltex) {
         Area area = new Area(ltex.getWidth(), ltex.getHeight(), ltex.getLayerCount());

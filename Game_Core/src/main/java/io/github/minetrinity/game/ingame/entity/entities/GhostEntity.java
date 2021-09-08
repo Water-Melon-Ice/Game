@@ -16,17 +16,4 @@ public class GhostEntity extends MovingEntity {
     public void tick() {
         super.tick();
     }
-
-    @Override
-    public void move() {
-        hitbox.x += (int) (Math.cos(Math.toRadians(direction)) * speed);
-        hitbox.y += (int) (Math.sin(Math.toRadians(direction)) * speed);
-        speed *= airDrag;
-        if(speed < maxSpeed){
-            int rd = (int) (Math.random() * maxSpeed);
-            speed += rd;
-            speed = (int) Math.min(maxSpeed, speed);
-        }
-
-    }
 }

@@ -4,6 +4,7 @@ package io.github.minetrinity.game.graphics.gui.minigames.snake;
 import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.graphics.Window;
+import io.github.minetrinity.game.graphics.gui.minigames.MinigameOverlay;
 import io.github.minetrinity.game.input.Controls;
 import io.github.minetrinity.game.io.Resources;
 
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class SnakeMain extends GUI {
+public class SnakeMain extends MinigameOverlay {
 
     private static final int WIDTH = 512;
     private static final int HEIGHT = WIDTH;
@@ -128,9 +129,10 @@ public class SnakeMain extends GUI {
 
     }
 
-    @Override
-    public void close() {
 
+    @Override
+    public int closeMinigame() {
+        return score;
     }
 
     @Override
