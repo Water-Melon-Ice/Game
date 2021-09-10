@@ -118,7 +118,7 @@ public class SnakeMain extends MinigameOverlay {
 
     private void collision() {
         if ((snakeHead.x > WIDTH - 1) || (snakeHead.y > HEIGHT - 1) || (snakeHead.x < 0 ) || (snakeHead.y < 0)) {
-            Window.init();
+            die();
         }
     }
 
@@ -137,7 +137,7 @@ public class SnakeMain extends MinigameOverlay {
 
     @Override
     public void paint(Graphics g) { //render snake and background to Graphics here.
-
+        super.paint(g);
         for(int x = 0; x < WIDTH / 16; x++) {
             for(int y = 0; y < HEIGHT / 16; y++){
                 if ((x + y) %2 == 1) {

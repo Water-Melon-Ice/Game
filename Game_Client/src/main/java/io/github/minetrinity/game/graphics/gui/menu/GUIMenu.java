@@ -3,6 +3,7 @@ package io.github.minetrinity.game.graphics.gui.menu;
 import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.graphics.components.GButton;
+import io.github.minetrinity.game.graphics.components.GOneTimeButton;
 import io.github.minetrinity.game.graphics.gui.TestGui;
 import io.github.minetrinity.game.graphics.gui.minigames.slimehead.SlimeMain;
 import io.github.minetrinity.game.graphics.gui.minigames.snake.SnakeMain;
@@ -14,7 +15,7 @@ public class GUIMenu extends GUI {
 
     @Override
     public void open() {
-        GButton play = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 512, 512,256, "Play.png"){
+        GButton play = new GOneTimeButton(getWidth() / 2 - 256, getHeight() / 2 - 512, 512,256, "Play.png"){
             @Override
             public void onClick() {
                 Window.getInstance().setGUI(new TestGui());
@@ -22,7 +23,7 @@ public class GUIMenu extends GUI {
         };
         add(play);
 
-        GButton snake = new GButton(getWidth() / 2 - 256, getHeight() / 2 - 256, 512,256, "Credits.png"){
+        GButton snake = new GOneTimeButton(getWidth() / 2 - 256, getHeight() / 2 - 256, 512,256, "Credits.png"){
             @Override
             public void onClick() {
                 getParent().add(new SnakeMain());
@@ -30,10 +31,15 @@ public class GUIMenu extends GUI {
         };
         add(snake);
 
-        GButton slime = new GButton(getWidth() / 2 - 256, getHeight() / 2, 512,256, "Credits.png"){
+        GButton slime = new GOneTimeButton(getWidth() / 2 - 256, getHeight() / 2, 512,256, "Credits.png"){
             @Override
             public void onClick() {
                 getParent().add(new SlimeMain());
+            }
+
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
             }
         };
         add(slime);

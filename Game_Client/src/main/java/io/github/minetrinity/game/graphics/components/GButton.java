@@ -41,13 +41,17 @@ public class GButton extends GComponent {
 
     @Override
     public void tick() {
-        if (isMouseOver() && Controls.isMousePressed(1)){
+        if (isClicked()){
             onClick();
         }
     }
 
     public void onClick() {
 
+    }
+
+    public boolean isClicked(){
+        return isMouseOver() && Controls.isMousePressed(1) && !isLocked();
     }
 
     public void setLocked(boolean islocked) {

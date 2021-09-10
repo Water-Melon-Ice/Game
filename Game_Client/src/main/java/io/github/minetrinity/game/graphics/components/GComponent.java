@@ -146,7 +146,7 @@ public class GComponent implements Paintable, Tickable {
     }
 
     public boolean isClicked(int mouseButton){
-        return isMouseOver() && Controls.isMousePressed(mouseButton);
+        return isMouseOver() && Controls.isMousePressed(mouseButton) && isVisible();
     }
 
     public int getAbsoluteWidthInWindow() {
