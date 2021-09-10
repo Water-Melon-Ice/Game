@@ -27,11 +27,14 @@ public class SnakeMain extends MinigameOverlay {
 
     private int apple_x;
     private int apple_y;
-    private int tmpHead_x;
-    private int tmpHead_y;
+
+    private boolean W = false;
+    private boolean S = false;
+    private boolean A = false;
+    private boolean D = false;
 
     private boolean leftDirection = false;
-    private boolean  rightDirection = true;
+    private boolean  rightDirection = false;
     private boolean  upDirection = false;
     private boolean  downDirection = false;
 
@@ -96,23 +99,59 @@ public class SnakeMain extends MinigameOverlay {
             y[z] = y[(z - 1)];
         }
 
-        tmpHead_x = snakeHead.x; //saving old Position
-        tmpHead_y = snakeHead.y;
+        W = Controls.isKeyPressed('W');
+        S = Controls.isKeyPressed('S');
+        A = Controls.isKeyPressed('A');
+        D = Controls.isKeyPressed('D');
 
-        snakeHead.x += Controls.getX() * 16; //moving Snake
-        snakeHead.y += Controls.getY() * 16;
+        if (W == true) {
+            upDirection = true;
+            downDirection = false;
+            leftDirection = false;
+            rightDirection = false;
+        }
+
+        if (S == true) {
+            upDirection = false;
+            downDirection = true;
+            leftDirection = false;
+            rightDirection = false;
+        }
+
+        if (A == true) {
+            upDirection = false;
+            downDirection = false;
+            leftDirection = true;
+            rightDirection = false;
+        }
+
+        if (D == true) {
+            upDirection = false;
+            downDirection = false;
+            leftDirection = false;
+            rightDirection = true;
+        }
 
     }
 
     private void automove() {
 
-        if (snakeHead.x > tmpHead_x) {
+        if (upDirection == true) {
+            snakeHead.y = snakeHead.y - 16;
+        }
+
+        if (downDirection == true) {
+            snakeHead.y = snakeHead.y + 16;
+        }
+
+        if (leftDirection == true) {
+            snakeHead.x = snakeHead.x - 16;
+        }
+
+        if (rightDirection == true) {
             snakeHead.x = snakeHead.x + 16;
         }
 
-        if (snakeHead.x < tmpHead_x) {
-            snakeHead.x = snakeHead.x - 16;
-        }
     }
 
 
@@ -137,7 +176,7 @@ public class SnakeMain extends MinigameOverlay {
 
     @Override
     public void paint(Graphics g) { //render snake and background to Graphics here.
-
+        super.paint(g);
         for(int x = 0; x < WIDTH / 16; x++) {
             for(int y = 0; y < HEIGHT / 16; y++){
                 if ((x + y) %2 == 1) {
@@ -159,8 +198,8 @@ public class SnakeMain extends MinigameOverlay {
     public void tick() {
         eaten();
         if (tick % 10 == 0) { //slowing down the Snake
-            automove();
             move();
+            automove();
         }
         collision();
         tick = tick + 1;
