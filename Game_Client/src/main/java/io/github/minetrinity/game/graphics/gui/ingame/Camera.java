@@ -52,7 +52,6 @@ public class Camera extends GOverlay {
     public void paint(Graphics g) {
         paintWorld(g);
         paintEntities(g);
-        drawFPS(g);
     }
 
     private void paintWorld(Graphics g) {
@@ -86,11 +85,5 @@ public class Camera extends GOverlay {
             tex.resizeScale((factor / size) * tex.getWidth(), (factor / size) * tex.getHeight());
             g.drawImage(tex.getImage(), e.getLocation().x * (factor / size), e.getLocation().y * (factor / size), null);
         }
-    }
-
-
-    private void drawFPS(Graphics g) {
-        g.setColor(Color.black);
-        g.drawString("" + Client.getInstance().getActualticks(), 10, 10);
     }
 }

@@ -1,5 +1,6 @@
 package io.github.minetrinity.game.graphics;
 
+import io.github.minetrinity.game.Client;
 import io.github.minetrinity.game.Game;
 import io.github.minetrinity.game.graphics.gui.menu.GUIMenu;
 import io.github.minetrinity.game.input.Controls;
@@ -14,6 +15,8 @@ public class Window {
 
     private static GraphicsDevice gdevice = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
     protected static Window instance;
+
+    public static boolean showFPS = true;
 
     public static Window getInstance() {
         if (instance == null) instance = new Window();
@@ -85,8 +88,11 @@ public class Window {
             graphics.setBackground(defaultBackground);
             graphics.clearRect(0, 0, frame.getWidth(), frame.getHeight());
             root.paintAll(graphics);
-            frame.getBufferStrategy().show();
 
+            if (showFPS)
+                drawFPS(graphics);
+
+            frame.getBufferStrategy().show();
         }
     }
 
@@ -138,5 +144,12 @@ public class Window {
 
     public Frame getFrame() {
         return frame;
+    }
+
+    private void drawFPS(Graphics g) {
+        g.setColor(Color.black);
+        g.fillRect(0, 0, 16, 16);
+        g.setColor(Color.white);
+        g.drawString("" + Client.getInstance().getActualticks(), 0, 10);
     }
 }
