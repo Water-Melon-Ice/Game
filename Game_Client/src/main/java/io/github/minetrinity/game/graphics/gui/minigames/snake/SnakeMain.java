@@ -34,7 +34,7 @@ public class SnakeMain extends MinigameOverlay {
     private boolean D = false;
 
     private boolean leftDirection = false;
-    private boolean  rightDirection = false;
+    private boolean  rightDirection = true;
     private boolean  upDirection = false;
     private boolean  downDirection = false;
 
@@ -49,7 +49,10 @@ public class SnakeMain extends MinigameOverlay {
     Texture background2 = (Texture) Resources.getResource("SnakeBackgroundLightGreen.png");
     Texture background = (Texture) Resources.getResource("SnakeBackgroundDarkGreen.png");
     Texture apple = (Texture) Resources.getResource("Pixel-apple.png");
-    Texture snakeHeadImage = (Texture) Resources.getResource("snakehead.png");
+    Texture snakeHeadImageup = (Texture) Resources.getResource("snakeheadup.png");
+    Texture snakeHeadImagedown = (Texture) Resources.getResource("snakeheaddown.png");
+    Texture snakeHeadImageleft = (Texture) Resources.getResource("snakeheadleft.png");
+    Texture snakeHeadImageright = (Texture) Resources.getResource("snakeheadright.png");
     Texture snakeBodyImage = (Texture) Resources.getResource("snakebody.png");
     Texture snakeTailImage = (Texture) Resources.getResource("snakebutt.png");
 
@@ -74,7 +77,6 @@ public class SnakeMain extends MinigameOverlay {
             g.drawImage(snakeBodyImage.getImage(), snakebody.get(i).x , snakebody.get(i).y , null);
         }
         g.drawImage(snakeTailImage.getImage(), snakebody.get(snakebody.size() - 1).x , snakebody.get(snakebody.size() - 1).y , null);
-        g.drawImage(snakeHeadImage.getImage(), snakeHead.x, snakeHead.y, null);
 
     }
 
@@ -151,7 +153,24 @@ public class SnakeMain extends MinigameOverlay {
         if (rightDirection == true) {
             snakeHead.x = snakeHead.x + 16;
         }
+    }
 
+    private void rotateSnake(Graphics g) {
+        if (rightDirection == true) {
+            g.drawImage(snakeHeadImageright.getImage(), snakeHead.x, snakeHead.y, null);
+        }
+
+        if (leftDirection == true) {
+            g.drawImage(snakeHeadImageleft.getImage(), snakeHead.x, snakeHead.y, null);
+        }
+
+        if (upDirection == true) {
+            g.drawImage(snakeHeadImageup.getImage(), snakeHead.x, snakeHead.y, null);
+        }
+
+        if (downDirection == true) {
+            g.drawImage(snakeHeadImagedown.getImage(), snakeHead.x, snakeHead.y, null);
+        }
     }
 
 
@@ -190,6 +209,7 @@ public class SnakeMain extends MinigameOverlay {
 
         g.drawImage(apple.getImage(),apple_x,apple_y,null);
         creatSnake(g);
+        rotateSnake(g);
         g.setColor(new Color(8, 140, 210));
         g.drawString("Score: " + score, HEIGHT, 16);
     }
@@ -199,7 +219,7 @@ public class SnakeMain extends MinigameOverlay {
         eaten();
         if (tick % 10 == 0) { //slowing down the Snake
             move();
-            automove();
+            automove();;
         }
         collision();
         tick = tick + 1;
