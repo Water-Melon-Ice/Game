@@ -28,6 +28,9 @@ public class SnakeMain extends MinigameOverlay {
     private int apple_x;
     private int apple_y;
 
+    private int tmp2_x;
+    private int tmp2_y;
+
     private boolean W = false;
     private boolean S = false;
     private boolean A = false;
@@ -77,7 +80,6 @@ public class SnakeMain extends MinigameOverlay {
             g.drawImage(snakeBodyImage.getImage(), snakebody.get(i).x , snakebody.get(i).y , null);
         }
         g.drawImage(snakeTailImage.getImage(), snakebody.get(snakebody.size() - 1).x , snakebody.get(snakebody.size() - 1).y , null);
-
     }
 
     private void eaten() {
@@ -92,14 +94,18 @@ public class SnakeMain extends MinigameOverlay {
     }
 
     private void move() {
-
+/*
         int sub = 0;
         if(eaten) sub = 1;
 
         for (int z = 1; z < snakebody.size() - sub; z++) {
             x[z] = x[(z - 1)];
             y[z] = y[(z - 1)];
-        }
+        } */
+
+        tmp2_x = snakeHead.x;
+        tmp2_y = snakeHead.y;
+
 
         W = Controls.isKeyPressed('W');
         S = Controls.isKeyPressed('S');
@@ -133,10 +139,14 @@ public class SnakeMain extends MinigameOverlay {
             leftDirection = false;
             rightDirection = true;
         }
-
     }
 
     private void automove() {
+
+        for (Point i: snakebody){
+            i.x = tmp2_x;
+            i.y = tmp2_y;
+        }
 
         if (upDirection == true) {
             snakeHead.y = snakeHead.y - 16;
@@ -178,13 +188,18 @@ public class SnakeMain extends MinigameOverlay {
         if ((snakeHead.x > WIDTH - 1) || (snakeHead.y > HEIGHT - 1) || (snakeHead.x < 0 ) || (snakeHead.y < 0)) {
             die();
         }
+
+        for (Point i: snakebody){
+            if ((snakeHead.x == i.x) && (snakeHead.y == i.y)) {
+                die();
+            }
+        }
     }
 
     @Override
     public void open() { //called on opening of the GUI
         snakebody.add(new Point(snakeHead));
         placeApple();
-
     }
 
 
