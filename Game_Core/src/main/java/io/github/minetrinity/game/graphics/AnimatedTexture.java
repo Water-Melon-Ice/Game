@@ -28,7 +28,7 @@ public class AnimatedTexture extends Texture {
 
     public void play(boolean playing) {
         if (startedPlaying == -1)
-            setStartedPlaying(Game.getInstance().startTime);
+            setStartedPlaying(Game.getInstance().getStartTime());
 
         if (playing && dt != 0) {
             startedPlaying = System.currentTimeMillis() - dt;
@@ -121,6 +121,7 @@ public class AnimatedTexture extends Texture {
 
     public void setImage(Image img, int index) {
         frames.get(index).image = img;
+        setSize(img);
     }
 
 
@@ -176,9 +177,8 @@ public class AnimatedTexture extends Texture {
         }
         if (frames.size() == 0 || i.delay == delay) delay = i.delay;
         else delay = -1;
+        setSize(i.image);
         frames.add(frame, i);
-        if (width == 0) width = i.image.getWidth(null);
-        if (height == 0) height = i.image.getHeight(null);
     }
 
     public void addAll(Image... images) {

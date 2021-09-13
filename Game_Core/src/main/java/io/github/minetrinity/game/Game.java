@@ -21,7 +21,7 @@ public class Game {
     protected volatile boolean running = false;
     protected volatile boolean started = false;
 
-    public long startTime;
+    private long startTime;
 
     protected ArrayList<Tickable> tickables = new ArrayList<>();
 
@@ -77,6 +77,10 @@ public class Game {
 
     public void remove(Tickable t) {
         tickables.remove(t);
+    }
+
+    public long getStartTime() {
+        return startTime;
     }
 
 }
