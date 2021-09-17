@@ -17,7 +17,7 @@ public class Camera extends GOverlay {
     public double x = 0;
     public double y = 0;
 
-    private final int factor = 1;
+    private final int factor = 8;
     private final int size = 16;
 
     private final int rows;
@@ -53,8 +53,8 @@ public class Camera extends GOverlay {
             }
         }
 
-        columns = (int) Math.ceil(Window.getInstance().getWidth() / (factor * size * 1.0));
-        rows = (int) Math.ceil(Window.getInstance().getHeight() / (factor * size * 1.0));
+        columns = (int) Math.ceil(Window.getInstance().getWidth() / (factor * size * 1.0)) + 1;
+        rows = (int) Math.ceil(Window.getInstance().getHeight() / (factor * size * 1.0)) + 1;
 
         this.follow = follow;
 
@@ -76,6 +76,7 @@ public class Camera extends GOverlay {
 
         int xoffset = (int) Math.max(Math.min(columns + this.x, World.getCurrent().getWidth()) - columns, 0);
         int yoffset = (int) Math.max(Math.min(rows + this.y, World.getCurrent().getHeight()) - rows, 0);
+        System.out.println(columns);
 
 
         for (int y = yoffset; y < rows + yoffset; y++) {
