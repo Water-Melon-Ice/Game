@@ -94,11 +94,19 @@ public class SnakeMain extends MinigameOverlay {
     }
 
     private void move() {
-
+/*
         for (int i = snakebody.size() - 1; i > 1; i--) {
             if (!((snakebody.get(i).x == snakebody.get(i-1).x) && (snakebody.get(i).y == snakebody.get(i-1).y))) {
                 x[i] = x[(i - 1)];
                 y[i] = y[(i - 1)];
+
+            }
+        }*/
+
+        for (int i = snakebody.size() - 1; i > 1; i--) {
+            if ((snakebody.get(i).x == snakebody.get(i-1).x) && (snakebody.get(i).y == snakebody.get(i-1).y)) {
+                snakebody.get(i).x = snakebody.get(i).x - 1;
+                snakebody.get(i).y = snakebody.get(i).y - 1;
 
             }
         }
@@ -227,6 +235,8 @@ public class SnakeMain extends MinigameOverlay {
         rotateSnake(g);
         g.setColor(new Color(8, 140, 210));
         g.drawString("Score: " + score, HEIGHT, 16);
+        g.setColor(new Color(8, 140, 210));
+        g.drawString("Snake: " + snakebody.size(), HEIGHT, 32);
     }
 
     @Override
