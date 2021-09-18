@@ -1,5 +1,8 @@
 package io.github.minetrinity.game.input;
 
+import io.github.minetrinity.game.graphics.Window;
+import io.github.minetrinity.game.math.MathUtils;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -19,28 +22,13 @@ public class Controls implements KeyListener, MouseListener {
 
     private static double directioncache = 0.0;
 
-    @Override
-    public void keyTyped(KeyEvent e) {}
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        char c = (char) e.getExtendedKeyCode();
-        pressedKeys.add((Character) c);
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        char c = (char) e.getExtendedKeyCode();
-        pressedKeys.removeAll(Collections.singleton((Character) c));
+    public static Controls getInstance() {
+        if (instance == null) instance = new Controls();
+        return instance;
     }
 
     public static boolean isKeyPressed(char key){
         return pressedKeys.contains(key);
-    }
-
-    public static Controls getInstance() {
-        if (instance == null) instance = new Controls();
-        return instance;
     }
 
     public static int getX(){
@@ -65,6 +53,9 @@ public class Controls implements KeyListener, MouseListener {
         return y;
     }
 
+    public static double getKeyDirection(){
+        return MathUtils.getDegree(getX(), getY());
+    }
 
     public static int getMouseX(){
         return MouseInfo.getPointerInfo().getLocation().x;
@@ -90,7 +81,30 @@ public class Controls implements KeyListener, MouseListener {
         return pressedMouseButtons.contains(mouseButton);
     }
 
+    public static double getMouseDegree(double ox, double oy){
+        return MathUtils.getDegree(getMouseX(), getY(), ox, oy);
+    }
+
+    public static double getMouseDegreeRelToCenter(){
+        return MathUtils.getDegree(getMouseX(), getMouseY(), Window.getInstance().getWidth() / 2.0, Window.getInstance().getHeight()) / 2.0;
+    }
+
     private Controls(){}
+
+    @Override
+    public void keyTyped(KeyEvent e) {}
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        char c = (char) e.getExtendedKeyCode();
+        pressedKeys.add((Character) c);
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        char c = (char) e.getExtendedKeyCode();
+        pressedKeys.removeAll(Collections.singleton((Character) c));
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {}

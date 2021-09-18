@@ -4,6 +4,10 @@ import io.github.minetrinity.game.ingame.entity.entities.PlayerEntity;
 
 public class Player {
 
-    private PlayerEntity entity;
+    private static PlayerEntity entity;
 
+    public static PlayerEntity getEntity() {
+        if(entity == null) entity = new PlayerEntity();
+        return entity;
+    }
 }

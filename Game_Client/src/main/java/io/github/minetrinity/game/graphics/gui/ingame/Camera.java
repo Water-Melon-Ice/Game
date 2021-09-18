@@ -10,39 +10,51 @@ import io.github.minetrinity.game.io.Resources;
 import io.github.minetrinity.game.ingame.world.World;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Camera extends GOverlay {
 
-    public int x = 0;
-    public int y = 0;
+    public double x = 0;
+    public double y = 0;
 
-    private final int factor = 1;
+    private final int factor = 8;
     private final int size = 16;
 
-    private int rows, columns;
+    private final int rows;
+    private final int columns;
 
     private Entity follow;
+    Texture mt = (Texture) Resources.getResource("MissingTile.png");
 
     public Camera(Entity follow) {
-        setVisible(true);
+
+        ArrayList<String> missingTiles = new ArrayList<>();
+        mt.resizeScale(factor * size, factor * size);
+
         for (int y = 0; y < World.getCurrent().getHeight(); y++) {
             for (int x = 0; x < World.getCurrent().getWidth(); x++) {
                 for (int layer = 0; layer < World.getCurrent().getLayers(); layer++) {
                     if (World.getCurrent().getTiles()[x][y][layer] != null) {
-                        Texture tempt = (Texture) Resources.getResource(World.getCurrent().getTiles()[x][y][layer].getTexture());
+                        String tile = World.getCurrent().getTiles()[x][y][layer].getTexture();
+                        Texture tempt = (Texture) Resources.getResource(tile);
                         if (tempt == null) {
-                            System.err.println(World.getCurrent().getTiles()[x][y][layer].getTexture());
+                            if (!missingTiles.contains(tile)) {
+                                System.err.println(World.getCurrent().getTiles()[x][y][layer].getTexture());
+                                missingTiles.add(tile);
+                            }
                             continue;
                         }
                         if (tempt.getWidth() != factor * size) {
                             tempt.resizeScale(factor * size, factor * size);
-                        } else if (tempt.getHeight() != factor * size) tempt.resizeScale(factor * size, factor * size);
+                        } else if (tempt.getHeight() != factor * size)
+                            tempt.resizeScale(factor * size, factor * size);
                     }
                 }
             }
         }
-        columns = Window.getInstance().getWidth() / factor * size;
-        rows = Window.getInstance().getHeight() / factor * size;
+
+        columns = (int) Math.ceil(Window.getInstance().getWidth() / (factor * size * 1.0)) + 1;
+        rows = (int) Math.ceil(Window.getInstance().getHeight() / (factor * size * 1.0)) + 1;
 
         this.follow = follow;
 
@@ -50,28 +62,30 @@ public class Camera extends GOverlay {
 
     @Override
     public void paint(Graphics g) {
+
+        if (follow != null) {
+            x = follow.getX() - columns / 2.0;
+            y = follow.getY() - rows / 2.0;
+        }
+
         paintWorld(g);
         paintEntities(g);
     }
 
     private void paintWorld(Graphics g) {
 
-        if (follow != null){
-            x = follow.getLocation().x;
-            y = follow.getLocation().y;
-        }
-        int ycap = Math.min(rows + 1, World.getCurrent().getHeight());
-        int xcap = Math.min(columns + 1, World.getCurrent().getWidth());
-        int xoffset = Math.max(Math.min(xcap + this.x, World.getCurrent().getWidth()) - xcap,0);
-        int yoffset = Math.max(Math.min(ycap + this.y, World.getCurrent().getHeight()) - ycap, 0);
+        int xoffset = (int) Math.max(Math.min(columns + this.x, World.getCurrent().getWidth()) - columns, 0);
+        int yoffset = (int) Math.max(Math.min(rows + this.y, World.getCurrent().getHeight()) - rows, 0);
+        System.out.println(columns);
 
-        for (int y = yoffset; y < ycap + yoffset; y++) {
-            for (int x = xoffset; x < xcap + xoffset; x++) {
+
+        for (int y = yoffset; y < rows + yoffset; y++) {
+            for (int x = xoffset; x < columns + xoffset; x++) {
                 for (int layer = 0; layer < World.getCurrent().getLayers(); layer++) {
                     if (World.getCurrent().getTiles()[x][y][layer] != null) {
                         Texture tempt = (Texture) Resources.getResource(World.getCurrent().getTiles()[x][y][layer].getTexture());
-                        if(tempt == null) continue;
-                        g.drawImage(tempt.getBufferedImage(), (x - this.x) * factor * size, (y - this.y) * factor * size, null);
+                        if (tempt == null) tempt = mt;
+                        g.drawImage(tempt.getBufferedImage(), (int) ( (x - this.x) * factor * size), (int) ((y - this.y) * factor * size), null);
                     }
                 }
             }
@@ -81,9 +95,14 @@ public class Camera extends GOverlay {
 
     private void paintEntities(Graphics g) {
         for (Entity e : World.getCurrent().getEntities()) {
-            Texture tex = ((AnimatedTexture) Resources.getResource(e.getTexture()));
-            tex.resizeScale((factor / size) * tex.getWidth(), (factor / size) * tex.getHeight());
-            g.drawImage(tex.getImage(), e.getLocation().x * (factor / size), e.getLocation().y * (factor / size), null);
+            Texture tempt = (Texture) Resources.getResource(e.getTexture());
+            if(tempt == null) tempt = mt;
+            if (tempt.getWidth() != factor * tempt.getBaseWidth() || tempt.getHeight() != factor * tempt.getBaseHeight()) {
+                tempt.resizeScale(factor * tempt.getBaseWidth(), factor * tempt.getBaseHeight());
+            }
+
+            g.drawImage(tempt.getImage(), (int) ((e.getX() - this.x) * factor * size), (int) ((e.getY() - this.y) * size * factor), null);
+
         }
     }
 }

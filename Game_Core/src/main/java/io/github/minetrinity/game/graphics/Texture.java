@@ -1,11 +1,8 @@
 package io.github.minetrinity.game.graphics;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class Texture implements Paintable{
 
@@ -69,29 +66,11 @@ public class Texture implements Paintable{
     private Image img;
 
     protected int width, height;
+    protected int baseWidth, baseHeight;
 
     protected boolean loaded = false;
 
     public Texture() {
-    }
-
-    @Override
-    public void paint(Graphics g) {
-        g.drawImage(getImage(), 0,0,null);
-    }
-
-    public Image getImage() {
-        return img;
-    }
-
-    public void setImage(Image img) {
-        this.img = img;
-        this.width = img.getWidth(null);
-        this.height = img.getHeight(null);
-    }
-
-    public BufferedImage getBufferedImage() {
-        return toBufferedImage(getImage());
     }
 
     public void resizeCut(int width, int height, Color fill) {
@@ -136,12 +115,51 @@ public class Texture implements Paintable{
         return out;
     }
 
+    @Override
+    public void paint(Graphics g) {
+        g.drawImage(getImage(), 0,0,null);
+    }
+
+    public Image getImage() {
+        return img;
+    }
+
+    public void setImage(Image img) {
+        this.img = img;
+        setSize(img);
+    }
+
+    public BufferedImage getBufferedImage() {
+        return toBufferedImage(getImage());
+    }
+
     public int getWidth() {
         return width;
     }
 
     public int getHeight() {
         return height;
+    }
+
+    public int getBaseWidth() {
+        return baseWidth;
+    }
+
+    public int getBaseHeight() {
+        return baseHeight;
+    }
+
+    protected void setSize(Image img){
+        this.width = img.getWidth(null);
+        this.height = img.getHeight(null);
+        if(baseWidth == 0 || baseHeight == 0){
+            baseWidth = width;
+            baseHeight = height;
+        }
+    }
+
+    protected double getRatio(){
+        return (double) width / height;
     }
 
     public Color getColor(int x, int y){

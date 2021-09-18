@@ -57,13 +57,13 @@ public class Client extends Game {
             return;
         }
 
-        long currenttime = startTime;
+        long currenttime = System.currentTimeMillis();
         long lasttime = currenttime;
         long dtime;                                     //timedifference
-        double mpt = 1000 / tickspersecond;             //millisPerTick
+        double mpt = 1000.0 / tickspersecond;             //millisPerTick
 
         long tickcounter = 0;                           //counts ticks in every second
-        long ticktimer = startTime;    //counts every second
+        long ticktimer = currenttime;    //counts every second
 
         while (running) {
             dtime = currenttime - lasttime;

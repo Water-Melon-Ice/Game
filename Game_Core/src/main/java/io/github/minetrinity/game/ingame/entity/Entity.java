@@ -4,17 +4,22 @@ import io.github.minetrinity.game.ingame.world.Area;
 import io.github.minetrinity.game.time.Tickable;
 
 import java.awt.*;
+import java.awt.geom.Point2D;
+import java.awt.geom.Rectangle2D;
 
 public abstract class Entity implements Tickable {
 
-    protected String texture = "";
+    protected String texture = "MissingTile.png";
 
     private Area area;
 
-    protected Rectangle hitbox;
+    protected double x = 0;
+    protected double y = 0;
+    protected double width;
+    protected double height;
 
-    public Entity(){
-        hitbox = new Rectangle(16, 32);
+    public Entity() {
+
     }
 
     @Override
@@ -22,16 +27,16 @@ public abstract class Entity implements Tickable {
 
     }
 
-    public final void kill(){
+    public final void kill() {
         getArea().remove(this);
     }
 
-    public boolean isInHitbox(Point p){
-        return hitbox.contains(p.x, p.y);
+    public boolean isInHitbox(double x, double y) {
+        return false;
     }
 
-    public boolean isInHitbox(Entity e){
-        return hitbox.contains(e.getHitbox());
+    public boolean isInHitbox(Entity e) {
+        return false;
     }
 
     public Area getArea() {
@@ -40,30 +45,39 @@ public abstract class Entity implements Tickable {
 
     public void setArea(Area area) {
         this.area = area;
-        if(!area.getEntities().contains(this)) area.add(this);
+        if (!area.getEntities().contains(this)) area.add(this);
     }
 
-    public Point getLocation() {
-        return hitbox.getLocation();
+    public double getX() {
+        return x;
     }
 
-    public void setLocation(Point location) {
-        hitbox.setLocation(location);
+    public double getY() {
+        return y;
     }
 
-    public Rectangle getHitbox() {
-        return hitbox;
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setLocation(double x, double y) {
+        this.x = x;
+        this.y = y;
     }
 
     public String getTexture() {
         return texture;
     }
 
-    public void onSpawn(){
+    public void onSpawn() {
 
     }
 
-    public void onDeath(){
+    public void onDeath() {
 
     }
 }

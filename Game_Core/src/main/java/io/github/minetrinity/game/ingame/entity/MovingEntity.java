@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class MovingEntity extends LivingEntity {
 
-    protected int speed = 10;
+    protected double speed = 10;
     protected double direction = 0.0;
 
     protected double airDrag = 0.9;
@@ -22,16 +22,35 @@ public class MovingEntity extends LivingEntity {
     }
 
     public void move(){
-        hitbox.x += (int) (Math.cos(Math.toRadians(direction)) * speed);
-        hitbox.y += (int) (Math.sin(Math.toRadians(direction)) * speed);
+        x +=  (Math.cos(Math.toRadians(direction)) * speed);
+        y +=  (Math.sin(Math.toRadians(direction)) * speed);
     }
 
     public void moveTowardsPoint(Point p){
 
     }
 
-    @Override
-    public void setLocation(Point location) {
-        super.setLocation(location);
+    public double getDirection() {
+        return direction;
+    }
+
+    public void setDirection(double direction) {
+        this.direction = direction;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
+    public double getMaxSpeed() {
+        return maxSpeed;
+    }
+
+    public void setMaxSpeed(double maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 }
