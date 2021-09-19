@@ -63,8 +63,14 @@ public class Area implements Tickable {
     }
 
     public boolean isWalkable(int x, int y){
+        if(x < 0) return false;
+        if(y < 0) return false;
+        if(x >= getWidth()) return false;
+        if(y >= getHeight()) return false;
         for(int i = 0; i < getLayers(); i++){
-            if(!getTile(x,y,i).isWalkable()) return false;
+            Tile t = getTile(x,y,i);
+            if(t == null) continue;
+            if(!t.isWalkable()) return false;
         }
         return true;
     }

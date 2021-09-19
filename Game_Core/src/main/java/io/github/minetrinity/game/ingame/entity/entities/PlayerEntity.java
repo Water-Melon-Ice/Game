@@ -7,7 +7,7 @@ public class PlayerEntity extends MovingEntity {
 
     public PlayerEntity() {
         super();
-        setMaxSpeed(0.3);
+        setMaxSpeed(0.0625);
         texture = "Character(L).gif";
     }
 

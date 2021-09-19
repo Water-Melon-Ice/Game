@@ -50,8 +50,10 @@ public class AreaIO {
         ArrayList<String[]> cclist = csv.getByName("colorcodes.csv");
         for (String[] sa : cclist) {
             Tile t = new Tile(sa[1]);
-            if (sa.length > 2)
+            if (sa.length > 2) {
                 t.setWalkable(Boolean.parseBoolean(sa[2]));
+                System.out.println(sa[1]);
+            }
             tiles.put(Color.decode("#" + sa[0]), t);
         }
     }
@@ -61,7 +63,7 @@ public class AreaIO {
         return tiles.get(c);
     }
 
-    //TODO: this is da lag machina
+    //TODO: this is da lag machine (not anymore, because something else is worse :D)
     public static Area toArea(LayeredTexture ltex) {
         Area area = new Area(ltex.getWidth(), ltex.getHeight(), ltex.getLayerCount());
         for (int y = 0; y < ltex.getHeight(); y++) {

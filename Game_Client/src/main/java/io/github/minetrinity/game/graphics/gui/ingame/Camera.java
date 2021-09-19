@@ -1,7 +1,5 @@
 package io.github.minetrinity.game.graphics.gui.ingame;
 
-import io.github.minetrinity.game.Client;
-import io.github.minetrinity.game.graphics.AnimatedTexture;
 import io.github.minetrinity.game.graphics.components.GOverlay;
 import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.graphics.Window;
@@ -10,6 +8,7 @@ import io.github.minetrinity.game.io.Resources;
 import io.github.minetrinity.game.ingame.world.World;
 
 import java.awt.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Camera extends GOverlay {
@@ -17,8 +16,9 @@ public class Camera extends GOverlay {
     public double x = 0;
     public double y = 0;
 
-    private final int factor = 8;
+    private final int factor = 2;
     private final int size = 16;
+    private double onePxinTile;
 
     private final int rows;
     private final int columns;
@@ -58,25 +58,47 @@ public class Camera extends GOverlay {
 
         this.follow = follow;
 
+        onePxinTile = 1.0 / (factor * size);
+
     }
 
     @Override
     public void paint(Graphics g) {
 
         if (follow != null) {
-            x = follow.getX() - columns / 2.0;
-            y = follow.getY() - rows / 2.0;
+            moveCamera();
+            smoothenCooridinates();
         }
 
         paintWorld(g);
         paintEntities(g);
     }
 
+    public void moveCamera(){
+        x = follow.getX() - columns / 2.0;
+        y = follow.getY() - rows / 2.0;
+
+    }
+
+    private void smoothenCooridinates(){
+        double xpo = x % 1;
+        if(xpo/ onePxinTile != 0){
+            int c = (int) (xpo / onePxinTile);
+            x -= xpo;
+            x += c * onePxinTile;
+        }
+        double ypo = y % 1;
+        if((y % 1) / onePxinTile != 0){
+            int c = (int) (ypo / onePxinTile);
+            y -= ypo;
+            y += c * onePxinTile;
+        }
+    }
+
     private void paintWorld(Graphics g) {
 
         int xoffset = (int) Math.max(Math.min(columns + this.x, World.getCurrent().getWidth()) - columns, 0);
         int yoffset = (int) Math.max(Math.min(rows + this.y, World.getCurrent().getHeight()) - rows, 0);
-        System.out.println(columns);
 
 
         for (int y = yoffset; y < rows + yoffset; y++) {
@@ -101,7 +123,7 @@ public class Camera extends GOverlay {
                 tempt.resizeScale(factor * tempt.getBaseWidth(), factor * tempt.getBaseHeight());
             }
 
-            g.drawImage(tempt.getImage(), (int) ((e.getX() - this.x) * factor * size), (int) ((e.getY() - this.y) * size * factor), null);
+            g.drawImage(tempt.getImage(), (int) ((e.getX() - this.x) * factor * size), (int) ((e.getY() - this.y) * size * factor) - tempt.getHeight(), null);
 
         }
     }

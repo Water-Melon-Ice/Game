@@ -15,8 +15,8 @@ public abstract class Entity implements Tickable {
 
     protected double x = 0;
     protected double y = 0;
-    protected double width;
-    protected double height;
+    protected double width = 1;
+    protected double height = 2;
 
     public Entity() {
 

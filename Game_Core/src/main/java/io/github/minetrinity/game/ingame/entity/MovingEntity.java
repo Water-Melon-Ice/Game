@@ -4,11 +4,10 @@ import java.awt.*;
 
 public class MovingEntity extends LivingEntity {
 
-    protected double speed = 10;
+    protected double speed = 0;
     protected double direction = 0.0;
 
-    protected double airDrag = 0.9;
-    protected double maxSpeed = 2000;
+    protected double maxSpeed = 1;
 
     public MovingEntity(){
         super();
@@ -18,12 +17,22 @@ public class MovingEntity extends LivingEntity {
     public void tick() {
         super.tick();
         move();
-
     }
 
     public void move(){
-        x +=  (Math.cos(Math.toRadians(direction)) * speed);
-        y +=  (Math.sin(Math.toRadians(direction)) * speed);
+        double nx = x +  (Math.cos(Math.toRadians(direction)) * speed);
+        double ny = y +  (Math.sin(Math.toRadians(direction)) * speed);
+        boolean canmove = true;
+        for(int i = 0; i <= width; i++) {
+            if (!getArea().isWalkable(((int) nx) + i, (int) ny)) {
+                canmove = false;
+            }
+        }
+        if(canmove) {
+            x = nx;
+            y = ny;
+        }
+
     }
 
     public void moveTowardsPoint(Point p){

@@ -6,7 +6,7 @@ import java.util.HashMap;
 public class Tile {
 
     protected String texture;
-    private boolean isWalkable = true;
+    private boolean isWalkable = false;
 
     public Tile(String texture){
         this.texture = texture;

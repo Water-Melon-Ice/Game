@@ -138,7 +138,7 @@ ef6c00,Berg(U-R).png
 e65100,Berg(U-L).png
 e65800,Berg(O-R).png
 e25100,Berg(O-L).png
-e28900,Berg(M).png
+e28900,Berg(M).png,true
 ffb900,Berg(Ecke-U-R).png
 ffa900,Berg(Ecke-U-L).png
 e45100,Berg(U-R-Stone).png
@@ -159,7 +159,7 @@ e85100,Berg(U-L-Stone).png
 10b151,HimmelsbaumS(U-U).png
 58a477,HimmelsbaumS(U-U-L).png
 195b33,HimmelsbaumS(U-U-R).png
-000000,snow.png
+000000,snow.png,true
 634e75,WasserEis(L).gif
 775c8f,WasserEis(R).gif
 8900fb,WasserEis(O).gif
