@@ -71,9 +71,9 @@ public class Client extends Game {
             if (dtime >= mpt) {
                 tickcounter++;
                 tick();
-                paint();
                 lasttime = currenttime;
             }
+            paint();
 
             currenttime = System.currentTimeMillis();
 

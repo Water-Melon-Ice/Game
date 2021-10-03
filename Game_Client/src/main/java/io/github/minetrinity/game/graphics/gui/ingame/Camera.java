@@ -26,17 +26,23 @@ public class Camera extends GOverlay {
     private Entity follow;
     Texture mt = (Texture) Resources.getResource("MissingTile.png");
 
+    Texture[][][] mapIT;
+
     public Camera(Entity follow) {
 
         ArrayList<String> missingTiles = new ArrayList<>();
         mt.resizeScale(factor * size, factor * size);
 
-        for (int y = 0; y < World.getCurrent().getHeight(); y++) {
-            for (int x = 0; x < World.getCurrent().getWidth(); x++) {
+        mapIT = new Texture[World.getCurrent().getWidth()][World.getCurrent().getHeight()][World.getCurrent().getLayers()];
+
+        for (int x = 0; x < World.getCurrent().getWidth(); x++) {
+            for (int y = 0; y < World.getCurrent().getHeight(); y++) {
+
                 for (int layer = 0; layer < World.getCurrent().getLayers(); layer++) {
                     if (World.getCurrent().getTiles()[x][y][layer] != null) {
                         String tile = World.getCurrent().getTiles()[x][y][layer].getTexture();
                         Texture tempt = (Texture) Resources.getResource(tile);
+                        mapIT[x][y][layer] = tempt;
                         if (tempt == null) {
                             if (!missingTiles.contains(tile)) {
                                 System.err.println(World.getCurrent().getTiles()[x][y][layer].getTexture());
@@ -74,21 +80,20 @@ public class Camera extends GOverlay {
         paintEntities(g);
     }
 
-    public void moveCamera(){
+    public void moveCamera() {
         x = follow.getX() - columns / 2.0;
         y = follow.getY() - rows / 2.0;
-
     }
 
-    private void smoothenCooridinates(){
+    private void smoothenCooridinates() {
         double xpo = x % 1;
-        if(xpo/ onePxinTile != 0){
+        if (xpo / onePxinTile != 0) {
             int c = (int) (xpo / onePxinTile);
             x -= xpo;
             x += c * onePxinTile;
         }
         double ypo = y % 1;
-        if((y % 1) / onePxinTile != 0){
+        if ((y % 1) / onePxinTile != 0) {
             int c = (int) (ypo / onePxinTile);
             y -= ypo;
             y += c * onePxinTile;
@@ -97,12 +102,12 @@ public class Camera extends GOverlay {
 
     private void paintWorld(Graphics g) {
 
-        int xoffset = (int) Math.max(Math.min(columns + this.x, World.getCurrent().getWidth()) - columns, 0);
-        int yoffset = (int) Math.max(Math.min(rows + this.y, World.getCurrent().getHeight()) - rows, 0);
+        int xoffset = (int) Math.min(columns + this.x, World.getCurrent().getWidth()) - columns;
+        int yoffset = (int) Math.min(rows + this.y, World.getCurrent().getHeight()) - rows;
 
 
-        for (int y = yoffset; y < rows + yoffset; y++) {
-            for (int x = xoffset; x < columns + xoffset; x++) {
+        for (int y = Math.max(yoffset, 0); y < rows + yoffset; y++) {
+            for (int x = Math.max(xoffset, 0); x < columns + xoffset; x++) {
                 for (int layer = 0; layer < World.getCurrent().getLayers(); layer++) {
                     if (World.getCurrent().getTiles()[x][y][layer] != null) {
                         Texture tempt = (Texture) Resources.getResource(World.getCurrent().getTiles()[x][y][layer].getTexture());
@@ -118,7 +123,7 @@ public class Camera extends GOverlay {
     private void paintEntities(Graphics g) {
         for (Entity e : World.getCurrent().getEntities()) {
             Texture tempt = (Texture) Resources.getResource(e.getTexture());
-            if(tempt == null) tempt = mt;
+            if (tempt == null) tempt = mt;
             if (tempt.getWidth() != factor * tempt.getBaseWidth() || tempt.getHeight() != factor * tempt.getBaseHeight()) {
                 tempt.resizeScale(factor * tempt.getBaseWidth(), factor * tempt.getBaseHeight());
             }
