@@ -112,7 +112,7 @@ public class Camera extends GOverlay {
                     if (World.getCurrent().getTiles()[x][y][layer] != null) {
                         Texture tempt = mapIT[x][y][layer];
                         if (tempt == null) tempt = mt;
-                        g.drawImage(tempt.getBufferedImage(), (int) ( (x - this.x) * factor * size), (int) ((y - this.y) * factor * size), null);
+                        g.drawImage(tempt.getImage(), (int) ( (x - this.x) * factor * size), (int) ((y - this.y) * factor * size), null);
                     }
                 }
             }

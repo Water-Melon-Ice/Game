@@ -150,12 +150,12 @@ public class Texture implements Paintable{
     }
 
     protected void setSize(Image img){
-        this.width = img.getWidth(null);
-        this.height = img.getHeight(null);
         if(baseWidth == 0 || baseHeight == 0){
             baseWidth = width;
             baseHeight = height;
         }
+        this.width = img.getWidth(null);
+        this.height = img.getHeight(null);
     }
 
     protected double getRatio(){

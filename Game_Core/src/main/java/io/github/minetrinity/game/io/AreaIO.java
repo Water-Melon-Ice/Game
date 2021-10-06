@@ -52,7 +52,6 @@ public class AreaIO {
             Tile t = new Tile(sa[1]);
             if (sa.length > 2) {
                 t.setWalkable(Boolean.parseBoolean(sa[2]));
-                System.out.println(sa[1]);
             }
             tiles.put(Color.decode("#" + sa[0]), t);
         }
