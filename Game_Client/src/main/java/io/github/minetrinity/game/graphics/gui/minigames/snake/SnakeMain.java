@@ -1,9 +1,7 @@
 package io.github.minetrinity.game.graphics.gui.minigames.snake;
 
 
-import io.github.minetrinity.game.graphics.GUI;
 import io.github.minetrinity.game.graphics.Texture;
-import io.github.minetrinity.game.graphics.Window;
 import io.github.minetrinity.game.graphics.gui.minigames.MinigameOverlay;
 import io.github.minetrinity.game.input.Controls;
 import io.github.minetrinity.game.io.Resources;
@@ -18,11 +16,6 @@ public class SnakeMain extends MinigameOverlay {
 
         private static final int WIDTH = 512;
         private static final int HEIGHT = WIDTH;
-        private static final int ALL_SQUARES = WIDTH * HEIGHT;
-
-
-        private final int[] x = new int[ALL_SQUARES];
-        private final int[] y = new int[ALL_SQUARES];
 
         private int apple_x;
         private int apple_y;
@@ -73,7 +66,6 @@ public class SnakeMain extends MinigameOverlay {
             for (int i = 2; i < snakebody.size() - 1; i++) {
                 g.drawImage(snakeBodyImage.getImage(), snakebody.get(i).x , snakebody.get(i).y , null);
             }
-            //g.drawImage(snakeTailImage.getImage(), snakebody.get(snakebody.size() - 1).x , snakebody.get(snakebody.size() - 1).y , null);
         }
 
         private void eaten() {
@@ -147,12 +139,8 @@ public class SnakeMain extends MinigameOverlay {
         private void followSnake() {
 
             for (int i = snakebody.size() - 1; i > 0; i--) {
-                //x[i] = x[(i - 1)];
                 snakebody.get(i).x = snakebody.get(i-1).x;
                 snakebody.get(i).y = snakebody.get(i-1).y;
-                //y[i] = y[(i - 1)];
-                System.out.println("" +i);
-
             }
         }
 
@@ -180,18 +168,20 @@ public class SnakeMain extends MinigameOverlay {
                 die();
             }
 
-            /*for (Point i: snakebody){
-                if ((snakebody.get(0).x == i.x) && (snakebody.get(0).y == i.y)) {
+            for (int i = 5; i < snakebody.size(); i++){
+                if ((snakebody.get(0).x == snakebody.get(i).x) && (snakebody.get(0).y == snakebody.get(i).y)){
                     die();
                 }
-            }*/
+            }
         }
 
         @Override
         public void open() { //called on opening of the GUI
             snakebody.add(new Point(WIDTH / 2, HEIGHT / 2));
-            snakebody.add(new Point(snakebody.get(0).x - 16, snakebody.get(0).y));
-            snakebody.add(new Point(snakebody.get(0).x - 32, snakebody.get(0).y));
+            snakebody.add(new Point(snakebody.get(snakebody.size() - 1)));
+            snakebody.add(new Point(snakebody.get(snakebody.size() - 1)));
+            snakebody.add(new Point(snakebody.get(snakebody.size() - 1)));
+            snakebody.add(new Point(snakebody.get(snakebody.size() - 1)));
 
             placeApple();
         }
@@ -222,7 +212,7 @@ public class SnakeMain extends MinigameOverlay {
             g.setColor(new Color(8, 140, 210));
             g.drawString("Score: " + score, HEIGHT, 16);
             g.setColor(new Color(8, 140, 210));
-            g.drawString("Snake: " + snakebody.size(), HEIGHT, 32);
+            g.drawString("Snake: " + ((snakebody.size()-1)/2), HEIGHT, 32);
         }
 
         @Override
