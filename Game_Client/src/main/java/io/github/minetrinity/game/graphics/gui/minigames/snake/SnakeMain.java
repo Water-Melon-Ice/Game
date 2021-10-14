@@ -10,6 +10,7 @@ import io.github.minetrinity.game.io.Resources;
 
 
 import java.awt.*;
+import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,12 +91,6 @@ public class SnakeMain extends MinigameOverlay {
 
         private void move() {
 
-            for (int i = snakebody.size() - 1; i > 0; i--) {
-                x[i] = x[(i - 1)];
-                y[i] = y[(i - 1)];
-
-            }
-
             W = Controls.isKeyPressed('W');
             S = Controls.isKeyPressed('S');
             A = Controls.isKeyPressed('A');
@@ -150,6 +145,16 @@ public class SnakeMain extends MinigameOverlay {
             }
         }
 
+        private void followSnake() {
+
+            for (int i = snakebody.size() - 1; i > 0; i--) {
+                x[i] = x[(i - 1)];
+                y[i] = y[(i - 1)];
+                System.out.println("" +i);
+
+            }
+        }
+
         private void rotateSnake(Graphics g) {
             if (rightDirection == true) {
                 g.drawImage(snakeHeadImageright.getImage(), snakebody.get(0).x, snakebody.get(0).y, null);
@@ -174,18 +179,17 @@ public class SnakeMain extends MinigameOverlay {
                 die();
             }
 
-            for (Point i: snakebody){
-                if ((snakebody.get(0).x == i.x) && (snakebody.get(0).y == i.y)) {
+            /*for (Point i: snakebody){
+                if ((snakebody.get(1).x == i.x) && (snakebody.get(1).y == i.y)) {
                     die();
                 }
-            }
+            }*/
         }
 
         @Override
         public void open() { //called on opening of the GUI
             snakebody.add(new Point(WIDTH / 2, HEIGHT / 2));
             snakebody.add(new Point(snakebody.get(0).x - 16, snakebody.get(0).y));
-            snakebody.add(new Point(snakebody.get(0).x - 32, snakebody.get(0).y));
 
         /*for (int i = 0; i < 3; i++) {
             vector_x = snakebody.get(i).x - snakebody.get(i-1).x;
@@ -229,10 +233,11 @@ public class SnakeMain extends MinigameOverlay {
             eaten();
             if (tick % 10 == 0) { //slowing down the Snake
                 move();
+                followSnake();
                 automove();;
+                followSnake();
             }
-            //collision();
+            collision();
             tick = tick + 1;
         }
     }
-//Glider Game: snakeHead.x += 5; (Space
