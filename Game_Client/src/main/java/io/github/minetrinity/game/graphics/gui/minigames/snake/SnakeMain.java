@@ -52,7 +52,6 @@ public class SnakeMain extends MinigameOverlay {
         Texture snakeHeadImageleft = (Texture) Resources.getResource("snakeheadleft.png");
         Texture snakeHeadImageright = (Texture) Resources.getResource("snakeheadright.png");
         Texture snakeBodyImage = (Texture) Resources.getResource("snakebody.png");
-        Texture snakeTailImage = (Texture) Resources.getResource("snakebutt.png");
 
 
         private void placeApple() {
@@ -71,16 +70,17 @@ public class SnakeMain extends MinigameOverlay {
         }
 
         private void creatSnake(Graphics g) {
-            for (int i = 1; i < snakebody.size() - 1; i++) {
+            for (int i = 2; i < snakebody.size() - 1; i++) {
                 g.drawImage(snakeBodyImage.getImage(), snakebody.get(i).x , snakebody.get(i).y , null);
             }
-            g.drawImage(snakeTailImage.getImage(), snakebody.get(snakebody.size() - 1).x , snakebody.get(snakebody.size() - 1).y , null);
+            //g.drawImage(snakeTailImage.getImage(), snakebody.get(snakebody.size() - 1).x , snakebody.get(snakebody.size() - 1).y , null);
         }
 
         private void eaten() {
 
             if ((snakebody.get(0).x == apple_x) && (snakebody.get(0).y == apple_y)) {
 
+                snakebody.add(new Point(snakebody.get(snakebody.size() - 1)));
                 snakebody.add(new Point(snakebody.get(snakebody.size() - 1)));
                 placeApple();
                 eaten = true;
@@ -181,7 +181,7 @@ public class SnakeMain extends MinigameOverlay {
             }
 
             /*for (Point i: snakebody){
-                if ((snakebody.get(1).x == i.x) && (snakebody.get(1).y == i.y)) {
+                if ((snakebody.get(0).x == i.x) && (snakebody.get(0).y == i.y)) {
                     die();
                 }
             }*/
@@ -191,6 +191,7 @@ public class SnakeMain extends MinigameOverlay {
         public void open() { //called on opening of the GUI
             snakebody.add(new Point(WIDTH / 2, HEIGHT / 2));
             snakebody.add(new Point(snakebody.get(0).x - 16, snakebody.get(0).y));
+            snakebody.add(new Point(snakebody.get(0).x - 32, snakebody.get(0).y));
 
             placeApple();
         }
@@ -230,10 +231,11 @@ public class SnakeMain extends MinigameOverlay {
             if (tick % 10 == 0) { //slowing down the Snake
                 move();
                 followSnake();
+                collision();
                 automove();;
                 followSnake();
+                collision();
             }
-            collision();
             tick = tick + 1;
         }
     }
