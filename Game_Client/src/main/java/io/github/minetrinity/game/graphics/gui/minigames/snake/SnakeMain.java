@@ -10,7 +10,6 @@ import io.github.minetrinity.game.io.Resources;
 
 
 import java.awt.*;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,8 +147,10 @@ public class SnakeMain extends MinigameOverlay {
         private void followSnake() {
 
             for (int i = snakebody.size() - 1; i > 0; i--) {
-                x[i] = x[(i - 1)];
-                y[i] = y[(i - 1)];
+                //x[i] = x[(i - 1)];
+                snakebody.get(i).x = snakebody.get(i-1).x;
+                snakebody.get(i).y = snakebody.get(i-1).y;
+                //y[i] = y[(i - 1)];
                 System.out.println("" +i);
 
             }
@@ -191,11 +192,6 @@ public class SnakeMain extends MinigameOverlay {
             snakebody.add(new Point(WIDTH / 2, HEIGHT / 2));
             snakebody.add(new Point(snakebody.get(0).x - 16, snakebody.get(0).y));
 
-        /*for (int i = 0; i < 3; i++) {
-            vector_x = snakebody.get(i).x - snakebody.get(i-1).x;
-            vector_y = snakebody.get(i).y - snakebody.get(i-1).y;
-            snakebody.add(new Point(snakebody.get(i).x - vector_x, snakebody.get(i).y));
-        }*/
             placeApple();
         }
 
