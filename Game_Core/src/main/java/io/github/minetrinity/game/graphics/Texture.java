@@ -93,12 +93,13 @@ public class Texture implements Paintable{
     }
 
     public void resizeScale(int width, int height) {
-        setImage(getImage().getScaledInstance(width, height, java.awt.Image.SCALE_DEFAULT));
+        Image img = getImage().getScaledInstance(width, height, Image.SCALE_DEFAULT);
+        setImage(img);
     }
 
     public Image getImageFillNonOpaque(Color c){
         BufferedImage img = getBufferedImage();
-        BufferedImage out = new BufferedImage(img.getWidth(), img.getHeight(), 2);
+        BufferedImage out = new BufferedImage(img.getWidth(), img.getHeight(), BufferedImage.TYPE_INT_ARGB);
         int crgba = c.getRGB();
         int[][] argbIntArray = toARGBIntArray(img);
         for(int x = 0; x < argbIntArray.length; x++){

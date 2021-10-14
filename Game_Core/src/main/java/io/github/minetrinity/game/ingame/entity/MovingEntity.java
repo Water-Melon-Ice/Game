@@ -18,18 +18,14 @@ public class MovingEntity extends LivingEntity {
     }
 
     public void move() {
-        double nx = getXDistance();
-        double ny = getYDistance();
-        if (!isObstrukted(nx, ny)) {
+        double nx = x + getXDistance();
+        double ny = y + getYDistance();
+        if (isMoveable(nx, ny)) {
             teleport(nx, ny);
-        }else if(!isObstrukted(getX(), ny)){
+        }else if(isMoveable(getX(), ny)){
             teleport(getX(), ny);
-            snapToGrid();
-        }else if(!isObstrukted(nx, getY())){
+        }else if(isMoveable(nx, getY())) {
             teleport(nx, getY());
-            snapToGrid();
-        }else{
-            snapToGrid();
         }
 
 
@@ -42,18 +38,15 @@ public class MovingEntity extends LivingEntity {
         this.y = y;
     }
 
-    public boolean isObstrukted(double x, double y) {
-        for (int i = 0; i < width + 1; i++) {
+    public boolean isMoveable(double x, double y) {
+        for (int i = 0; i < ((int) width) + 1; i++) {
             if (getArea().isObstrukted(((int) x) + i, (int) y)) {
-                return true;
+                return false;
             }
         }
-        return false;
-    }
 
-    //todo: snaps to obstrukted tiles too
-    public void snapToGrid() {
-        setLocation(Math.round(getX()), Math.round(getY()));
+        if(getArea().isObstrukted((int) (x + width % 1), (int) y)) return false;
+        return true;
     }
 
     public double getDirection() {
@@ -65,11 +58,11 @@ public class MovingEntity extends LivingEntity {
     }
 
     public double getXDistance() {
-        return x + (Math.cos(Math.toRadians(direction)) * speed);
+        return (Math.cos(Math.toRadians(direction)) * speed);
     }
 
     public double getYDistance() {
-        return y + (Math.sin(Math.toRadians(direction)) * speed);
+        return (Math.sin(Math.toRadians(direction)) * speed);
     }
 
     public double getSpeed() {

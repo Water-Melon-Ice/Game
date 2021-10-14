@@ -15,7 +15,7 @@ public abstract class Entity implements Tickable {
 
     protected double x = 0;
     protected double y = 0;
-    protected double width = 1;
+    protected double width = 0.8;
     protected double height = 2;
 
     public Entity() {
@@ -54,6 +54,22 @@ public abstract class Entity implements Tickable {
 
     public double getY() {
         return y;
+    }
+
+    public int getTileX() {
+        return (int) x;
+    }
+
+    public int getTileY() {
+        return (int) y;
+    }
+
+    public double getXinTile(){
+        return x % 1;
+    }
+
+    public double getYinTile(){
+        return y % 1;
     }
 
     public double getWidth() {

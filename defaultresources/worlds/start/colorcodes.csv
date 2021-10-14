@@ -143,9 +143,9 @@ ffb900,Berg(Ecke-U-R).png
 ffa900,Berg(Ecke-U-L).png
 e45100,Berg(U-R-Stone).png
 e85100,Berg(U-L-Stone).png
-424242,Eingang(1.1;1.2).png
-696969,Eingang(2.1).png
-420420,Eingang(2.2).png
+424242,Eingang(1.1;1.2).png,true
+696969,Eingang(2.1).png,true
+420420,Eingang(2.2).png,true
 00ff66,Himmelsbaum(L).png
 128f44,Himmelsbaum(M).png
 2ccb6c,Himmelsbaum(O).png

@@ -3,7 +3,11 @@ package io.github.minetrinity.game.graphics.gui.ingame;
 import io.github.minetrinity.game.graphics.components.GOverlay;
 import io.github.minetrinity.game.graphics.Texture;
 import io.github.minetrinity.game.graphics.Window;
+import io.github.minetrinity.game.graphics.gui.minigames.slimehead.SlimeMain;
+import io.github.minetrinity.game.graphics.gui.minigames.snake.SnakeMain;
+import io.github.minetrinity.game.ingame.Player;
 import io.github.minetrinity.game.ingame.entity.Entity;
+import io.github.minetrinity.game.input.KeyBindings;
 import io.github.minetrinity.game.io.Resources;
 import io.github.minetrinity.game.ingame.world.World;
 
@@ -34,6 +38,7 @@ public class Camera extends GOverlay {
         mt.resizeScale(factor * size, factor * size);
 
         mapIT = new Texture[World.getCurrent().getWidth()][World.getCurrent().getHeight()][World.getCurrent().getLayers()];
+
 
         for (int x = 0; x < World.getCurrent().getWidth(); x++) {
             for (int y = 0; y < World.getCurrent().getHeight(); y++) {
@@ -66,6 +71,46 @@ public class Camera extends GOverlay {
 
         onePxinTile = 1.0 / (factor * size);
 
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (KeyBindings.hasKeyDirection())
+            Player.getEntity().setDirection(KeyBindings.getKeyDirection());
+        if (KeyBindings.getY() != 0 || KeyBindings.getX() != 0) {
+            Player.getEntity().setSpeed(Player.getEntity().getMaxSpeed());
+        } else {
+            Player.getEntity().setSpeed(0);
+        }
+
+        if(Player.getEntity().getTileX() == 7 && Player.getEntity().getTileY() == 13) {
+            setVisible(false);
+            getParent().add(new SnakeMain());
+        }else if(Player.getEntity().getTileX() == 7 && Player.getEntity().getTileY() == 14) {
+            setVisible(false);
+            getParent().add(new SnakeMain());
+        }else if(Player.getEntity().getTileX() == 8 && Player.getEntity().getTileY() == 13) {
+            setVisible(false);
+            getParent().add(new SnakeMain());
+        }else if(Player.getEntity().getTileX() == 8 && Player.getEntity().getTileY() == 14) {
+            setVisible(false);
+            getParent().add(new SnakeMain());
+        }
+
+        if(Player.getEntity().getTileX() == 23 && Player.getEntity().getTileY() == 3) {
+            setVisible(false);
+            getParent().add(new SlimeMain());
+        }else if(Player.getEntity().getTileX() == 23 && Player.getEntity().getTileY() == 4) {
+            setVisible(false);
+            getParent().add(new SlimeMain());
+        }else if(Player.getEntity().getTileX() == 24 && Player.getEntity().getTileY() == 3) {
+            setVisible(false);
+            getParent().add(new SlimeMain());
+        }else if(Player.getEntity().getTileX() == 24 && Player.getEntity().getTileY() == 4) {
+            setVisible(false);
+            getParent().add(new SlimeMain());
+        }
     }
 
     @Override

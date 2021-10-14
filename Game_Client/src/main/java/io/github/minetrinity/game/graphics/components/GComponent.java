@@ -55,7 +55,7 @@ public class GComponent implements Paintable, Tickable {
         }
         for(int i = gcomponents.size() - 1; i >= 0; i--){
             if(gcomponents.get(i).destroy){
-                gcomponents.remove(i);
+                remove(i);
             }
         }
     }
@@ -103,6 +103,12 @@ public class GComponent implements Paintable, Tickable {
         gcomponent.close();
         gcomponents.remove(gcomponent);
         gcomponent.parent = null;
+    }
+
+    public void remove(int index) {
+        gcomponents.get(index).close();
+        gcomponents.get(index).parent = null;
+        gcomponents.remove(index);
     }
 
     public ArrayList<GComponent> getComponents() {

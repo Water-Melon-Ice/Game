@@ -2,6 +2,8 @@ package io.github.minetrinity.game.graphics.gui;
 
 import io.github.minetrinity.game.Client;
 import io.github.minetrinity.game.Game;
+import io.github.minetrinity.game.graphics.gui.minigames.slimehead.SlimeMain;
+import io.github.minetrinity.game.graphics.gui.minigames.snake.SnakeMain;
 import io.github.minetrinity.game.ingame.Player;
 import io.github.minetrinity.game.ingame.entity.Entity;
 import io.github.minetrinity.game.ingame.entity.entities.GhostEntity;
@@ -38,7 +40,6 @@ public class TestGui extends GUI {
         add(c);
 
 
-
     }
 
     @Override
@@ -46,14 +47,14 @@ public class TestGui extends GUI {
 
     }
 
+    /**
+     * TODO: TEMPORARY
+     */
     @Override
     public void tick() {
-        super.tick();
-        Player.getEntity().setDirection(KeyBindings.getKeyDirection());
-        if(KeyBindings.getY() != 0 || KeyBindings.getX() != 0){
-            Player.getEntity().setSpeed(Player.getEntity().getMaxSpeed());
-        }else{
-            Player.getEntity().setSpeed(0);
+
+        if(getComponents().size() == 1) {
+            getComponents().get(0).setVisible(true);
         }
     }
 }

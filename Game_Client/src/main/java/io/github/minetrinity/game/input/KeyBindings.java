@@ -51,4 +51,8 @@ public final class KeyBindings {
         return MathUtils.getDegree(getX(), getY());
     }
 
+    public static boolean hasKeyDirection(){
+        return getX() != 0 || getY() != 0;
+    }
+
 }
