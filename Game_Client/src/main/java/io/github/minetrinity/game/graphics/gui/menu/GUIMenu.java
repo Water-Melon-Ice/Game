@@ -23,27 +23,6 @@ public class GUIMenu extends GUI {
         };
         add(play);
 
-        GButton snake = new GOneTimeButton(getWidth() / 2 - 256, getHeight() / 2 - 256, 512,256, "Credits.png"){
-            @Override
-            public void onClick() {
-                getParent().add(new SnakeMain());
-            }
-        };
-        add(snake);
-
-        GButton slime = new GOneTimeButton(getWidth() / 2 - 256, getHeight() / 2, 512,256, "Credits.png"){
-            @Override
-            public void onClick() {
-                getParent().add(new SlimeMain());
-            }
-
-            @Override
-            public void paint(Graphics g) {
-                super.paint(g);
-            }
-        };
-        add(slime);
-
     }
 
     @Override
